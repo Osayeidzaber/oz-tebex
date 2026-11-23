@@ -1,11 +1,38 @@
 {#
-  One icon. Vars: ic (icon name like "crown-gold", or an image URL), size ('' | 'sm' | 'lg' | 'xl'), label (optional alt text).
-  Names: see the icon gallery (npm run preview → /icons.html) or the Icons tab on the setup page.
+  One icon. Upload as an Asset named exactly "oz-icon.twig".
+  Vars (pick one way to choose the icon):
+    ic    — icon name like "crown-gold", or an image URL
+    pkg   — a package name: looks it up in the `package-icons` setting ("MVP=crown-gold, Golden key=key-gold"),
+            falling back to `package-icon-default`
+    cat   — a category object + n (its position): looks it up in `category-icons` ("Ranks=crown, Keys=key"),
+            falling back to a rotating default
+  size ('' | 'sm' | 'lg' | 'xl'), label (optional alt text).
+  Only Tebex-allowed Twig is used here (no default / trim / merge filters).
 #}
-{%- set icv = ic|default('chest')|trim -%}
+{%- set icv = ic is defined and ic ? ic : '' -%}
+{%- if not icv and pkg is defined -%}
+  {%- set icv = config('package-icon-default') ? config('package-icon-default') : 'chest' -%}
+  {%- set want = pkg|replace({' ': ''})|lower -%}
+  {%- for line in (config('package-icons') ? config('package-icons') : '')|split("\n") -%}
+    {%- for pair in line|split(',') -%}
+      {%- set kv = pair|split('=') -%}
+      {%- if kv|length == 2 and kv[0]|replace({' ': ''})|lower == want -%}{%- set icv = kv[1] -%}{%- endif -%}
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if not icv and cat is defined -%}
+  {%- set rot = ['crown','key','coin','gem','chest','pet','gift','sword','star','potion'] -%}
+  {%- set icv = rot[(n is defined ? n : 0) % 10] -%}
+  {%- set want = cat.name|replace({' ': ''})|lower -%}
+  {%- for pair in (config('category-icons') ? config('category-icons') : '')|split(',') -%}
+    {%- set kv = pair|split('=') -%}
+    {%- if kv|length == 2 and (kv[0]|replace({' ': ''})|lower == want or kv[0]|replace({' ': ''}) == cat.id ~ '') -%}{%- set icv = kv[1] -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set icv = (icv ? icv : 'chest')|replace({' ': ''}) -%}
 {%- set sz = size is defined and size ? ' oz-ico--' ~ size : '' -%}
 {%- if '/' in icv -%}
   <img class="oz-ico oz-ico--img{{ sz }}" src="{{ icv }}" alt="{{ label is defined ? label : '' }}" loading="lazy">
 {%- else -%}
-  <span class="oz-ico{{ sz }} oz-ico--{{ icv|lower|replace({' ': '-'}) }}" {% if label is defined and label %}role="img" aria-label="{{ label }}"{% else %}aria-hidden="true"{% endif %}></span>
+  <span class="oz-ico{{ sz }} oz-ico--{{ icv|lower }}" {% if label is defined and label %}role="img" aria-label="{{ label }}"{% else %}aria-hidden="true"{% endif %}></span>
 {%- endif -%}

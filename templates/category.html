@@ -1,24 +1,21 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  {% set perRow    = config('packages-per-row')|default('3') %}
-  {% set qtyCats   = config('quantity-categories')|default('')|split(',') %}
-  {% set qtyOpts   = config('quantity-options')|default('1,5,10,15')|split(',') %}
+  {# Only Tebex-allowed Twig: no default / trim / merge. Names are compared without spaces, lower-case. #}
+  {% set perRow    = config('packages-per-row') ? config('packages-per-row') : '3' %}
+  {% set qtyOpts   = (config('quantity-options') ? config('quantity-options') : '1,5,10,15')|split(',') %}
+  {% set myName    = name|replace({' ': ''})|lower %}
   {% set useQty    = false %}
-  {% for c in qtyCats %}{% if c|trim == id ~ '' or c|trim|lower == name|lower or c|trim == '*' %}{% set useQty = true %}{% endif %}{% endfor %}
-  {% set badgeMap = {} %}
-  {% for line in config('package-badges')|default('')|split("\n") %}{% set kv = line|split('=') %}{% if kv|length == 2 %}{% set badgeMap = badgeMap|merge({ (kv[0]|trim|lower): kv[1]|split(',') }) %}{% endif %}{% endfor %}
-  {% set rankCat   = config('rank-category')|default('')|trim %}
-  {% set isRanks   = rankCat and (rankCat == id ~ '' or rankCat|lower == name|lower) %}
+  {% for c in (config('quantity-categories') ? config('quantity-categories') : '')|split(',') %}{% set c = c|replace({' ': ''})|lower %}{% if c and (c == id ~ '' or c == myName or c == '*') %}{% set useQty = true %}{% endif %}{% endfor %}
+  {% set badgeLines = (config('package-badges') ? config('package-badges') : '')|split("\n") %}
+  {% set styleLines = (config('rank-styles') ? config('rank-styles') : '')|split("\n") %}
+  {% set rankCat   = (config('rank-category') ? config('rank-category') : '')|replace({' ': ''})|lower %}
+  {% set isRanks   = rankCat and (rankCat == id ~ '' or rankCat == myName) %}
 
   <div class="oz-panel oz-cat-head">
-    {% set iconNames = ['crown','key','coin','gem','chest','pet','gift','sword','star','potion'] %}
-    {% set iconMap = {} %}
-    {% for pair in config('category-icons')|default('')|split(',') %}{% set kv = pair|split('=') %}{% if kv|length == 2 %}{% set iconMap = iconMap|merge({ (kv[0]|trim|lower): kv[1]|trim|lower }) %}{% endif %}{% endfor %}
-    {% set catIcon = 'chest' %}
-    {% for c in store.categories %}{% if c.id == id %}{% set catIcon = iconNames[(loop.index0) % 10] %}{% endif %}{% endfor %}
-    {% set catIcon = iconMap[name|lower]|default(iconMap[id ~ '']|default(catIcon)) %}
-    <span class="oz-slot">{% include "oz-icon.twig" with { ic: catIcon, size: 'xl' } %}</span>
+    {% set n = 0 %}{% set catObj = { name: name, id: id } %}
+    {% for c in store.categories %}{% if c.id == id %}{% set n = loop.index0 %}{% endif %}{% endfor %}
+    <span class="oz-slot">{% include "oz-icon.twig" with { cat: catObj, n: n, size: 'xl' } %}</span>
     <div style="flex:1;min-width:240px">
       <nav class="oz-crumbs" aria-label="Breadcrumb"><a href="/">{{ __('Home') }}</a> / {{ name }}</nav>
       <h1>{{ name }}</h1>
@@ -26,7 +23,7 @@
     </div>
   </div>
 
-  {% if packages|length > 3 and config('category-tools')|default('on')|lower == 'on' and not (isRanks and config('rank-table')) %}
+  {% if packages|length > 3 and (config('category-tools') ? config('category-tools') : 'on')|lower == 'on' and not (isRanks and config('rank-table')) %}
   <div class="oz-panel oz-cat-tools" data-oz-cat-tools>
     <label class="oz-sr" for="oz-filter">{{ __('Filter packages') }}</label>
     <input class="oz-input" id="oz-filter" type="search" data-oz-filter placeholder="{{ __('Filter') }} {{ name }}…">
@@ -47,35 +44,33 @@
   {% elseif isRanks and config('rank-table') %}
     {# ---------- Rank comparison table ---------- #}
     {% set rows = config('rank-table')|split("\n") %}
-    {% set hot  = config('rank-highlight')|default('')|trim|lower %}
-    {# ---------- Rank preview helpers (settings: rank-styles) ---------- #}
-    {% set rankStyles = {} %}
-    {% for line in config('rank-styles')|default('')|split("\n") %}
-      {% set p = line|split('|') %}
-      {% if p|length >= 2 %}{% set rankStyles = rankStyles|merge({ (p[0]|trim|lower): { prefix: p[1]|trim, color: (p[2]|default('#FFFFFF'))|trim } }) %}{% endif %}
+    {% set hot  = (config('rank-highlight') ? config('rank-highlight') : '')|replace({' ': ''})|lower %}
+    {% set skinName = basket.ign ? basket.ign : (config('preview-skin') ? config('preview-skin') : 'MHF_Steve') %}
+    {% set skinLabel = basket.ign ? basket.ign : __('You') %}
+    {# Pick the rank shown first: the highlighted one, else the first package that has a style #}
+    {% set pick = false %}{% set pickPrefix = '' %}{% set pickColor = '#FFFFFF' %}{% set styled = 0 %}
+    {% for package in packages %}
+      {% for line in styleLines %}{% set p = line|split('|') %}
+        {% if p|length >= 2 and p[0]|replace({' ': ''})|lower == package.name|replace({' ': ''})|lower %}
+          {% set styled = styled + 1 %}
+          {% if not pick or package.name|replace({' ': ''})|lower == hot %}{% set pick = package.name %}{% set pickPrefix = p[1] %}{% set pickColor = p|length > 2 ? p[2]|replace({' ': ''}) : '#FFFFFF' %}{% endif %}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
-    {% set skinName = basket.ign ?: config('preview-skin')|default('MHF_Steve') %}
-    {% set skinLabel = basket.ign ?: __('You') %}
-    {% if config('rank-preview')|default('show')|lower == 'show' and rankStyles|length %}
-      {% set pvChoices = [] %}
-      {% set pick = null %}
-      {% for package in packages %}{% set st = rankStyles[package.name|lower]|default(null) %}{% if st %}
-        {% set pvChoices = pvChoices|merge([{ name: package.name, prefix: st.prefix, color: st.color, href: '/checkout/packages/add/' ~ package.id ~ '/single', price: package.price }]) %}
-        {% if package.name|lower == hot or pick is null %}{% set pick = pvChoices|last %}{% endif %}
-      {% endif %}{% endfor %}
+    {% if (config('rank-preview') ? config('rank-preview') : 'show')|lower == 'show' and styled %}
       {% if pick %}
       <section class="oz-rankhero" aria-label="{{ __('Rank preview') }}">
         <div class="oz-panel oz-rankhero__stage">
-          {% set pvSkin = skinName %}{% set pvLabel = skinLabel %}{% set pvPrefix = pick.prefix %}{% set pvColor = pick.color %}{% set pvName = pick.name %}
+          {% set pvSkin = skinName %}{% set pvLabel = skinLabel %}{% set pvPrefix = pickPrefix %}{% set pvColor = pickColor %}{% set pvName = pick %}{% set pvPackages = packages %}
           {% include "oz-preview.twig" %}
         </div>
         <div class="oz-panel oz-rankhero__info">
           <div class="oz-label">{{ __('Rank preview') }}</div>
-          <h2 data-oz-preview-name>{{ pick.name }}</h2>
+          <h2 data-oz-preview-name>{{ pick }}</h2>
           <p class="oz-muted oz-m0">{{ basket.ign ? __('This is exactly how you will look in-game.') : __('Log in to see it on your own skin.') }}</p>
           {# "Your current rank": the player says which rank they own (Tebex does not tell the theme).
              Remembered in their browser per username. Ranks are assumed to be listed lowest → highest. #}
-          {% if basket.ign and config('rank-current-picker')|default('on')|lower == 'on' %}
+          {% if basket.ign and (config('rank-current-picker') ? config('rank-current-picker') : 'on')|lower == 'on' %}
           <div class="oz-slot oz-myrank" data-oz-myrank data-ign="{{ basket.ign|lower }}">
             <label class="oz-label" for="oz-myrank-sel">{{ __('Your current rank') }}</label>
             <select class="oz-input oz-myrank__sel" id="oz-myrank-sel">
@@ -86,10 +81,15 @@
             <small class="oz-muted">{{ __('Saved on this device only. We can’t see your in-game rank, so pick it here.') }}</small>
           </div>
           {% endif %}
-          {% if config('rank-ladder')|default('on')|lower == 'on' %}
+          {% if (config('rank-ladder') ? config('rank-ladder') : 'on')|lower == 'on' %}
           <div class="oz-ladder" aria-label="{{ __('Rank ladder') }}">
-            {% for c in pvChoices %}
-              <a class="oz-ladder__step" href="#oz-rank-table" data-oz-rank="{{ c.name|lower }}"><span class="oz-ladder__bar" style="height:{{ 30 + loop.index0 * (90 / (pvChoices|length)) }}px;background:{{ c.color }}"></span><b style="color:{{ c.color }}">{{ c.name }}</b><small class="oz-muted">{{ c.price|money }} {{ basket.currency }}</small></a>
+            {% set step = 0 %}
+            {% for package in packages %}
+              {% for line in styleLines %}{% set p = line|split('|') %}
+                {% if p|length >= 2 and p[0]|replace({' ': ''})|lower == package.name|replace({' ': ''})|lower %}{% set col = p|length > 2 ? p[2]|replace({' ': ''}) : '#FFFFFF' %}
+              <a class="oz-ladder__step" href="#oz-rank-table" data-oz-rank="{{ package.name|lower }}"><span class="oz-ladder__bar" style="height:{{ 30 + step * (90 / styled) }}px;background:{{ col }}"></span><b style="color:{{ col }}">{{ package.name }}</b><small class="oz-muted">{{ package.price|money }} {{ basket.currency }}</small></a>
+                {% set step = step + 1 %}{% endif %}
+              {% endfor %}
             {% endfor %}
           </div>
           {% endif %}
@@ -103,9 +103,9 @@
           <tr>
             <th style="vertical-align:bottom;width:24%"><span class="oz-label">{{ __('Compare') }}</span></th>
             {% for package in packages %}
-              <th class="{% if package.name|lower == hot %}is-hot{% endif %}" data-oz-rank="{{ package.name|lower }}">
+              <th class="{% if package.name|replace({' ': ''})|lower == hot %}is-hot{% endif %}" data-oz-rank="{{ package.name|lower }}">
                 <span class="oz-tag oz-tag--b oz-ranks__mine" hidden>{{ __('Your rank') }}</span>
-                {% if package.name|lower == hot %}<span class="oz-tag oz-ranks__hot">{{ __('Most popular') }}</span>{% endif %}
+                {% if package.name|replace({' ': ''})|lower == hot %}<span class="oz-tag oz-ranks__hot">{{ __('Most popular') }}</span>{% endif %}
                 <span class="oz-slot">{% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="">{% else %}<span class="oz-ico oz-ico--lg oz-ico--crown"></span>{% endif %}</span>
                 <h3>{{ package.name }}</h3>
                 <div class="oz-price">
@@ -126,12 +126,12 @@
             {% set cells = row|split('|') %}
             {% if cells|length > 1 %}
               <tr>
-                <td>{{ cells[0]|trim }}</td>
+                <td>{{ cells[0] }}</td>
                 {% for package in packages %}
-                  {% set v = cells[loop.index]|default('')|trim %}
-                  <td class="{% if package.name|lower == hot %}is-hot{% endif %}" data-oz-rank="{{ package.name|lower }}">
-                    {% if v|lower in ['yes','y','true','✓'] %}<span class="yes" aria-label="{{ __('Included') }}">✓</span>
-                    {% elseif v|lower in ['no','n','false','-','—',''] %}<span class="no" aria-label="{{ __('Not included') }}">✕</span>
+                  {% set v = cells|length > loop.index ? cells[loop.index] : '' %}{% set vk = v|replace({' ': ''})|lower %}
+                  <td class="{% if package.name|replace({' ': ''})|lower == hot %}is-hot{% endif %}" data-oz-rank="{{ package.name|lower }}">
+                    {% if vk in ['yes','y','true','✓'] %}<span class="yes" aria-label="{{ __('Included') }}">✓</span>
+                    {% elseif vk in ['no','n','false','-','—',''] %}<span class="no" aria-label="{{ __('Not included') }}">✕</span>
                     {% else %}{{ v }}{% endif %}
                   </td>
                 {% endfor %}
@@ -147,7 +147,7 @@
     <div class="oz-list">
       {% for package in packages %}
         <div class="oz-panel oz-row">
-          <span class="oz-slot">{% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[package.name|lower]|default(pkgIconDefault), size: '' } %}{% endif %}</span>
+          <span class="oz-slot">{% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="">{% else %}{% include "oz-icon.twig" with { pkg: package.name, size: '' } %}{% endif %}</span>
           <h3><a href="/package/{{ package.id }}" data-oz-popup>{{ package.name }}</a></h3>
           <div class="oz-price">
             {% if package.discount is defined and package.discount.applied %}<s>{{ package.discount.original|money }}</s>{% endif %}
@@ -170,10 +170,10 @@
         <article class="oz-panel oz-pkg">
           <div class="oz-pkg__tags">
             {% if package.discount is defined and package.discount.applied %}<span class="oz-tag">-{{ package.discount.percentage }}%</span>{% endif %}
-            {% for b in badgeMap[package.name|lower]|default([]) %}{% set b = b|trim %}<span class="oz-tag oz-badge--{{ b|lower|replace({' ': '-'}) }}">{{ b }}</span>{% endfor %}
+            {% for line in badgeLines %}{% set kv = line|split('=') %}{% if kv|length == 2 and kv[0]|replace({' ': ''})|lower == package.name|replace({' ': ''})|lower %}{% for b in kv[1]|split(',') %}{% if b|replace({' ': ''}) %}<span class="oz-tag oz-badge--{{ b|replace({' ': ''})|lower }}">{{ b }}</span>{% endif %}{% endfor %}{% endif %}{% endfor %}
           </div>
           <a class="oz-slot oz-pkg__media" href="/package/{{ package.id }}" data-oz-popup aria-label="{{ package.name }}">
-            {% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="" loading="lazy">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[package.name|lower]|default(pkgIconDefault), size: 'xl' } %}{% endif %}
+            {% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="" loading="lazy">{% else %}{% include "oz-icon.twig" with { pkg: package.name, size: 'xl' } %}{% endif %}
           </a>
           <h3 class="oz-pkg__name"><a href="/package/{{ package.id }}" data-oz-popup>{{ package.name }}</a></h3>
           <div class="oz-price">
@@ -190,7 +190,7 @@
           {% else %}
             {% if useQty %}
               <div class="oz-qtys" role="group" aria-label="{{ __('Quantity') }}" data-oz-qty-group>
-                {% for q in qtyOpts %}<button type="button" data-oz-qty="{{ q|trim }}" aria-pressed="{{ loop.first ? 'true' : 'false' }}">&times;{{ q|trim }}</button>{% endfor %}
+                {% for q in qtyOpts %}{% set q = q|replace({' ': ''}) %}{% if q %}<button type="button" data-oz-qty="{{ q }}" aria-pressed="{{ loop.first ? 'true' : 'false' }}">&times;{{ q }}</button>{% endif %}{% endfor %}
               </div>
             {% endif %}
             <div class="oz-pkg__actions">

@@ -29,7 +29,7 @@
               {% endfor %}
             </select>
           {% elseif variable.type == 'discord_id' %}
-            <input class="oz-input" id="oz-var-{{ variable.id }}" name="variables[{{ variable.id }}]" value="{{ variable.value }}" placeholder="{{ variable.discord_tag|default('Discord ID') }}" required>
+            <input class="oz-input" id="oz-var-{{ variable.id }}" name="variables[{{ variable.id }}]" value="{{ variable.value }}" placeholder="{{ (variable.discord_tag is defined and variable.discord_tag ? variable.discord_tag : 'Discord ID') }}" required>
           {% else %}
             <input class="oz-input" id="oz-var-{{ variable.id }}" name="variables[{{ variable.id }}]" value="{{ variable.value }}" required>
           {% endif %}

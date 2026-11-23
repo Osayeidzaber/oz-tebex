@@ -1,5 +1,5 @@
 {# Renders "Label|URL, Label|URL" settings as links. Vars: list (string), cls (optional class) #}
-{% for link in list|default('')|split(',') %}
+{% for link in (list is defined and list ? list : '')|split(',') %}
   {% set parts = link|split('|') %}
-  {% if parts|length == 2 and parts[0]|trim %}<a {% if cls is defined and cls %}class="{{ cls }}"{% endif %} href="{{ parts[1]|trim }}">{{ parts[0]|trim }}</a>{% endif %}
+  {% if parts|length == 2 and parts[0]|replace({' ': ''}) %}<a {% if cls is defined and cls %}class="{{ cls }}"{% endif %} href="{{ parts[1]|replace({' ': ''}) }}">{{ parts[0] }}</a>{% endif %}
 {% endfor %}

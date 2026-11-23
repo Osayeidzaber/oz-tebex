@@ -1,7 +1,7 @@
 {% set p = module.package %}
 {% if p %}
 <div class="oz-panel oz-mod">
-  <h3 class="oz-a">{{ module.header|default(__('Featured')) }}</h3>
+  <h3 class="oz-a">{{ (module.header is defined and module.header ? module.header : __('Featured')) }}</h3>
   <a class="oz-slot" href="/package/{{ p.id }}" data-oz-popup style="height:140px;margin-bottom:12px">
     {% if p.discount is defined and p.discount.applied %}<span class="oz-tag" style="position:absolute;top:10px;left:10px">-{{ p.discount.percentage }}%</span>{% endif %}
     {% if p.image is defined and p.image and p.image.url %}<img src="{{ p.image.url }}" alt="" style="max-height:110px;width:auto">{% else %}<span class="oz-ico oz-ico--xl oz-ico--crown"></span>{% endif %}

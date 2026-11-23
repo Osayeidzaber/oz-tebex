@@ -563,7 +563,7 @@ body { transition: opacity .18s ease; }
 
 /* ---------- Badges ---------- */
 .oz-badge--popular { background: var(--a); }
-.oz-badge--best-value { background: var(--b); }
+.oz-badge--best-value, .oz-badge--bestvalue { background: var(--b); }
 .oz-badge--new { background: #6BE38F; }
 .oz-badge--limited { background: #FF8A8A; }
 .oz-badge--subscription, .oz-badge--monthly { background: #7AA2FF; }

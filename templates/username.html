@@ -4,7 +4,7 @@
 {% block sidebar %}{% endblock %}
 
 {% block content %}
-  {% set editions = config('editions')|default('java + bedrock')|lower %}
+  {% set editions = (config('editions') ? config('editions') : 'java + bedrock')|lower %}
   <div class="oz-panel oz-login">
     <div>
       <div class="oz-label">{{ __('Step 1 of 2') }}</div>

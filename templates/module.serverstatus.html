@@ -1,5 +1,5 @@
 <div class="oz-panel oz-mod">
-  <h3>{{ module.header|default(__('Server status')) }}</h3>
+  <h3>{{ (module.header is defined and module.header ? module.header : __('Server status')) }}</h3>
   <div class="oz-status">
     <span class="oz-status__dot {% if not module.online %}is-off{% endif %}" aria-hidden="true"></span>
     <strong class="oz-pixel-18">{% if module.online %}{{ module.players.online }} / {{ module.players.max }} {{ __('online') }}{% else %}{{ __('Offline') }}{% endif %}</strong>

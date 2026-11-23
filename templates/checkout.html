@@ -24,12 +24,12 @@
             <tr>
               <td>
                 <div style="display:flex;gap:12px;align-items:center">
-                  <span class="oz-slot" style="width:52px;height:52px;flex:none">{% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img src="{{ item.image.url }}" alt="" style="max-height:36px;width:auto">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[item.name|lower]|default(pkgIconDefault), size: 'sm' } %}{% endif %}</span>
+                  <span class="oz-slot" style="width:52px;height:52px;flex:none">{% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img src="{{ item.image.url }}" alt="" style="max-height:36px;width:auto">{% else %}{% include "oz-icon.twig" with { pkg: item.name, size: 'sm' } %}{% endif %}</span>
                   <strong class="oz-pixel-18">{{ item.name }}</strong>
                 </div>
               </td>
               <td>{{ item.price|money }} {{ basket.currency }}</td>
-              <td>{{ item.quantity|default(1) }}</td>
+              <td>{{ (item.quantity is defined and item.quantity ? item.quantity : 1) }}</td>
               <td class="oz-right"><a class="oz-btn oz-btn--alt oz-btn--icon oz-btn--sm" href="/checkout/packages/remove/{{ item.id }}" aria-label="{{ __('Remove') }} {{ item.name }}">&times;</a></td>
             </tr>
           {% endfor %}
@@ -42,19 +42,19 @@
       data-oz-checkout
       data-oz-empty="{{ empty ? 'true' : 'false' }}"
       data-oz-ident="{{ basket.ident is defined and basket.ident ? basket.ident : '' }}"
-      data-oz-theme="{{ config('checkout-theme')|default('auto')|lower }}"
-      data-oz-confetti="{{ config('fx-confetti')|default('checkout')|lower == 'off' ? 'off' : 'on' }}"
+      data-oz-theme="{{ (config('checkout-theme') ? config('checkout-theme') : 'auto')|lower }}"
+      data-oz-confetti="{{ (config('fx-confetti') ? config('fx-confetti') : 'checkout')|lower == 'off' ? 'off' : 'on' }}"
       {% if config('checkout-redirect') %}data-oz-redirect="{{ config('checkout-redirect') }}"{% endif %}>
       <h2 style="font-size:24px">{{ __('Summary') }}</h2>
       {% if basket.coupons is defined and basket.coupons|length %}
-        <div class="oz-muted oz-small">{{ __('Coupons') }}: {% for c in basket.coupons %}{{ c.code|default(c) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>
+        <div class="oz-muted oz-small">{{ __('Coupons') }}: {% for c in basket.coupons %}{{ (c.code is defined and c.code ? c.code : c) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
       <div class="oz-total"><span class="oz-label">{{ __('Total') }}</span><strong>{{ basket.price|money }} {{ basket.currency }}</strong></div>
       <p class="oz-note oz-m0">{{ __('Coupons, gift cards and creator codes can be entered in the secure checkout.') }}</p>
 
-      {% if config('checkout-terms')|default('show')|lower == 'show' and not empty %}
+      {% if (config('checkout-terms') ? config('checkout-terms') : 'show')|lower == 'show' and not empty %}
       <div style="display:flex;flex-direction:column;gap:10px" data-oz-terms>
-        <label class="oz-check"><input type="checkbox"> <span>{{ __('I agree to the') }} <a href="{{ config('terms-url')|default('/terms/checkout') }}" target="_blank" rel="noopener">{{ __('terms of sale') }}</a>.</span></label>
+        <label class="oz-check"><input type="checkbox"> <span>{{ __('I agree to the') }} <a href="{{ (config('terms-url') ? config('terms-url') : '/terms/checkout') }}" target="_blank" rel="noopener">{{ __('terms of sale') }}</a>.</span></label>
         <label class="oz-check"><input type="checkbox"> <span>{{ __('I understand digital items are delivered instantly and are non-refundable.') }}</span></label>
         {% if basket.ign %}<label class="oz-check"><input type="checkbox"> <span>{{ __('Items go to') }} <strong>{{ basket.ign }}</strong>.</span></label>{% endif %}
       </div>
@@ -74,14 +74,14 @@
 <script>
   window.OZ = window.OZ || {};
   window.OZ.checkoutText = {
-    terms: {{ __('Tick the boxes above to continue.')|json_encode|raw }},
-    loading: {{ __('Preparing secure checkout…')|json_encode|raw }},
-    open: {{ __('Checkout open…')|json_encode|raw }},
-    done: {{ __('Payment complete!')|json_encode|raw }},
-    doneNote: {{ __('Thanks! Your items arrive in-game within a few minutes.')|json_encode|raw }},
-    error: {{ __('Payment failed — nothing was charged. Please try again.')|json_encode|raw }},
-    login: {{ __('Log in with your username before paying.')|json_encode|raw }},
-    blocked: {{ __('Secure checkout could not load. Disable ad-blockers for this site and try again.')|json_encode|raw }}
+    terms: "{{ __('Tick the boxes above to continue.')|escape('js') }}",
+    loading: "{{ __('Preparing secure checkout…')|escape('js') }}",
+    open: "{{ __('Checkout open…')|escape('js') }}",
+    done: "{{ __('Payment complete!')|escape('js') }}",
+    doneNote: "{{ __('Thanks! Your items arrive in-game within a few minutes.')|escape('js') }}",
+    error: "{{ __('Payment failed — nothing was charged. Please try again.')|escape('js') }}",
+    login: "{{ __('Log in with your username before paying.')|escape('js') }}",
+    blocked: "{{ __('Secure checkout could not load. Disable ad-blockers for this site and try again.')|escape('js') }}"
   };
 </script>
 <script src="{{ asset('oz-checkout.js') }}" defer></script>

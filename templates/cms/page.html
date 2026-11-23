@@ -10,98 +10,92 @@
 {# Tebex exposes the page either at the root (title, metaData) or under `page` — accept both. #}
 {% set pTitle = title is defined and title ? title : (page.title is defined ? page.title : '') %}
 {% set pBody = metaData is defined and metaData.content is defined ? metaData.content : (page.metaData is defined and page.metaData.content is defined ? page.metaData.content : '') %}
-{% set here = path()|split('?')|first|trim('/')|split('/')|last|lower %}
+{% set pathParts = path()|split('?') %}{% set here = '' %}{% for seg in pathParts[0]|split('/') %}{% if seg %}{% set here = seg|lower %}{% endif %}{% endfor %}
 {% set kind = '' %}
 {% for k in ['staff', 'vote', 'faq', 'patrons', 'rules', 'news', 'setup'] %}
-  {% set key = config('page-slug-' ~ k)|default(k)|trim|lower %}
-  {% if here == key or pTitle|trim|lower == key %}{% set kind = k %}{% endif %}
+  {% set key = (config('page-slug-' ~ k) ? config('page-slug-' ~ k) : k)|replace({' ': ''})|lower %}
+  {% if here == key or pTitle|replace({' ': ''})|lower == key %}{% set kind = k %}{% endif %}
 {% endfor %}
-{% if kind == 'setup' and config('setup-page')|default('off')|lower != 'on' %}{% set kind = '' %}{% endif %}
+{% if kind == 'setup' and (config('setup-page') ? config('setup-page') : 'off')|lower != 'on' %}{% set kind = '' %}{% endif %}
 
-{# Split a "a | b | c" per-line setting into rows #}
-{% set rows = [] %}
-{% if kind and kind != 'setup' %}
-  {% for line in config(kind ~ '-list')|default('')|split("\n") %}
-    {% set f = line|split('|') %}
-    {% if f[0]|trim %}{% set rows = rows|merge([f]) %}{% endif %}
-  {% endfor %}
-{% endif %}
+{# Lines of the matching "<kind>-list" setting ("a | b | c" per line). Empty lines are skipped below. #}
+{% set rows = kind and kind != 'setup' and config(kind ~ '-list') ? config(kind ~ '-list')|split("\n") : [] %}
 
-  <article class="oz-panel oz-welcome oz-page oz-page--{{ kind|default('plain') }}">
+  <article class="oz-panel oz-welcome oz-page oz-page--{{ (kind is defined and kind ? kind : 'plain') }}">
     <nav class="oz-crumbs" aria-label="Breadcrumb"><a href="/">{{ __('Home') }}</a> / {{ pTitle }}</nav>
     <h1>{{ pTitle }}</h1>
     {% if pBody %}<div class="oz-prose" data-oz-faq>{{ pBody|raw }}</div>{% endif %}
 
     {% if kind == 'staff' and rows|length %}
       <div class="oz-people">
-        {% for r in rows %}
-          {% set ign = (r|length > 2 ? r[2] : r[0])|trim %}
+        {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+          {% set ign = (r|length > 2 ? r[2] : r[0])|replace({' ': ''}) %}
           <div class="oz-slot oz-person">
-            <img src="https://mc-heads.net/body/{{ ign|url_encode }}/120" alt="" width="60" height="120" loading="lazy" data-oz-skin-fallback>
-            <strong>{{ r[0]|trim }}</strong>
-            {% if r|length > 1 %}<span class="oz-tag">{{ r[1]|trim }}</span>{% endif %}
+            <img src="https://mc-heads.net/body/{{ ign|escape('url') }}/120" alt="" width="60" height="120" loading="lazy" data-oz-skin-fallback>
+            <strong>{{ r[0] }}</strong>
+            {% if r|length > 1 %}<span class="oz-tag">{{ r[1] }}</span>{% endif %}
           </div>
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
 
     {% elseif kind == 'vote' and rows|length %}
       <div class="oz-votes">
-        {% for r in rows %}
-          <a class="oz-slot oz-vote" href="{{ (r|length > 1 ? r[1] : '#')|trim }}" target="_blank" rel="noopener">
-            <span class="oz-vote__n">{{ loop.index }}</span>
-            <strong>{{ r[0]|trim }}</strong>
+        {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+          <a class="oz-slot oz-vote" href="{{ (r|length > 1 ? r[1] : '#')|replace({' ': ''}) }}" target="_blank" rel="noopener">
+            <span class="oz-vote__n">{{ num }}</span>
+            <strong>{{ r[0] }}</strong>
             <span class="oz-btn oz-btn--sm">{{ __('Vote') }} &rarr;</span>
           </a>
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
 
     {% elseif kind == 'faq' and rows|length %}
       <div class="oz-faq">
-        {% for r in rows %}
-          <details class="oz-slot oz-faq__item" {% if loop.first %}open{% endif %}>
-            <summary>{{ r[0]|trim }}</summary>
-            <p>{{ (r|length > 1 ? r|slice(1)|join('|') : '')|trim }}</p>
+        {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+          <details class="oz-slot oz-faq__item" {% if num == 1 %}open{% endif %}>
+            <summary>{{ r[0] }}</summary>
+            <p>{{ r|length > 1 ? line|slice((r[0]|length) + 1) : '' }}</p>
           </details>
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
 
     {% elseif kind == 'patrons' and rows|length %}
       <div class="oz-people oz-people--small">
-        {% for r in rows %}
+        {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
           <div class="oz-slot oz-person">
-            <img src="https://mc-heads.net/avatar/{{ r[0]|trim|url_encode }}/64" alt="" width="48" height="48" loading="lazy">
-            <strong>{{ r[0]|trim }}</strong>
-            {% if r|length > 1 %}<span class="oz-tag">{{ r[1]|trim }}</span>{% endif %}
+            <img src="https://mc-heads.net/avatar/{{ r[0]|replace({' ': ''})|escape('url') }}/64" alt="" width="48" height="48" loading="lazy">
+            <strong>{{ r[0] }}</strong>
+            {% if r|length > 1 %}<span class="oz-tag">{{ r[1] }}</span>{% endif %}
           </div>
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
-      <p class="oz-muted oz-small">{{ config('patrons-note')|default(__('Thank you for keeping the server running.')) }}</p>
+      <p class="oz-muted oz-small">{{ (config('patrons-note') ? config('patrons-note') : __('Thank you for keeping the server running.')) }}</p>
 
     {% elseif kind == 'rules' and rows|length %}
       {# Rules: "Section | rule" per line. Consecutive lines with the same section are grouped. #}
       <ol class="oz-rules">
         {% set lastSec = '' %}
-        {% for r in rows %}
-          {% set sec = r|length > 1 ? r[0]|trim : '' %}
-          {% set text = (r|length > 1 ? r|slice(1)|join('|') : r[0])|trim %}
-          {% if sec and sec != lastSec %}<li class="oz-rules__sec" aria-hidden="true"><span class="oz-label">{{ sec }}</span></li>{% set lastSec = sec %}{% endif %}
-          <li class="oz-slot oz-rules__item"><span class="oz-rules__n">{{ loop.index }}</span><span>{{ text }}</span></li>
-        {% endfor %}
+        {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+          {% set sec = r|length > 1 ? r[0] : '' %}
+          {% set text = r|length > 1 ? line|slice((r[0]|length) + 1) : r[0] %}
+          {% if sec|replace({' ': ''}) and sec != lastSec %}<li class="oz-rules__sec" aria-hidden="true"><span class="oz-label">{{ sec }}</span></li>{% set lastSec = sec %}{% endif %}
+          <li class="oz-slot oz-rules__item"><span class="oz-rules__n">{{ num }}</span><span>{{ text }}</span></li>
+        {% endif %}{% endfor %}
       </ol>
 
     {% elseif kind == 'news' and rows|length %}
       {# News: "Date | Title | Text | optional image URL" per line, newest first as written. #}
       <div class="oz-news">
-        {% for r in rows %}
+        {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
           <article class="oz-slot oz-news__item">
-            {% if r|length > 3 and r[3]|trim %}<img class="oz-news__img" src="{{ r[3]|trim }}" alt="" loading="lazy">{% endif %}
+            {% if r|length > 3 and r[3]|replace({' ': ''}) %}<img class="oz-news__img" src="{{ r[3]|replace({' ': ''}) }}" alt="" loading="lazy">{% endif %}
             <div>
-              <time class="oz-label">{{ r[0]|trim }}</time>
-              <h2>{{ (r|length > 1 ? r[1] : '')|trim }}</h2>
-              {% if r|length > 2 %}<p>{{ r[2]|trim }}</p>{% endif %}
+              <time class="oz-label">{{ r[0] }}</time>
+              <h2>{{ (r|length > 1 ? r[1] : '') }}</h2>
+              {% if r|length > 2 %}<p>{{ r[2] }}</p>{% endif %}
             </div>
           </article>
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
 
     {% elseif kind == 'setup' %}

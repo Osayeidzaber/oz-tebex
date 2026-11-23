@@ -1,8 +1,8 @@
 <div class="oz-panel oz-mod">
-  <h3>{{ module.header|default(__('Server goal')) }}</h3>
-  <div class="oz-xp__lvl">{{ module.percentage|round }}%</div>
-  <div class="oz-xp__bar {% if module.bar.animated %}oz-xp__bar--animated{% elseif module.bar.style == 'striped' %}oz-xp__bar--striped{% endif %}" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ module.percentage|round }}">
-    <span class="oz-xp__fill" style="width: {{ min(module.percentage, 100) }}%"></span>
+  <h3>{{ (module.header is defined and module.header ? module.header : __('Server goal')) }}</h3>
+  <div class="oz-xp__lvl">{{ module.percentage|number_format(0) }}%</div>
+  <div class="oz-xp__bar {% if module.bar.animated %}oz-xp__bar--animated{% elseif module.bar.style == 'striped' %}oz-xp__bar--striped{% endif %}" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ module.percentage|number_format(0) }}">
+    <span class="oz-xp__fill" style="width: {{ module.percentage > 100 ? 100 : module.percentage }}%"></span>
   </div>
   {% if module.displayAmount %}<div class="oz-xp__meta">{{ module.total|money }} / {{ module.target|money }} {{ basket.currency }}</div>{% endif %}
 </div>

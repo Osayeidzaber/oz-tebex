@@ -7,41 +7,41 @@
 {# Tebex exposes package fields either as `package.*` or at the root; support both. #}
 {% if package is not defined %}{% set package = _context %}{% endif %}
 
-{# ---------- Rank styles (Name | prefix | color) ---------- #}
-{% set rankStyles = {} %}
-{% for line in config('rank-styles')|default('')|split("\n") %}
+{# ---------- Rank style for this package (rank-styles: Name | prefix | color) — Tebex-allowed Twig only ---------- #}
+{% set myName = package.name|replace({' ': ''})|lower %}
+{% set st = false %}{% set stPrefix = '' %}{% set stColor = '#FFFFFF' %}
+{% for line in (config('rank-styles') ? config('rank-styles') : '')|split("\n") %}
   {% set p = line|split('|') %}
-  {% if p|length >= 2 %}{% set rankStyles = rankStyles|merge({ (p[0]|trim|lower): { prefix: p[1]|trim, color: (p[2]|default('#FFFFFF'))|trim } }) %}{% endif %}
+  {% if p|length >= 2 and p[0]|replace({' ': ''})|lower == myName %}{% set st = true %}{% set stPrefix = p[1] %}{% set stColor = p|length > 2 ? p[2]|replace({' ': ''}) : '#FFFFFF' %}{% endif %}
 {% endfor %}
-{% set st = rankStyles[package.name|lower]|default(null) %}
-{% set showPreview = st and config('rank-preview')|default('show')|lower == 'show' %}
+{% set showPreview = st and (config('rank-preview') ? config('rank-preview') : 'show')|lower == 'show' %}
 
 {# ---------- Badges (Name=BADGE, BADGE per line) ---------- #}
 {% set badges = [] %}
-{% for line in config('package-badges')|default('')|split("\n") %}
+{% for line in (config('package-badges') ? config('package-badges') : '')|split("\n") %}
   {% set kv = line|split('=') %}
-  {% if kv|length == 2 and kv[0]|trim|lower == package.name|lower %}{% set badges = kv[1]|split(',') %}{% endif %}
+  {% if kv|length == 2 and kv[0]|replace({' ': ''})|lower == myName %}{% set badges = kv[1]|split(',') %}{% endif %}
 {% endfor %}
 
-{% set big = config('product-layout')|default('big')|lower == 'big' %}
+{% set big = (config('product-layout') ? config('product-layout') : 'big')|lower == 'big' %}
 <div class="oz-panel oz-product {% if big %}oz-product--big{% endif %}" id="oz-product">
   <div class="oz-product__media">
     {% if showPreview %}
-      {% set pvSkin = basket.ign ?: config('preview-skin')|default('MHF_Steve') %}
-      {% set pvLabel = basket.ign ?: __('You') %}
-      {% set pvPrefix = st.prefix %}{% set pvColor = st.color %}{% set pvName = package.name %}
+      {% set pvSkin = basket.ign ? basket.ign : (config('preview-skin') ? config('preview-skin') : 'MHF_Steve') %}
+      {% set pvLabel = basket.ign ? basket.ign : __('You') %}
+      {% set pvPrefix = stPrefix %}{% set pvColor = stColor %}{% set pvName = package.name %}
       {% set pvMedia = package.media is defined ? package.media : [] %}
       {% include "oz-preview.twig" %}
     {% else %}
       <div class="oz-gallery" data-oz-gallery>
         <div class="oz-slot oz-gallery__main" data-oz-gallery-main>
           {% if package.media is defined and package.media|length %}
-            {% set first = package.media|first %}
+            {% set first = package.media[0] %}
             {% if first.type == 'video' %}<iframe data-oz-yt="{{ first.url }}" title="{{ package.name }}" allowfullscreen></iframe>{% else %}<img src="{{ first.url }}" alt="{{ package.name }}">{% endif %}
           {% elseif package.image is defined and package.image and package.image.url %}
             <img src="{{ package.image.url }}" alt="{{ package.name }}">
           {% else %}
-            <span class="oz-pkg-hero-ico">{% include "oz-icon.twig" with { ic: pkgIconMap[package.name|lower]|default(pkgIconDefault), size: 'xl' } %}</span>
+            <span class="oz-pkg-hero-ico">{% include "oz-icon.twig" with { pkg: package.name, size: 'xl' } %}</span>
           {% endif %}
         </div>
         {% if package.media is defined and package.media|length > 1 %}
@@ -63,7 +63,7 @@
     {% if badges|length or (package.discount is defined and package.discount.applied) %}
     <div style="display:flex;gap:6px;flex-wrap:wrap">
       {% if package.discount is defined and package.discount.applied %}<span class="oz-tag">-{{ package.discount.percentage }}%</span>{% endif %}
-      {% for b in badges %}{% set b = b|trim %}<span class="oz-tag oz-badge--{{ b|lower|replace({' ': '-'}) }}">{{ b }}</span>{% endfor %}
+      {% for b in badges %}{% if b|replace({' ': ''}) %}<span class="oz-tag oz-badge--{{ b|replace({' ': ''})|lower }}">{{ b }}</span>{% endif %}{% endfor %}
     </div>
     {% endif %}
 
@@ -77,11 +77,11 @@
       <div class="oz-slot" style="display:flex;gap:10px;padding:10px 12px;justify-content:flex-start"><span class="oz-label">{{ __('Sale ends in') }}</span><strong data-oz-countdown="{{ package.countdownEnds }}" style="font-family:var(--font-pixel)"></strong></div>
     {% endif %}
 
-    {% if config('package-facts')|default('show')|lower == 'show' %}
+    {% if (config('package-facts') ? config('package-facts') : 'show')|lower == 'show' %}
     <div class="oz-facts">
-      <div class="oz-slot"><b>{{ config('fact-1-title')|default(__('Instant')) }}</b><span>{{ config('fact-1-text')|default(__('Delivered in-game')) }}</span></div>
-      <div class="oz-slot"><b>{{ config('fact-2-title')|default(__('Secure')) }}</b><span>{{ config('fact-2-text')|default(__('Checkout by Tebex')) }}</span></div>
-      <div class="oz-slot"><b>{{ config('fact-3-title')|default(__('Fair play')) }}</b><span>{{ config('fact-3-text')|default(__('No pay-to-win')) }}</span></div>
+      <div class="oz-slot"><b>{{ (config('fact-1-title') ? config('fact-1-title') : __('Instant')) }}</b><span>{{ (config('fact-1-text') ? config('fact-1-text') : __('Delivered in-game')) }}</span></div>
+      <div class="oz-slot"><b>{{ (config('fact-2-title') ? config('fact-2-title') : __('Secure')) }}</b><span>{{ (config('fact-2-text') ? config('fact-2-text') : __('Checkout by Tebex')) }}</span></div>
+      <div class="oz-slot"><b>{{ (config('fact-3-title') ? config('fact-3-title') : __('Fair play')) }}</b><span>{{ (config('fact-3-text') ? config('fact-3-text') : __('No pay-to-win')) }}</span></div>
     </div>
     {% endif %}
 
@@ -97,11 +97,11 @@
         <a class="oz-btn" href="/checkout/packages/add/{{ package.id }}/single" data-oz-preview-buy>{{ __('Add to basket') }} · <span>{{ package.price|money }} {{ basket.currency }}</span></a>
       {% endif %}
     </div>
-    <p class="oz-note">{{ config('package-note')|default(__('Be online in-game to receive your items. Buying for a friend? Log in with their username.')) }}</p>
+    <p class="oz-note">{{ (config('package-note') ? config('package-note') : __('Be online in-game to receive your items. Buying for a friend? Log in with their username.')) }}</p>
   </div>
 </div>
 
-{% if config('sticky-buy-bar')|default('on')|lower == 'on' and package.purchasable and package.quantity == 0 %}
+{% if (config('sticky-buy-bar') ? config('sticky-buy-bar') : 'on')|lower == 'on' and package.purchasable and package.quantity == 0 %}
 <div class="oz-panel oz-buybar" aria-hidden="true">
   <div class="oz-wrap oz-buybar__in">
     <b>{{ package.name }}</b>

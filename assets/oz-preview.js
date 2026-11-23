@@ -110,7 +110,7 @@
       var b = e.target.closest('[data-oz-preview-set]');
       if (b) {
         box.querySelectorAll('[data-oz-preview-set]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-        var prefix = b.getAttribute('data-prefix'), color = b.getAttribute('data-color');
+        var prefix = (b.getAttribute('data-prefix') || '').trim(), color = (b.getAttribute('data-color') || '').trim();
         box.querySelectorAll('[data-oz-preview-tag] span, [data-oz-preview-chat], [data-oz-preview-tab]').forEach(function (el) { el.textContent = prefix; el.style.color = color; });
         // The rank heading lives in the info panel next to the preview, not inside it.
         var nm = (box.closest('.oz-rankhero, .oz-content') || box).querySelector('[data-oz-preview-name]'); if (nm) nm.textContent = b.getAttribute('data-name');

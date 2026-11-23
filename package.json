@@ -4,10 +4,13 @@
   "private": true,
   "description": "OZ — Minecraft-style Tebex webstore theme",
   "scripts": {
-    "test": "node tools/icons.js && node tools/render.js . .preview",
+    "test": "node tools/tebex-lint.js templates && node tools/icons.js && node tools/render.js . .preview",
     "preview": "node tools/render.js . .preview && node tools/serve.js .preview 5173",
     "docs": "node tools/settings-doc.js",
-    "package": "npm test && node tools/settings-doc.js && rm -rf dist && mkdir dist && zip -rq dist/oz-theme-v$npm_package_version.zip templates assets schema.json README.md AGENT.md docs -x '.*'"
+    "package": "npm test && node tools/settings-doc.js && rm -rf dist && mkdir dist && zip -rq dist/oz-theme-v$npm_package_version.zip templates assets schema.json README.md AGENT.md docs -x '.*'",
+    "lint": "node tools/tebex-lint.js templates"
   },
-  "devDependencies": { "twig": "1.17.1" }
+  "devDependencies": {
+    "twig": "1.17.1"
+  }
 }

@@ -40,8 +40,8 @@
 ] %}
 
 {% set done = 0 %}{% set total = 0 %}
-{% for g in checks %}{% for c in g[1] %}{% set total = total + 1 %}{%- set v = config(c[0])|trim -%}
-{%- set ok = v and not (c|length > 3 and c[3] and v starts with c[3]) and not (c|length > 4 and config(c[4])|default('')|lower != c[5]) -%}{% if ok %}{% set done = done + 1 %}{% endif %}{% endfor %}{% endfor %}
+{% for g in checks %}{% for c in g[1] %}{% set total = total + 1 %}{%- set v = config(c[0]) ? config(c[0])|replace({' ': ''}) : '' -%}
+{%- set ok = v and not (c|length > 3 and c[3] and v starts with c[3]) and not (c|length > 4 and (config(c[4]) ? config(c[4]) : '')|lower != c[5]) -%}{% if ok %}{% set done = done + 1 %}{% endif %}{% endfor %}{% endfor %}
 
 <div class="oz-setup" data-oz-setup>
   <div class="oz-slot oz-setup__warn" role="note">
@@ -55,7 +55,7 @@
       <h2 id="oz-setup-progress">{{ __('Setup checklist') }}</h2>
       <span class="oz-label">{{ done }} / {{ total }} {{ __('done') }}</span>
     </div>
-    <div class="oz-xp"><div class="oz-xp__bar"><span class="oz-xp__fill" style="width: {{ (done / total * 100)|round }}%"></span></div></div>
+    <div class="oz-xp"><div class="oz-xp__bar"><span class="oz-xp__fill" style="width: {{ (done / total * 100)|number_format(0) }}%"></span></div></div>
 
     <div class="oz-setup__groups">
       {% for g in checks %}
@@ -63,11 +63,11 @@
           <h3>{{ g[0] }}</h3>
           <ul class="oz-setup__list">
             {% for c in g[1] %}
-              {%- set v = config(c[0])|trim -%}
-{%- set ok = v and not (c|length > 3 and c[3] and v starts with c[3]) and not (c|length > 4 and config(c[4])|default('')|lower != c[5]) -%}
+              {%- set v = config(c[0]) ? config(c[0])|replace({' ': ''}) : '' -%}
+{%- set ok = v and not (c|length > 3 and c[3] and v starts with c[3]) and not (c|length > 4 and (config(c[4]) ? config(c[4]) : '')|lower != c[5]) -%}
               <li class="{{ ok ? 'is-ok' : 'is-todo' }}">
                 <span class="oz-setup__dot" aria-hidden="true">{{ ok ? '✓' : '' }}</span>
-                <span><b>{{ c[1] }}</b> <code>{{ c[0] }}</code><small>{{ c[2] }}{% if c|length > 4 %} · {{ __('switch') }} <code>{{ c[4] }}</code> {{ __('must be') }} {{ c[5]|capitalize }}{% endif %}</small></span>
+                <span><b>{{ c[1] }}</b> <code>{{ c[0] }}</code><small>{{ c[2] }}{% if c|length > 4 %} · {{ __('switch') }} <code>{{ c[4] }}</code> {{ __('must be') }} {{ c[5]|upper }}{% endif %}</small></span>
                 <span class="oz-sr">{{ ok ? __('Done') : __('Not set') }}</span>
               </li>
             {% endfor %}
@@ -83,8 +83,8 @@
     <div class="oz-setup__stats">
       <div class="oz-slot"><b>{{ store.categories|length }}</b><small>{{ __('categories') }}</small></div>
       <div class="oz-slot"><b>{{ store.pages is defined ? store.pages|length : '—' }}</b><small>{{ __('custom pages') }}</small></div>
-      <div class="oz-slot"><b>{{ config('preset')|default('Frost') }}</b><small>{{ __('color preset') }}</small></div>
-      <div class="oz-slot"><b>{{ config('category-style')|default('Hotbar') }}</b><small>{{ __('menu style') }}</small></div>
+      <div class="oz-slot"><b>{{ (config('preset') ? config('preset') : 'Frost') }}</b><small>{{ __('color preset') }}</small></div>
+      <div class="oz-slot"><b>{{ (config('category-style') ? config('category-style') : 'Hotbar') }}</b><small>{{ __('menu style') }}</small></div>
     </div>
     <p class="oz-muted oz-small">{{ __('Open each page once to check it:') }}
       <a href="/">{{ __('Home') }}</a>{% for c in store.categories %} · <a href="/category/{{ c.id }}">{{ c.name }}</a>{% endfor %} · <a href="/login">{{ __('Login') }}</a> · <a href="/checkout/basket">{{ __('Checkout') }}</a>
@@ -120,7 +120,7 @@
 
     {% for e in editors %}
       <div class="oz-setup__editor" id="oz-ed-{{ e[0] }}" role="tabpanel" aria-labelledby="oz-tab-{{ e[0] }}" {% if not loop.first %}hidden{% endif %}
-        data-oz-editor="{{ e[0] }}" data-oz-sep="{{ e[3] }}" data-oz-join="{{ e[4] }}" data-oz-cols="{{ e[2]|join('||') }}" {% if 'icons' in e[0] %}data-oz-icon-col="1"{% endif %}>
+        data-oz-editor="{{ e[0] }}" data-oz-sep="{{ e[3] }}" data-oz-join="{{ e[4] }}" data-oz-cols="{% for col in e[2] %}{{ col }}{% if not loop.last %}||{% endif %}{% endfor %}" {% if 'icons' in e[0] %}data-oz-icon-col="1"{% endif %}>
         <textarea class="oz-sr" data-oz-source aria-hidden="true" tabindex="-1">{{ config(e[0]) }}</textarea>
         <div class="oz-setup__rows" data-oz-rows></div>
         <div class="oz-setup__bar">

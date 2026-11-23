@@ -3,69 +3,53 @@
   Every page extends this file. Theme settings are read with config("id");
   ids are listed in schema.json and documented in docs/SETTINGS.md.
 #}
-{% set preset      = config('preset')|default('frost')|lower %}
-{% set mode        = config('color-mode')|default('dark')|lower %}
-{% set ground      = config('ground')|default('preset')|lower %}
-{% set corners     = config('corners')|default('square')|lower %}
-{% set panels      = config('panel-style')|default('bevel')|lower %}
-{% set headFont    = config('heading-font')|default('pixel')|lower %}
-{% set headerStyle = config('header-style')|default('scene')|lower %}
-{% set navStyle    = config('category-style')|default('hotbar')|lower %}
-{% set logoText    = config('logo-text')|default(store.name) %}
-{% set serverIp    = config('server-ip')|default('') %}
-{% set discordUrl  = config('discord-invite')|default('') %}
-{% set discordId   = config('discord-id')|default('') %}
-{% set showAnnounce = config('announcement')|default('hide')|lower == 'show' %}
-{% set loader      = config('fx-page-loader')|default('bar')|lower %}
-{% set transition  = config('fx-page-transitions')|default('blocks')|lower %}{% if transition == 'on' %}{% set transition = 'fade' %}{% endif %}
-{% set revealStyle = config('fx-reveal-style')|default('drop')|lower %}
+{% set preset      = (config('preset') ? config('preset') : 'frost')|lower %}
+{% set mode        = (config('color-mode') ? config('color-mode') : 'dark')|lower %}
+{% set ground      = (config('ground') ? config('ground') : 'preset')|lower %}
+{% set corners     = (config('corners') ? config('corners') : 'square')|lower %}
+{% set panels      = (config('panel-style') ? config('panel-style') : 'bevel')|lower %}
+{% set headFont    = (config('heading-font') ? config('heading-font') : 'pixel')|lower %}
+{% set headerStyle = (config('header-style') ? config('header-style') : 'scene')|lower %}
+{% set navStyle    = (config('category-style') ? config('category-style') : 'hotbar')|lower %}
+{% set logoText    = (config('logo-text') ? config('logo-text') : store.name) %}
+{% set serverIp    = (config('server-ip') ? config('server-ip') : '') %}
+{% set discordUrl  = (config('discord-invite') ? config('discord-invite') : '') %}
+{% set discordId   = (config('discord-id') ? config('discord-id') : '') %}
+{% set showAnnounce = (config('announcement') ? config('announcement') : 'hide')|lower == 'show' %}
+{% set loader      = (config('fx-page-loader') ? config('fx-page-loader') : 'bar')|lower %}
+{% set transition  = (config('fx-page-transitions') ? config('fx-page-transitions') : 'blocks')|lower %}{% if transition == 'on' %}{% set transition = 'fade' %}{% endif %}
+{% set revealStyle = (config('fx-reveal-style') ? config('fx-reveal-style') : 'drop')|lower %}
 {% set fxOn = {
-  reveal: config('fx-scroll-reveal')|default('on')|lower == 'on',
-  tilt: config('fx-card-tilt')|default('on')|lower == 'on',
-  shine: config('fx-card-shine')|default('on')|lower == 'on',
+  reveal: (config('fx-scroll-reveal') ? config('fx-scroll-reveal') : 'on')|lower == 'on',
+  tilt: (config('fx-card-tilt') ? config('fx-card-tilt') : 'on')|lower == 'on',
+  shine: (config('fx-card-shine') ? config('fx-card-shine') : 'on')|lower == 'on',
   transitions: transition != 'off',
   transitionStyle: transition,
-  loadingStates: config('fx-loading-states')|default('on')|lower == 'on',
-  stickyHeader: config('fx-sticky-header')|default('on')|lower == 'on',
-  flyToCart: config('fx-fly-to-cart')|default('on')|lower == 'on',
-  parallax: config('fx-parallax')|default('on')|lower == 'on',
-  sounds: config('fx-sounds')|default('off')|lower == 'on',
-  socialPopups: config('social-popups')|default('off')|lower == 'on',
-  confetti: config('fx-confetti')|default('checkout')|lower,
-  particles: config('fx-particles')|default('auto')|lower,
+  loadingStates: (config('fx-loading-states') ? config('fx-loading-states') : 'on')|lower == 'on',
+  stickyHeader: (config('fx-sticky-header') ? config('fx-sticky-header') : 'on')|lower == 'on',
+  flyToCart: (config('fx-fly-to-cart') ? config('fx-fly-to-cart') : 'on')|lower == 'on',
+  parallax: (config('fx-parallax') ? config('fx-parallax') : 'on')|lower == 'on',
+  sounds: (config('fx-sounds') ? config('fx-sounds') : 'off')|lower == 'on',
+  socialPopups: (config('social-popups') ? config('social-popups') : 'off')|lower == 'on',
+  confetti: (config('fx-confetti') ? config('fx-confetti') : 'checkout')|lower,
+  particles: (config('fx-particles') ? config('fx-particles') : 'auto')|lower,
   loader: loader
 } %}
 
-{# Icon per category: "Ranks=crown, Keys=key" in settings, else a rotating default #}
-{% set iconNames = ['crown','key','coin','gem','chest','pet','gift','sword','star','potion'] %}
-{% set iconMap = {} %}
-{% for pair in config('category-icons')|default('')|split(',') %}
-  {% set kv = pair|split('=') %}
-  {% if kv|length == 2 %}{% set iconMap = iconMap|merge({ (kv[0]|trim|lower): kv[1]|trim|lower }) %}{% endif %}
-{% endfor %}
-{# Icon per package without an image: "MVP=crown-gold, Golden key=key-gold" #}
-{% set pkgIconMap = {} %}
-{% for line in config('package-icons')|default('')|split("\n") %}
-  {% for pair in line|split(',') %}
-    {% set kv = pair|split('=') %}
-    {% if kv|length == 2 %}{% set pkgIconMap = pkgIconMap|merge({ (kv[0]|trim|lower): kv[1]|trim }) %}{% endif %}
-  {% endfor %}
-{% endfor %}
-{% set pkgIconDefault = config('package-icon-default')|default('chest')|trim %}
 <!DOCTYPE html>
-<html lang="en" data-preset="{{ preset }}" data-mode="{{ mode == 'light' ? 'light' : 'dark' }}" data-mode-choice="{{ mode }}" {% if ground != 'preset' %}data-ground="{{ ground }}"{% endif %} data-corners="{{ corners }}" data-panels="{{ panels }}" data-font="{{ headFont }}" data-header="{{ headerStyle }}" data-cursor="{{ config('fx-cursor')|default('default')|lower }}" data-reveal="{{ revealStyle }}" data-icons="{{ config('fx-icon-motion')|default('hover')|lower }}" data-transition="{{ transition }}">
+<html lang="en" data-preset="{{ preset }}" data-mode="{{ mode == 'light' ? 'light' : 'dark' }}" data-mode-choice="{{ mode }}" {% if ground != 'preset' %}data-ground="{{ ground }}"{% endif %} data-corners="{{ corners }}" data-panels="{{ panels }}" data-font="{{ headFont }}" data-header="{{ headerStyle }}" data-cursor="{{ (config('fx-cursor') ? config('fx-cursor') : 'default')|lower }}" data-reveal="{{ revealStyle }}" data-icons="{{ (config('fx-icon-motion') ? config('fx-icon-motion') : 'hover')|lower }}" data-transition="{{ transition }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title is defined and page.title %}{{ page.title }} — {% endif %}{{ store.name }}</title>
   {% if store.favicon %}<link rel="icon" href="{{ store.favicon }}">{% endif %}
-  {% set seoDesc = config('seo-description')|default('Official store of ' ~ store.name) %}
+  {% set seoDesc = (config('seo-description') ? config('seo-description') : 'Official store of ' ~ store.name) %}
   <meta name="description" content="{{ seoDesc }}">
   <meta property="og:title" content="{% if page.title is defined and page.title %}{{ page.title }} — {% endif %}{{ store.name }}">
   <meta property="og:description" content="{{ seoDesc }}">
   <meta property="og:type" content="website">
   {% if config('seo-image') %}<meta property="og:image" content="{{ config('seo-image') }}"><meta name="twitter:card" content="summary_large_image">{% endif %}
-  <meta name="theme-color" content="{{ config('color-background')|default('#0B1020') }}">
+  <meta name="theme-color" content="{{ (config('color-background') ? config('color-background') : '#0B1020') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&family=Chakra+Petch:wght@600;700&family=Silkscreen:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
@@ -91,13 +75,13 @@
 {% if loader == 'screen' %}<div class="oz-loading" aria-hidden="true"><div class="oz-loading__blocks"><span></span><span></span><span></span></div></div>{% endif %}
 
 {% if showAnnounce and config('announcement-text') %}
-{% set marquee = config('announcement-style')|default('static')|lower == 'marquee' %}
-<div class="oz-announce {% if marquee %}oz-announce--marquee{% endif %}" role="region" aria-label="{{ __('Announcement') }}" {% if config('announcement-dismissible')|default('on')|lower == 'on' %}data-oz-dismiss="{{ config('announcement-text')|length }}{{ config('announcement-end') }}"{% endif %}>
+{% set marquee = (config('announcement-style') ? config('announcement-style') : 'static')|lower == 'marquee' %}
+<div class="oz-announce {% if marquee %}oz-announce--marquee{% endif %}" role="region" aria-label="{{ __('Announcement') }}" {% if (config('announcement-dismissible') ? config('announcement-dismissible') : 'on')|lower == 'on' %}data-oz-dismiss="{{ config('announcement-text')|length }}{{ config('announcement-end') }}"{% endif %}>
   <div class="oz-wrap">
     {% set annText %}{% if config('announcement-link') %}<a href="{{ config('announcement-link') }}" style="color:inherit">{{ config('announcement-text') }}</a>{% else %}<span>{{ config('announcement-text') }}</span>{% endif %}{% if config('announcement-end') %} <span class="oz-announce__timer" data-oz-countdown="{{ config('announcement-end') }}" aria-live="off"></span>{% endif %}{% endset %}
     {% if marquee %}<div class="oz-announce__track">{{ annText }}<span aria-hidden="true">{{ annText }}</span></div>{% else %}{{ annText }}{% endif %}
   </div>
-  {% if config('announcement-dismissible')|default('on')|lower == 'on' %}<button class="oz-announce__close" type="button" aria-label="{{ __('Dismiss') }}">&times;</button>{% endif %}
+  {% if (config('announcement-dismissible') ? config('announcement-dismissible') : 'on')|lower == 'on' %}<button class="oz-announce__close" type="button" aria-label="{{ __('Dismiss') }}">&times;</button>{% endif %}
 </div>
 {% endif %}
 
@@ -123,11 +107,11 @@
         {% include "oz-links.twig" with { list: config('header-links'), cls: 'oz-btn oz-btn--alt oz-btn--sm' } %}
       </nav>
       <div class="oz-topbar__right">
-        {% if config('search')|default('on')|lower == 'on' %}<button class="oz-btn oz-btn--alt oz-btn--sm" type="button" data-oz-search-open aria-label="{{ __('Search') }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span class="oz-kbd" aria-hidden="true">/</span></button>{% endif %}
+        {% if (config('search') ? config('search') : 'on')|lower == 'on' %}<button class="oz-btn oz-btn--alt oz-btn--sm" type="button" data-oz-search-open aria-label="{{ __('Search') }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span class="oz-kbd" aria-hidden="true">/</span></button>{% endif %}
         {% if fxOn.sounds %}<button class="oz-btn oz-btn--alt oz-btn--sm oz-btn--icon oz-mute" type="button" data-oz-mute hidden aria-pressed="false" aria-label="{{ __('Mute sounds') }}"><span class="oz-mute__on" aria-hidden="true">♪</span><span class="oz-mute__off" aria-hidden="true">✕</span></button>{% endif %}
         {% if basket.ign %}
-          <a class="oz-panel oz-user" href="/logout" title="{{ __('Log out') }}">
-            <img src="https://mc-heads.net/avatar/{{ basket.ign|url_encode }}/64" alt="" width="34" height="34" loading="lazy">
+          <a class="oz-panel oz-user" href="/checkout/logout" title="{{ __('Log out') }}">
+            <img src="https://mc-heads.net/avatar/{{ basket.ign|escape('url') }}/64" alt="" width="34" height="34" loading="lazy">
             <span><strong>{{ basket.ign }}</strong><small>{{ __('Log out') }}</small></span>
           </a>
         {% elseif not store.noLogin %}
@@ -142,7 +126,7 @@
 
     <div class="oz-stage">
       {% if serverIp %}
-      <button class="oz-cta" type="button" data-oz-copy="{{ serverIp }}" {% if config('show-player-count')|default('show')|lower == 'show' %}data-oz-players="{{ serverIp }}"{% endif %}>
+      <button class="oz-cta" type="button" data-oz-copy="{{ serverIp }}" {% if (config('show-player-count') ? config('show-player-count') : 'show')|lower == 'show' %}data-oz-players="{{ serverIp }}"{% endif %}>
         <span class="oz-btn oz-cta__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
         <span><span class="oz-cta__k" data-oz-players-label>{{ __('Play now') }}</span><span class="oz-cta__v">{{ serverIp }}</span><span class="oz-cta__s">{{ __('Click to copy') }}</span></span>
       </button>
@@ -153,9 +137,9 @@
         logo-icon-image (uploaded icon) or logo-icon (icon name / URL), logo-text, logo-subtitle,
         logo-size (small | medium | large), logo-animation (float | bounce | glow | none).
       #}
-      {% set logoIconSrc = config('logo-icon-image')|default(config('logo-icon'))|default('')|trim %}
-      {% set logoSub = config('logo-subtitle')|default(__('Official store')) %}
-      <a class="oz-logo" href="/" data-logo-size="{{ config('logo-size')|default('medium')|lower }}" data-logo-anim="{{ config('logo-animation')|default('float')|lower }}" aria-label="{{ store.name }}">
+      {% set logoIconSrc = config('logo-icon-image') ? config('logo-icon-image') : (config('logo-icon') ? config('logo-icon')|replace({' ': ''}) : '') %}
+      {% set logoSub = (config('logo-subtitle') ? config('logo-subtitle') : __('Official store')) %}
+      <a class="oz-logo" href="/" data-logo-size="{{ (config('logo-size') ? config('logo-size') : 'medium')|lower }}" data-logo-anim="{{ (config('logo-animation') ? config('logo-animation') : 'float')|lower }}" aria-label="{{ store.name }}">
         {% if config('logo-image') %}
           <img class="oz-logo__img" src="{{ config('logo-image') }}" alt="{{ store.name }}">
         {% elseif store.logo and not logoIconSrc %}
@@ -164,17 +148,17 @@
           {% if logoIconSrc %}
             <span class="oz-logo__icon">{% include "oz-icon.twig" with { ic: logoIconSrc, size: '' } %}</span>
           {% endif %}
-          {% if logoText|trim and config('logo-icon-only')|default('off')|lower != 'on' %}
+          {% if logoText|replace({' ': ''}) and (config('logo-icon-only') ? config('logo-icon-only') : 'off')|lower != 'on' %}
             <div class="oz-logo__text">{% for ch in logoText|split('') %}<span style="--i:{{ loop.index0 }}">{{ ch == ' ' ? ' ' : ch }}</span>{% endfor %}</div>
           {% endif %}
-          {% if logoSub|trim %}<div class="oz-label oz-logo__sub">{{ logoSub }}</div>{% endif %}
+          {% if logoSub|replace({' ': ''}) %}<div class="oz-label oz-logo__sub">{{ logoSub }}</div>{% endif %}
         {% endif %}
       </a>
 
       {% if discordUrl %}
       <a class="oz-cta oz-cta--right" href="{{ discordUrl }}" target="_blank" rel="noopener" {% if discordId %}data-oz-discord="{{ discordId }}"{% endif %}>
         <span class="oz-btn oz-btn--b oz-cta__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17c-2 0-4-1-4-1V8l2-3h4l1 2h4l1-2h4l2 3v8s-2 1-4 1l-1-2H8z"/><circle cx="9.5" cy="12" r="1.1"/><circle cx="14.5" cy="12" r="1.1"/></svg></span>
-        <span><span class="oz-cta__k" data-oz-discord-label>Discord</span><span class="oz-cta__v">{{ config('discord-label')|default(__('Join Discord')) }}</span><span class="oz-cta__s">{{ __('Join the community') }}</span></span>
+        <span><span class="oz-cta__k" data-oz-discord-label>Discord</span><span class="oz-cta__v">{{ (config('discord-label') ? config('discord-label') : __('Join Discord')) }}</span><span class="oz-cta__s">{{ __('Join the community') }}</span></span>
       </a>
       {% else %}<span></span>{% endif %}
     </div>
@@ -196,11 +180,10 @@
   <div class="oz-panel oz-hotbar__bar">
     {% set n = 0 %}
     {% for category in store.categories %}
-      {% set ic = iconMap[category.name|lower]|default(iconMap[category.id ~ '']|default(iconNames[n % 10])) %}
-      {% set n = n + 1 %}
+            {% set n = n + 1 %}
       <div class="oz-hb {% if path() ends with '/category/' ~ category.id %}is-active{% endif %}">
         <a class="oz-hb__link" href="/category/{{ category.id }}">
-          <span class="oz-slot">{% include "oz-icon.twig" with { ic: ic, size: '' } %}</span>
+          <span class="oz-slot">{% include "oz-icon.twig" with { cat: category, n: n, size: '' } %}</span>
           <span>{{ category.name }}</span>
         </a>
         {% if category.subcategories is defined and category.subcategories|length %}
@@ -235,9 +218,8 @@
       <a href="/"><span class="oz-slot"><span class="oz-ico oz-ico--sm oz-ico--home"></span></span>{{ __('Home') }}</a>
       {% set n = 0 %}
       {% for category in store.categories %}
-        {% set ic = iconMap[category.name|lower]|default(iconMap[category.id ~ '']|default(iconNames[n % 10])) %}
-        {% set n = n + 1 %}
-        <a href="/category/{{ category.id }}"><span class="oz-slot">{% include "oz-icon.twig" with { ic: ic, size: 'sm' } %}</span>{{ category.name }}</a>
+                {% set n = n + 1 %}
+        <a href="/category/{{ category.id }}"><span class="oz-slot">{% include "oz-icon.twig" with { cat: category, n: n, size: 'sm' } %}</span>{{ category.name }}</a>
         {% if category.subcategories is defined %}{% for sub in category.subcategories %}<a class="is-sub" href="/category/{{ sub.id }}">{{ sub.name }}</a>{% endfor %}{% endif %}
       {% endfor %}
     </nav>
@@ -248,7 +230,7 @@
     </div>
 
     {% block sidebar %}
-      {% set showCard = basket.ign and config('player-card')|default('show')|lower == 'show' %}
+      {% set showCard = basket.ign and (config('player-card') ? config('player-card') : 'show')|lower == 'show' %}
       {% if showCard or (modules is defined and modules) %}
         <aside class="oz-sidebar" aria-label="{{ __('Server activity') }}">
           {% if showCard %}
@@ -256,9 +238,9 @@
             <h3>{{ __('Shopping as') }}</h3>
             <div class="oz-slot oz-player__stage">
               <span class="oz-nametag">{{ basket.ign }}</span>
-              <img class="oz-player__skin" src="https://mc-heads.net/body/{{ basket.ign|url_encode }}/180" alt="{{ basket.ign }}'s skin" loading="lazy" data-oz-skin-fallback>
+              <img class="oz-player__skin" src="https://mc-heads.net/body/{{ basket.ign|escape('url') }}/180" alt="{{ basket.ign }}'s skin" loading="lazy" data-oz-skin-fallback>
             </div>
-            <div class="oz-player__row"><span class="oz-muted">{{ basket.packages|length }} {{ __('in basket') }}</span><a href="/logout">{{ __('Switch player') }}</a></div>
+            <div class="oz-player__row"><span class="oz-muted">{{ basket.packages|length }} {{ __('in basket') }}</span><a href="/checkout/logout">{{ __('Switch player') }}</a></div>
           </div>
           {% endif %}
           {% if modules is defined %}{{ modules|raw }}{% endif %}
@@ -272,7 +254,7 @@
   <div class="oz-wrap oz-footer__grid">
     <div class="oz-footer__brand">
       <b>{{ logoText }}</b>
-      {% set game = config('disclaimer-game')|default('minecraft')|lower %}
+      {% set game = (config('disclaimer-game') ? config('disclaimer-game') : 'minecraft')|lower %}
       <p class="oz-footer__legal">
         {% if game == 'minecraft' %}Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
         {% elseif game == 'fivem' or game == 'gta' %}Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.
@@ -289,9 +271,9 @@
     </div>
     <div>
       <h4>{{ __('Help') }}</h4>
-      <a href="{{ config('terms-url')|default('/terms/checkout') }}">{{ __('Terms of sale') }}</a>
-      <a href="{{ config('refund-url')|default('/terms/privacy') }}">{{ config('refund-url') ? __('Refund policy') : __('Privacy policy') }}</a>
-      {% if store.pages is defined %}{% for p in store.pages %}{% if p.slug is not defined or p.slug != config('page-slug-setup')|default('setup') %}<a href="/pages/{{ p.id }}">{{ p.name|default(p.title) }}</a>{% endif %}{% endfor %}{% endif %}
+      <a href="{{ (config('terms-url') ? config('terms-url') : '/terms/checkout') }}">{{ __('Terms of sale') }}</a>
+      <a href="{{ (config('refund-url') ? config('refund-url') : '/terms/privacy') }}">{{ config('refund-url') ? __('Refund policy') : __('Privacy policy') }}</a>
+      {% if store.pages is defined %}{% for p in store.pages %}{% if p.slug is not defined or p.slug != (config('page-slug-setup') ? config('page-slug-setup') : 'setup') %}<a href="/pages/{{ p.id }}">{{ (p.name is defined and p.name ? p.name : p.title) }}</a>{% endif %}{% endfor %}{% endif %}
       {% if config('faq-url') %}<a href="{{ config('faq-url') }}">{{ __('FAQ') }}</a>{% endif %}
       {% if discordUrl %}<a href="{{ discordUrl }}" target="_blank" rel="noopener">{{ __('Support') }}</a>{% endif %}
     </div>
@@ -313,7 +295,7 @@
   <div class="oz-drawer__head">
     <div><h2>{{ __('Basket') }}</h2><small class="oz-muted">{{ basket.packages|length }} {{ __('items') }}{% if basket.ign %} · {{ basket.ign }}{% endif %}</small></div>
     <div class="oz-drawer__tools">
-      {% set currencies = config('currencies')|default('')|replace({' ': ''})|split(',') %}
+      {% set currencies = (config('currencies') ? config('currencies') : '')|replace({' ': ''})|split(',') %}
       {% if currencies|length > 1 %}
         <label class="oz-sr" for="oz-currency">{{ __('Currency') }}</label>
         <select class="oz-input oz-currency" id="oz-currency" data-oz-currency>
@@ -327,7 +309,7 @@
     {% for item in basket.packages %}
       <div class="oz-panel oz-line">
         <span class="oz-slot">
-          {% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img class="oz-line__img" src="{{ item.image.url }}" alt="">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[item.name|lower]|default(pkgIconDefault), size: 'sm' } %}{% endif %}
+          {% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img class="oz-line__img" src="{{ item.image.url }}" alt="">{% else %}{% include "oz-icon.twig" with { pkg: item.name, size: 'sm' } %}{% endif %}
         </span>
         <div><b>{{ item.name }}</b><small>{% if item.quantity is defined and item.quantity > 1 %}{{ item.quantity }} &times; {% endif %}{{ item.price|money }} {{ basket.currency }}</small></div>
         <div class="oz-line__actions">
@@ -340,11 +322,11 @@
   </div>
   {% if basket.packages|length %}
   <div class="oz-drawer__foot">
-    {% set giftGoal = config('basket-goal-amount')|default('')|trim %}
+    {% set giftGoal = (config('basket-goal-amount') ? config('basket-goal-amount') : '')|replace({' ': ''}) %}
     {% if giftGoal %}
       {% set left = giftGoal - basket.price %}
       <div class="oz-slot oz-giftgoal" data-oz-goal="{{ giftGoal }}" data-oz-have="{{ basket.price }}">
-        {% if left > 0 %}{{ config('basket-goal-text')|default(__('Spend :amount more for a free gift!'))|replace({':amount': (left|number_format(2)) ~ ' ' ~ basket.currency}) }}{% else %}<strong class="oz-ok">{{ config('basket-goal-done')|default(__('Free gift unlocked!')) }}</strong>{% endif %}
+        {% if left > 0 %}{{ (config('basket-goal-text') ? config('basket-goal-text') : __('Spend :amount more for a free gift!'))|replace({':amount': (left|number_format(2)) ~ ' ' ~ basket.currency}) }}{% else %}<strong class="oz-ok">{{ (config('basket-goal-done') ? config('basket-goal-done') : __('Free gift unlocked!')) }}</strong>{% endif %}
         <div class="oz-xp__bar"><span class="oz-xp__fill"></span></div>
       </div>
     {% endif %}
@@ -366,9 +348,9 @@
 <div class="oz-panel oz-pop" data-oz-pop role="status" aria-live="polite"></div>
 
 {# Discount pop-up (settings: promo-*). Shown once per code per visitor. #}
-{% if config('promo')|default('off')|lower == 'on' and config('promo-title') %}
+{% if (config('promo') ? config('promo') : 'off')|lower == 'on' and config('promo-title') %}
 <div class="oz-modal oz-promo" id="oz-promo" role="dialog" aria-modal="true" aria-labelledby="oz-promo-h"
-  data-oz-promo="{{ config('promo-code')|default(config('promo-title')) }}" data-oz-promo-delay="{{ config('promo-delay')|default('4')|trim }}">
+  data-oz-promo="{{ (config('promo-code') ? config('promo-code') : config('promo-title')) }}" data-oz-promo-delay="{{ (config('promo-delay') ? config('promo-delay') : '4')|replace({' ': ''}) }}">
   <div class="oz-panel oz-modal__box oz-promo__box">
     <button class="oz-btn oz-btn--alt oz-btn--icon oz-modal__close" type="button" data-oz-promo-close aria-label="{{ __('Close') }}">&times;</button>
     <span class="oz-ico oz-ico--lg oz-ico--gift oz-promo__ico" aria-hidden="true"></span>
@@ -380,12 +362,12 @@
       </button>
       <p class="oz-small oz-muted">{{ __('Enter it at checkout.') }}</p>
     {% endif %}
-    <button class="oz-btn oz-btn--block" type="button" data-oz-promo-close>{{ config('promo-button')|default(__('Start shopping')) }}</button>
+    <button class="oz-btn oz-btn--block" type="button" data-oz-promo-close>{{ (config('promo-button') ? config('promo-button') : __('Start shopping')) }}</button>
   </div>
 </div>
 {% endif %}
 
-{% if config('search')|default('on')|lower == 'on' %}
+{% if (config('search') ? config('search') : 'on')|lower == 'on' %}
 <div class="oz-search" id="oz-search" role="dialog" aria-modal="true" aria-label="{{ __('Search') }}">
   <div class="oz-panel oz-search__box">
     <label class="oz-sr" for="oz-search-input">{{ __('Search the store') }}</label>
@@ -398,7 +380,7 @@
 </div>
 {% endif %}
 
-{% if config('fx-back-to-top')|default('on')|lower == 'on' %}<button class="oz-btn oz-btn--alt oz-btn--icon oz-totop" type="button" aria-label="{{ __('Back to top') }}">↑</button>{% endif %}
+{% if (config('fx-back-to-top') ? config('fx-back-to-top') : 'on')|lower == 'on' %}<button class="oz-btn oz-btn--alt oz-btn--icon oz-totop" type="button" aria-label="{{ __('Back to top') }}">↑</button>{% endif %}
 
 <div class="oz-mbar">
   <button class="oz-btn oz-btn--block" type="button" data-oz-open="basket">{{ __('Basket') }} · {{ basket.packages|length }}{% if basket.packages|length %} · {{ basket.price|money }} {{ basket.currency }}{% endif %}</button>
@@ -406,19 +388,34 @@
 
 <script>
   window.OZ = {
-    popup: {{ (config('package-click')|default('popup')|lower == 'popup') ? 'true' : 'false' }},
-    bedrockPrefix: {{ config('bedrock-prefix')|default('.')|json_encode|raw }},
-    copied: {{ __('IP copied!')|json_encode|raw }},
-    online: {{ __('online')|json_encode|raw }},
-    offline: {{ __('Server offline')|json_encode|raw }},
-    noResults: {{ __('No results')|json_encode|raw }},
-    offlineMsg: {{ __('You are offline. Purchases will wait until you reconnect.')|json_encode|raw }},
-    onlineMsg: {{ __('Back online.')|json_encode|raw }},
-    rankMine: {{ __('This is your rank.')|json_encode|raw }},
-    rankUpgrade: {{ __('Upgrade')|json_encode|raw }},
-    rankBelow: {{ __('Already included in your rank.')|json_encode|raw }},
-    rankNone: {{ __('Pick a rank to preview it.')|json_encode|raw }},
-    fx: {{ fxOn|json_encode|raw }}
+    popup: {{ ((config('package-click') ? config('package-click') : 'popup')|lower == 'popup') ? 'true' : 'false' }},
+    bedrockPrefix: "{{ (config('bedrock-prefix') ? config('bedrock-prefix') : '.')|escape('js') }}",
+    copied: "{{ __('IP copied!')|escape('js') }}",
+    online: "{{ __('online')|escape('js') }}",
+    offline: "{{ __('Server offline')|escape('js') }}",
+    noResults: "{{ __('No results')|escape('js') }}",
+    offlineMsg: "{{ __('You are offline. Purchases will wait until you reconnect.')|escape('js') }}",
+    onlineMsg: "{{ __('Back online.')|escape('js') }}",
+    rankMine: "{{ __('This is your rank.')|escape('js') }}",
+    rankUpgrade: "{{ __('Upgrade')|escape('js') }}",
+    rankBelow: "{{ __('Already included in your rank.')|escape('js') }}",
+    rankNone: "{{ __('Pick a rank to preview it.')|escape('js') }}",
+    fx: {
+      reveal: {{ ((config('fx-scroll-reveal') ? config('fx-scroll-reveal') : 'on')|lower == 'on') ? 'true' : 'false' }},
+      tilt: {{ ((config('fx-card-tilt') ? config('fx-card-tilt') : 'on')|lower == 'on') ? 'true' : 'false' }},
+      shine: {{ ((config('fx-card-shine') ? config('fx-card-shine') : 'on')|lower == 'on') ? 'true' : 'false' }},
+      transitions: {{ (transition != 'off') ? 'true' : 'false' }},
+      transitionStyle: "{{ (transition)|escape('js') }}",
+      loadingStates: {{ ((config('fx-loading-states') ? config('fx-loading-states') : 'on')|lower == 'on') ? 'true' : 'false' }},
+      stickyHeader: {{ ((config('fx-sticky-header') ? config('fx-sticky-header') : 'on')|lower == 'on') ? 'true' : 'false' }},
+      flyToCart: {{ ((config('fx-fly-to-cart') ? config('fx-fly-to-cart') : 'on')|lower == 'on') ? 'true' : 'false' }},
+      parallax: {{ ((config('fx-parallax') ? config('fx-parallax') : 'on')|lower == 'on') ? 'true' : 'false' }},
+      sounds: {{ ((config('fx-sounds') ? config('fx-sounds') : 'off')|lower == 'on') ? 'true' : 'false' }},
+      socialPopups: {{ ((config('social-popups') ? config('social-popups') : 'off')|lower == 'on') ? 'true' : 'false' }},
+      confetti: "{{ ((config('fx-confetti') ? config('fx-confetti') : 'checkout')|lower)|escape('js') }}",
+      particles: "{{ ((config('fx-particles') ? config('fx-particles') : 'auto')|lower)|escape('js') }}",
+      loader: "{{ (loader)|escape('js') }}"
+    }
   };
 </script>
 <script src="{{ asset('oz.js') }}" defer></script>
