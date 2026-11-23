@@ -1,0 +1,15 @@
+{% set p = module.package %}
+{% if p %}
+<div class="oz-panel oz-mod">
+  <h3 style="color:var(--a)">{{ module.header|default(__('Featured')) }}</h3>
+  <a class="oz-slot" href="/package/{{ p.id }}" data-oz-popup style="height:140px;margin-bottom:12px">
+    {% if p.discount is defined and p.discount.applied %}<span class="oz-tag" style="position:absolute;top:10px;left:10px">-{{ p.discount.percentage }}%</span>{% endif %}
+    {% if p.image is defined and p.image and p.image.url %}<img src="{{ p.image.url }}" alt="" style="max-height:110px;width:auto">{% else %}<span class="oz-ico oz-ico--xl oz-ico--crown"></span>{% endif %}
+  </a>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+    <b style="font:600 22px var(--font-pixel)">{{ p.name }}</b>
+    <div class="oz-price">{% if p.discount is defined and p.discount.applied %}<s>{{ p.discount.original|money }}</s>{% endif %}<strong style="font-size:20px">{{ p.price|money }}</strong></div>
+  </div>
+  <a class="oz-btn oz-btn--block" href="/checkout/packages/add/{{ p.id }}/single" style="margin-top:12px">{{ __('Add to basket') }}</a>
+</div>
+{% endif %}

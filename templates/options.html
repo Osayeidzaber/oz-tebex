@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block grid_class %}oz-grid--full{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+  <div class="oz-panel oz-login" style="max-width:560px">
+    <div>
+      <div class="oz-label">{{ __('Almost there') }}</div>
+      <h1 style="margin-top:8px">{{ options.package.name }}</h1>
+      <p class="oz-muted" style="margin:8px 0 0">{{ __('Choose your options before adding to basket.') }}</p>
+    </div>
+
+    <form method="post" style="display:flex;flex-direction:column;gap:16px">
+      {% if options.package.customPrice %}
+        <div>
+          <label class="oz-label" for="oz-price" style="display:block;margin-bottom:8px">{{ __('Amount') }} ({{ basket.currency }})</label>
+          <input class="oz-input" id="oz-price" name="price" type="number" step="0.01" min="{{ options.package.price }}" value="{{ options.package.price }}" required>
+        </div>
+      {% endif %}
+
+      {% for variable in options.variables %}
+        <div>
+          <label class="oz-label" for="oz-var-{{ variable.id }}" style="display:block;margin-bottom:8px">{{ variable.description }}</label>
+          {% if variable.type == 'dropdown' %}
+            <select class="oz-input" id="oz-var-{{ variable.id }}" name="variables[{{ variable.id }}]">
+              {% for option in variable.options %}
+                <option value="{{ option.name }}" {% if option.default %}selected{% endif %}>{{ option.name }}{% if option.price > 0 %} (+{{ option.price|money }} {{ basket.currency }}){% endif %}</option>
+              {% endfor %}
+            </select>
+          {% elseif variable.type == 'discord_id' %}
+            <input class="oz-input" id="oz-var-{{ variable.id }}" name="variables[{{ variable.id }}]" value="{{ variable.value }}" placeholder="{{ variable.discord_tag|default('Discord ID') }}" required>
+          {% else %}
+            <input class="oz-input" id="oz-var-{{ variable.id }}" name="variables[{{ variable.id }}]" value="{{ variable.value }}" required>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button class="oz-btn oz-btn--block" type="submit" style="min-height:56px">{{ __('Add to basket') }}</button>
+    </form>
+  </div>
+{% endblock %}

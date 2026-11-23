@@ -1,0 +1,371 @@
+{#
+  OZ Theme — layout.html
+  Every page extends this file. Theme settings are read with config("id");
+  ids are listed in schema.json and documented in docs/SETTINGS.md.
+#}
+{% set preset      = config('preset')|default('frost')|lower %}
+{% set mode        = config('color-mode')|default('dark')|lower %}
+{% set ground      = config('ground')|default('preset')|lower %}
+{% set corners     = config('corners')|default('square')|lower %}
+{% set panels      = config('panel-style')|default('bevel')|lower %}
+{% set headFont    = config('heading-font')|default('pixel')|lower %}
+{% set headerStyle = config('header-style')|default('scene')|lower %}
+{% set navStyle    = config('category-style')|default('hotbar')|lower %}
+{% set logoText    = config('logo-text')|default(store.name) %}
+{% set serverIp    = config('server-ip')|default('') %}
+{% set discordUrl  = config('discord-invite')|default('') %}
+{% set discordId   = config('discord-id')|default('') %}
+{% set showAnnounce = config('announcement')|default('hide')|lower == 'show' %}
+{% set loader      = config('fx-page-loader')|default('bar')|lower %}
+{% set fxOn = {
+  reveal: config('fx-scroll-reveal')|default('on')|lower == 'on',
+  tilt: config('fx-card-tilt')|default('on')|lower == 'on',
+  shine: config('fx-card-shine')|default('on')|lower == 'on',
+  transitions: config('fx-page-transitions')|default('on')|lower == 'on',
+  stickyHeader: config('fx-sticky-header')|default('on')|lower == 'on',
+  flyToCart: config('fx-fly-to-cart')|default('on')|lower == 'on',
+  parallax: config('fx-parallax')|default('on')|lower == 'on',
+  sounds: config('fx-sounds')|default('off')|lower == 'on',
+  socialPopups: config('social-popups')|default('off')|lower == 'on',
+  confetti: config('fx-confetti')|default('checkout')|lower,
+  particles: config('fx-particles')|default('auto')|lower,
+  loader: loader
+} %}
+
+{# Icon per category: "Ranks=crown, Keys=key" in settings, else a rotating default #}
+{% set iconNames = ['crown','key','coin','gem','chest','pet','gift','sword','star','potion'] %}
+{% set iconMap = {} %}
+{% for pair in config('category-icons')|default('')|split(',') %}
+  {% set kv = pair|split('=') %}
+  {% if kv|length == 2 %}{% set iconMap = iconMap|merge({ (kv[0]|trim|lower): kv[1]|trim|lower }) %}{% endif %}
+{% endfor %}
+<!DOCTYPE html>
+<html lang="en" data-preset="{{ preset }}" data-mode="{{ mode == 'light' ? 'light' : 'dark' }}" data-mode-choice="{{ mode }}" {% if ground != 'preset' %}data-ground="{{ ground }}"{% endif %} data-corners="{{ corners }}" data-panels="{{ panels }}" data-font="{{ headFont }}" data-header="{{ headerStyle }}" data-cursor="{{ config('fx-cursor')|default('default')|lower }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title is defined and page.title %}{{ page.title }} — {% endif %}{{ store.name }}</title>
+  {% if store.favicon %}<link rel="icon" href="{{ store.favicon }}">{% endif %}
+  {% set seoDesc = config('seo-description')|default('Official store of ' ~ store.name) %}
+  <meta name="description" content="{{ seoDesc }}">
+  <meta property="og:title" content="{% if page.title is defined and page.title %}{{ page.title }} — {% endif %}{{ store.name }}">
+  <meta property="og:description" content="{{ seoDesc }}">
+  <meta property="og:type" content="website">
+  {% if config('seo-image') %}<meta property="og:image" content="{{ config('seo-image') }}"><meta name="twitter:card" content="summary_large_image">{% endif %}
+  <meta name="theme-color" content="{{ config('color-background')|default('#0B1020') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&family=Chakra+Petch:wght@600;700&family=Silkscreen:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="{{ asset('oz.css') }}">
+  {% if preset == 'custom' %}
+  <style>
+    :root {
+      {% if config('color-accent') %}--a: {{ config('color-accent') }};{% endif %}
+      {% if config('color-secondary') %}--b: {{ config('color-secondary') }};{% endif %}
+      {% if config('color-background') %}--bg: {{ config('color-background') }};{% endif %}
+    }
+  </style>
+  {% endif %}
+  {% if store.css %}<link rel="stylesheet" href="{{ store.css }}">{% endif %}
+  <script>try{var m=localStorage.getItem('oz-mode');if(m&&document.documentElement.dataset.modeChoice==='player')document.documentElement.dataset.mode=m;}catch(e){}</script>
+</head>
+<body>
+<a class="oz-sr" href="#oz-main">{{ __('Skip to content') }}</a>
+{% if loader != 'off' %}<div class="oz-progress" aria-hidden="true"></div>{% endif %}
+{% if loader == 'screen' %}<div class="oz-loading" aria-hidden="true"><div class="oz-loading__blocks"><span></span><span></span><span></span></div></div>{% endif %}
+
+{% if showAnnounce and config('announcement-text') %}
+{% set marquee = config('announcement-style')|default('static')|lower == 'marquee' %}
+<div class="oz-announce {% if marquee %}oz-announce--marquee{% endif %}" role="region" aria-label="{{ __('Announcement') }}" {% if config('announcement-dismissible')|default('on')|lower == 'on' %}data-oz-dismiss="{{ config('announcement-text')|length }}{{ config('announcement-end') }}"{% endif %}>
+  <div class="oz-wrap">
+    {% set annText %}{% if config('announcement-link') %}<a href="{{ config('announcement-link') }}" style="color:inherit">{{ config('announcement-text') }}</a>{% else %}<span>{{ config('announcement-text') }}</span>{% endif %}{% if config('announcement-end') %} <span class="oz-announce__timer" data-oz-countdown="{{ config('announcement-end') }}" aria-live="off"></span>{% endif %}{% endset %}
+    {% if marquee %}<div class="oz-announce__track">{{ annText }}<span aria-hidden="true">{{ annText }}</span></div>{% else %}{{ annText }}{% endif %}
+  </div>
+  {% if config('announcement-dismissible')|default('on')|lower == 'on' %}<button class="oz-announce__close" type="button" aria-label="{{ __('Dismiss') }}">&times;</button>{% endif %}
+</div>
+{% endif %}
+
+<header class="oz-hero {% block hero_class %}oz-hero--compact{% endblock %} {% if config('header-banner') %}oz-hero--banner{% endif %}"
+  {% if config('header-banner') %}style="background-image:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.45)),url('{{ config('header-banner') }}')"{% endif %}>
+  <div class="oz-hero__glow oz-hero__glow--a" aria-hidden="true"></div>
+  <div class="oz-hero__glow oz-hero__glow--b" aria-hidden="true"></div>
+  {% if not config('header-banner') %}
+    <span class="oz-hero__star" style="left:8%;top:70px" aria-hidden="true"></span>
+    <span class="oz-hero__star" style="left:22%;top:150px;animation-delay:.6s" aria-hidden="true"></span>
+    <span class="oz-hero__star" style="left:36%;top:60px;animation-delay:1.2s" aria-hidden="true"></span>
+    <span class="oz-hero__star" style="left:58%;top:120px;animation-delay:.3s" aria-hidden="true"></span>
+    <span class="oz-hero__star" style="left:71%;top:48px;animation-delay:1.8s" aria-hidden="true"></span>
+    <span class="oz-hero__star" style="left:86%;top:140px;animation-delay:.9s" aria-hidden="true"></span>
+    <svg class="oz-hero__hills" viewBox="0 0 160 40" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true"><path class="h1" d="M0 40V26h8v-4h6v-6h6v-4h6v6h4v4h8v-8h6V8h6v6h4v6h6v4h8v-6h6v-6h6V4h6v8h4v6h6v4h8v-8h6v-6h6v8h4v6h6v4h8v-4h6v-4h6v8h6v14z"/><path class="h2" d="M0 40V32h12v-4h10v4h14v-6h12v4h16v-2h12v6h14v-6h10v2h16v-4h12v6h12v-4h10v12z"/></svg>
+  {% endif %}
+  <div class="oz-ground" aria-hidden="true"></div>
+
+  <div class="oz-wrap oz-hero__inner">
+    <div class="oz-topbar">
+      <nav aria-label="Site">
+        <a class="oz-btn oz-btn--alt oz-btn--sm" href="/">{{ __('Home') }}</a>
+        {% for link in config('header-links')|default('')|split(',') %}
+          {% set parts = link|split('|') %}
+          {% if parts|length == 2 %}<a class="oz-btn oz-btn--alt oz-btn--sm" href="{{ parts[1]|trim }}">{{ parts[0]|trim }}</a>{% endif %}
+        {% endfor %}
+      </nav>
+      <div class="oz-topbar__right">
+        {% if config('search')|default('on')|lower == 'on' %}<button class="oz-btn oz-btn--alt oz-btn--sm" type="button" data-oz-search-open aria-label="{{ __('Search') }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span class="oz-kbd" aria-hidden="true">/</span></button>{% endif %}
+        {% if fxOn.sounds %}<button class="oz-btn oz-btn--alt oz-btn--sm oz-btn--icon oz-mute" type="button" data-oz-mute hidden aria-pressed="false" aria-label="{{ __('Mute sounds') }}"><span class="oz-mute__on" aria-hidden="true">♪</span><span class="oz-mute__off" aria-hidden="true">✕</span></button>{% endif %}
+        {% if basket.ign %}
+          <a class="oz-panel oz-user" href="/logout" title="{{ __('Log out') }}">
+            <img src="https://mc-heads.net/avatar/{{ basket.ign|url_encode }}/64" alt="" width="34" height="34" loading="lazy">
+            <span><strong>{{ basket.ign }}</strong><small>{{ __('Log out') }}</small></span>
+          </a>
+        {% elseif not store.noLogin %}
+          <a class="oz-btn oz-btn--alt" href="/login">{{ __('Log in') }}</a>
+        {% endif %}
+        <button class="oz-btn" type="button" data-oz-open="basket" aria-controls="oz-basket" aria-label="{{ __('Basket') }}: {{ basket.packages|length }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 7h14l-1.5 9h-11z"/><path d="M6 7 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>
+          <span>{{ basket.packages|length }}{% if basket.packages|length %} · {{ basket.price|money }} {{ basket.currency }}{% endif %}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="oz-stage">
+      {% if serverIp %}
+      <button class="oz-cta" type="button" data-oz-copy="{{ serverIp }}" {% if config('show-player-count')|default('show')|lower == 'show' %}data-oz-players="{{ serverIp }}"{% endif %}>
+        <span class="oz-btn oz-cta__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span><span class="oz-cta__k" data-oz-players-label>{{ __('Play now') }}</span><span class="oz-cta__v">{{ serverIp }}</span><span class="oz-cta__s">{{ __('Click to copy') }}</span></span>
+      </button>
+      {% else %}<span></span>{% endif %}
+
+      <a class="oz-logo" href="/">
+        {% if config('logo-image') %}
+          <img src="{{ config('logo-image') }}" alt="{{ store.name }}">
+        {% elseif store.logo %}
+          <img src="{{ store.logo }}" alt="{{ store.name }}">
+        {% else %}
+          <div class="oz-logo__text">{{ logoText }}</div>
+          <div class="oz-label oz-logo__sub">{{ __('Official store') }}</div>
+        {% endif %}
+      </a>
+
+      {% if discordUrl %}
+      <a class="oz-cta oz-cta--right" href="{{ discordUrl }}" target="_blank" rel="noopener" {% if discordId %}data-oz-discord="{{ discordId }}"{% endif %}>
+        <span class="oz-btn oz-btn--b oz-cta__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17c-2 0-4-1-4-1V8l2-3h4l1 2h4l1-2h4l2 3v8s-2 1-4 1l-1-2H8z"/><circle cx="9.5" cy="12" r="1.1"/><circle cx="14.5" cy="12" r="1.1"/></svg></span>
+        <span><span class="oz-cta__k" data-oz-discord-label>Discord</span><span class="oz-cta__v">{{ config('discord-label')|default(__('Join Discord')) }}</span><span class="oz-cta__s">{{ __('Join the community') }}</span></span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </div>
+  </div>
+</header>
+
+{% if fxOn.stickyHeader %}
+<div class="oz-panel oz-sticky" aria-hidden="true">
+  <div class="oz-wrap oz-sticky__in">
+    <a class="oz-sticky__logo" href="/" tabindex="-1">{{ logoText }}</a>
+    <nav>{% for category in store.categories %}<a href="/category/{{ category.id }}" tabindex="-1">{{ category.name }}</a>{% endfor %}</nav>
+    <button class="oz-btn oz-btn--sm" type="button" data-oz-open="basket" tabindex="-1">{{ basket.packages|length }}{% if basket.packages|length %} · {{ basket.price|money }}{% endif %}</button>
+  </div>
+</div>
+{% endif %}
+
+{% if navStyle == 'hotbar' %}
+<nav class="oz-wrap oz-hotbar" aria-label="{{ __('Categories') }}">
+  <div class="oz-panel oz-hotbar__bar">
+    {% set n = 0 %}
+    {% for category in store.categories %}
+      {% set ic = iconMap[category.name|lower]|default(iconMap[category.id ~ '']|default(iconNames[n % 10])) %}
+      {% set n = n + 1 %}
+      <div class="oz-hb {% if path() ends with '/category/' ~ category.id %}is-active{% endif %}">
+        <a href="/category/{{ category.id }}" style="display:contents;color:inherit">
+          <span class="oz-slot"><span class="oz-ico oz-ico--{{ ic }}"></span></span>
+          <span>{{ category.name }}</span>
+        </a>
+        {% if category.subcategories is defined and category.subcategories|length %}
+          <div class="oz-panel oz-hb__sub">
+            {% for sub in category.subcategories %}<a href="/category/{{ sub.id }}">{{ sub.name }}</a>{% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</nav>
+{% endif %}
+
+{% if navStyle == 'tabs' %}
+<nav class="oz-wrap oz-tabs" aria-label="{{ __('Categories') }}">
+  <div class="oz-panel oz-tabs__bar">
+    <a href="/" {% if path() ends with '/' %}class="is-active"{% endif %}>{{ __('Home') }}</a>
+    {% for category in store.categories %}<a href="/category/{{ category.id }}" {% if path() ends with '/category/' ~ category.id %}class="is-active"{% endif %}>{{ category.name }}</a>{% endfor %}
+  </div>
+</nav>
+{% endif %}
+
+<main id="oz-main" class="oz-wrap oz-main">
+  {% if page.message is defined and page.message.display %}
+    <div class="oz-panel oz-toast oz-toast--{{ page.message.type }}" role="alert" style="margin-bottom:24px" data-oz-message="{{ page.message.text }}" data-oz-message-type="{{ page.message.type }}">{{ page.message.text }}</div>
+  {% endif %}
+
+  <div class="oz-grid {% if navStyle == 'sidebar' %}oz-grid--left{% endif %} {% block grid_class %}{% endblock %}">
+    {% if navStyle == 'sidebar' %}
+    <nav class="oz-panel oz-side-nav" aria-label="{{ __('Categories') }}">
+      <span class="oz-label" style="padding:6px 8px">{{ __('Menu') }}</span>
+      <a href="/"><span class="oz-slot"><span class="oz-ico oz-ico--sm oz-ico--home"></span></span>{{ __('Home') }}</a>
+      {% set n = 0 %}
+      {% for category in store.categories %}
+        {% set ic = iconMap[category.name|lower]|default(iconMap[category.id ~ '']|default(iconNames[n % 10])) %}
+        {% set n = n + 1 %}
+        <a href="/category/{{ category.id }}"><span class="oz-slot"><span class="oz-ico oz-ico--sm oz-ico--{{ ic }}"></span></span>{{ category.name }}</a>
+        {% if category.subcategories is defined %}{% for sub in category.subcategories %}<a class="is-sub" href="/category/{{ sub.id }}">{{ sub.name }}</a>{% endfor %}{% endif %}
+      {% endfor %}
+    </nav>
+    {% endif %}
+
+    <div class="oz-content">
+      {% block content %}{% endblock %}
+    </div>
+
+    {% block sidebar %}
+      {% set showCard = basket.ign and config('player-card')|default('show')|lower == 'show' %}
+      {% if showCard or (modules is defined and modules) %}
+        <aside class="oz-sidebar" aria-label="{{ __('Server activity') }}">
+          {% if showCard %}
+          <div class="oz-panel oz-mod oz-player">
+            <h3>{{ __('Shopping as') }}</h3>
+            <div class="oz-slot oz-player__stage">
+              <span class="oz-nametag">{{ basket.ign }}</span>
+              <img class="oz-player__skin" src="https://mc-heads.net/body/{{ basket.ign|url_encode }}/180" alt="{{ basket.ign }}'s skin" loading="lazy" data-oz-skin-fallback>
+            </div>
+            <div class="oz-player__row"><span class="oz-muted">{{ basket.packages|length }} {{ __('in basket') }}</span><a href="/logout">{{ __('Switch player') }}</a></div>
+          </div>
+          {% endif %}
+          {% if modules is defined %}{{ modules|raw }}{% endif %}
+        </aside>
+      {% endif %}
+    {% endblock %}
+  </div>
+</main>
+
+<footer class="oz-footer">
+  <div class="oz-wrap oz-footer__grid">
+    <div class="oz-footer__brand">
+      <b>{{ logoText }}</b>
+      {% set game = config('disclaimer-game')|default('minecraft')|lower %}
+      <p class="oz-footer__legal">
+        {% if game == 'minecraft' %}Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
+        {% elseif game == 'fivem' or game == 'gta' %}Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.
+        {% elseif game == 'rust' %}Not affiliated with or endorsed by Facepunch Studios.
+        {% elseif game == 'hytale' %}Not affiliated with or endorsed by Hypixel Studios.
+        {% elseif game == 'custom' %}{{ config('disclaimer-text') }}
+        {% endif %}
+        {{ __('Payments are processed securely by Tebex.') }}
+      </p>
+    </div>
+    <div>
+      <h4>{{ __('Store') }}</h4>
+      {% for category in store.categories|slice(0, 5) %}<a href="/category/{{ category.id }}">{{ category.name }}</a>{% endfor %}
+    </div>
+    <div>
+      <h4>{{ __('Help') }}</h4>
+      {% if config('terms-url') %}<a href="{{ config('terms-url') }}">{{ __('Terms of sale') }}</a>{% endif %}
+      {% if config('refund-url') %}<a href="{{ config('refund-url') }}">{{ __('Refund policy') }}</a>{% endif %}
+      {% if config('faq-url') %}<a href="{{ config('faq-url') }}">{{ __('FAQ') }}</a>{% endif %}
+      {% if discordUrl %}<a href="{{ discordUrl }}" target="_blank" rel="noopener">{{ __('Support') }}</a>{% endif %}
+    </div>
+    <div>
+      <h4>{{ __('Community') }}</h4>
+      {% if discordUrl %}<a href="{{ discordUrl }}" target="_blank" rel="noopener">Discord</a>{% endif %}
+      {% for link in config('footer-links')|default('')|split(',') %}
+        {% set parts = link|split('|') %}
+        {% if parts|length == 2 %}<a href="{{ parts[1]|trim }}">{{ parts[0]|trim }}</a>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="oz-wrap oz-footer__bottom">
+    <span>&copy; {{ "now"|date("Y") }} {{ store.name }}</span>
+    {% if mode == 'player' %}<button class="oz-mode-toggle" type="button" data-oz-mode-toggle>{{ __('Switch light / dark') }}</button>{% endif %}
+  </div>
+</footer>
+
+{# Basket drawer #}
+<div class="oz-scrim" data-oz-close="basket"></div>
+<aside class="oz-panel oz-drawer" id="oz-basket" aria-label="{{ __('Basket') }}" aria-hidden="true">
+  <div class="oz-drawer__head">
+    <div><h2>{{ __('Basket') }}</h2><small class="oz-muted">{{ basket.packages|length }} {{ __('items') }}{% if basket.ign %} · {{ basket.ign }}{% endif %}</small></div>
+    <button class="oz-btn oz-btn--alt oz-btn--icon" type="button" data-oz-close="basket" aria-label="{{ __('Close') }}">&times;</button>
+  </div>
+  <div class="oz-drawer__body">
+    {% for item in basket.packages %}
+      <div class="oz-panel oz-line">
+        <span class="oz-slot">
+          {% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img src="{{ item.image.url }}" alt="" style="max-height:36px;width:auto">{% else %}<span class="oz-ico oz-ico--sm oz-ico--chest"></span>{% endif %}
+        </span>
+        <div><b>{{ item.name }}</b><small>{% if item.quantity is defined and item.quantity > 1 %}{{ item.quantity }} &times; {% endif %}{{ item.price|money }} {{ basket.currency }}</small></div>
+        <div class="oz-line__actions">
+          <a class="oz-btn oz-btn--alt oz-btn--icon oz-btn--sm" href="/checkout/packages/remove/{{ item.id }}" aria-label="{{ __('Remove') }} {{ item.name }}">&times;</a>
+        </div>
+      </div>
+    {% else %}
+      <div class="oz-empty"><span class="oz-ico oz-ico--lg oz-ico--chest" style="margin:0 auto 12px;opacity:.6"></span>{{ __('Your basket is empty.') }}</div>
+    {% endfor %}
+  </div>
+  {% if basket.packages|length %}
+  <div class="oz-drawer__foot">
+    {% set giftGoal = config('basket-goal-amount')|default('')|trim %}
+    {% if giftGoal %}
+      {% set left = giftGoal - basket.price %}
+      <div class="oz-slot oz-giftgoal" data-oz-goal="{{ giftGoal }}" data-oz-have="{{ basket.price }}" style="display:block">
+        {% if left > 0 %}{{ config('basket-goal-text')|default(__('Spend :amount more for a free gift!'))|replace({':amount': (left|number_format(2)) ~ ' ' ~ basket.currency}) }}{% else %}<strong style="color:var(--ok)">{{ config('basket-goal-done')|default(__('Free gift unlocked!')) }}</strong>{% endif %}
+        <div class="oz-xp__bar"><span class="oz-xp__fill"></span></div>
+      </div>
+    {% endif %}
+    <div class="oz-total"><span class="oz-label">{{ __('Total') }}</span><strong>{{ basket.price|money }} {{ basket.currency }}</strong></div>
+    <a class="oz-btn oz-btn--block" href="/checkout/basket" style="min-height:54px">{{ __('Proceed to checkout') }}</a>
+    <small class="oz-muted" style="text-align:center">{{ __('Taxes calculated at checkout.') }}</small>
+  </div>
+  {% endif %}
+</aside>
+
+{# Package popup shell (filled by oz.js) #}
+<div class="oz-modal" id="oz-modal" role="dialog" aria-modal="true" aria-label="{{ __('Package') }}">
+  <div class="oz-modal__box">
+    <button class="oz-btn oz-btn--alt oz-btn--icon oz-modal__close" type="button" data-oz-close="modal" aria-label="{{ __('Close') }}">&times;</button>
+    <div data-oz-modal-body></div>
+  </div>
+</div>
+
+<div class="oz-panel oz-pop" data-oz-pop role="status" aria-live="polite"></div>
+
+{% if config('search')|default('on')|lower == 'on' %}
+<div class="oz-search" id="oz-search" role="dialog" aria-modal="true" aria-label="{{ __('Search') }}">
+  <div class="oz-panel oz-search__box">
+    <label class="oz-sr" for="oz-search-input">{{ __('Search the store') }}</label>
+    <input class="oz-input" id="oz-search-input" type="search" placeholder="{{ __('Search ranks, keys, coins…') }}" autocomplete="off">
+    <div class="oz-search__res" data-oz-search-results></div>
+  </div>
+  <div hidden>
+    {% for category in store.categories %}<a href="/category/{{ category.id }}" data-oz-search-item="{{ category.name }}" data-oz-search-kind="{{ __('Category') }}"></a>{% if category.subcategories is defined %}{% for sub in category.subcategories %}<a href="/category/{{ sub.id }}" data-oz-search-item="{{ sub.name }}" data-oz-search-kind="{{ category.name }}"></a>{% endfor %}{% endif %}{% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if config('fx-back-to-top')|default('on')|lower == 'on' %}<button class="oz-btn oz-btn--alt oz-btn--icon oz-totop" type="button" aria-label="{{ __('Back to top') }}">↑</button>{% endif %}
+
+<div class="oz-mbar">
+  <button class="oz-btn oz-btn--block" type="button" data-oz-open="basket">{{ __('Basket') }} · {{ basket.packages|length }}{% if basket.packages|length %} · {{ basket.price|money }} {{ basket.currency }}{% endif %}</button>
+</div>
+
+<script>
+  window.OZ = {
+    popup: {{ (config('package-click')|default('popup')|lower == 'popup') ? 'true' : 'false' }},
+    bedrockPrefix: {{ config('bedrock-prefix')|default('.')|json_encode|raw }},
+    copied: {{ __('IP copied!')|json_encode|raw }},
+    online: {{ __('online')|json_encode|raw }},
+    offline: {{ __('Server offline')|json_encode|raw }},
+    noResults: {{ __('No results')|json_encode|raw }},
+    fx: {{ fxOn|json_encode|raw }}
+  };
+</script>
+<script src="{{ asset('oz.js') }}" defer></script>
+<script src="{{ asset('oz-fx.js') }}" defer></script>
+<script src="{{ asset('oz-preview.js') }}" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

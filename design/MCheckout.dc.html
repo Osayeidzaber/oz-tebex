@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phone checkout</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{--a:#D4FF3A;--b:#B9A6FF;font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px}
+.s a{color:var(--a);text-decoration:none}
+.h{font-family:"Pixelify Sans",sans-serif}
+.m{color:#A3ADC2}
+.k{font:600 11px/1.2 "Pixelify Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:#151B30;border:3px solid #05070F;box-shadow:inset 0 0 0 2px #232B47,inset 0 -6px 0 rgba(0,0,0,.25)}
+.slot{background:#0E1324;box-shadow:inset 4px 4px 0 rgba(0,0,0,.55),inset -4px -4px 0 rgba(255,255,255,.07);display:grid;place-items:center;position:relative}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;padding:0 12px;border:3px solid #05070F;background:var(--a);color:#05070F !important;font:600 15px "Pixelify Sans",sans-serif;cursor:pointer;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28);box-sizing:border-box}
+.btn2{background:#2A3456;color:#E9EEF7 !important}
+.st{width:36px;height:36px;border:3px solid #05070F;background:#2A3456;color:#E9EEF7;font:600 16px "Pixelify Sans",sans-serif}
+.ck{display:flex;gap:10px;align-items:flex-start;color:#C9D2E3;font-size:13px}
+.ck input{width:20px;height:20px;accent-color:#D4FF3A;margin:0;flex:none}
+</style>
+</helmet>
+<div class="s" style="width: 390px; height: 1300px; overflow: hidden; position: relative; background: #0B1020">
+  <header style="height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: #050816; border-bottom: 6px solid #EEF4FF">
+    <a href="#" class="btn btn2" style="width: 44px; padding: 0" aria-label="Back">←</a>
+    <span class="h" style="font-size: 24px; font-weight: 700; text-shadow: 0 3px 0 var(--a)">Checkout</span>
+    <span style="width: 44px"></span>
+  </header>
+  <div style="display: flex; gap: 4px; padding: 12px" class="h" aria-label="Steps">
+    <span style="flex: 1; text-align: center; padding: 6px; background: #2A3456; border: 3px solid #05070F; font-size: 13px">Basket</span>
+    <span style="flex: 1; text-align: center; padding: 6px; background: var(--a); color: #05070F; border: 3px solid #05070F; font-size: 13px">Review</span>
+    <span style="flex: 1; text-align: center; padding: 6px; background: #0E1324; color: #A3ADC2; border: 3px solid #05070F; font-size: 13px">Pay</span>
+  </div>
+  <div style="padding: 0 12px; display: flex; flex-direction: column; gap: 8px">
+    <div class="pan" style="padding: 10px; display: grid; grid-template-columns: 50px minmax(0, 1fr) auto; gap: 10px; align-items: center"><span class="slot" style="width: 50px; height: 50px"><svg width="30" height="30" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path></svg></span><div><b class="h" style="font-size: 17px">MVP rank</b><div class="m" style="font-size: 12px">$11.99</div></div><button class="st" aria-label="Remove">×</button></div>
+    <div class="pan" style="padding: 10px; display: grid; grid-template-columns: 50px minmax(0, 1fr); gap: 10px; align-items: center"><span class="slot" style="width: 50px; height: 50px"><svg width="30" height="30" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path></svg></span><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><div><b class="h" style="font-size: 17px">Golden key</b><div class="m" style="font-size: 12px">$22.00</div></div><div style="display: flex; gap: 4px; align-items: center"><button class="st" aria-label="Decrease">−</button><span class="h" style="width: 24px; text-align: center">10</span><button class="st" aria-label="Increase">+</button></div></div></div>
+    <div class="pan" style="padding: 10px; display: grid; grid-template-columns: 50px minmax(0, 1fr); gap: 10px; align-items: center"><span class="slot" style="width: 50px; height: 50px"><svg width="30" height="30" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#C9CED6" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path></svg></span><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><div><b class="h" style="font-size: 17px">Silver key</b><div class="m" style="font-size: 12px">$4.50</div></div><div style="display: flex; gap: 4px; align-items: center"><button class="st" aria-label="Decrease">−</button><span class="h" style="width: 24px; text-align: center">3</span><button class="st" aria-label="Increase">+</button></div></div></div>
+  </div>
+  <section class="pan" style="margin: 14px 12px 0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+    <form style="display: flex; gap: 6px"><label for="cp" style="position: absolute; left: -9999px">Coupon or gift card</label><input id="cp" placeholder="Coupon or gift card" style="flex: 1; min-width: 0; height: 44px; border: 3px solid #05070F; background: #0E1324; color: #E9EEF7; padding: 0 10px; font: 14px Inter, sans-serif; box-sizing: border-box"><button type="button" class="btn btn2">Apply</button></form>
+    <div style="display: flex; justify-content: space-between"><span class="m">Subtotal</span><span>$38.49</span></div>
+    <div style="display: flex; justify-content: space-between; color: #6BE38F"><span>Coupon WINTER</span><span>−$3.85</span></div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 3px solid #05070F; padding-top: 10px"><span class="k">Total</span><span class="h" style="font-size: 30px; font-weight: 700">$34.64</span></div>
+    <label class="ck"><input type="checkbox" checked=""> <span>I agree to the <a href="#">terms of sale</a>.</span></label>
+    <label class="ck"><input type="checkbox" checked=""> <span>Digital items are non-refundable.</span></label>
+    <label class="ck"><input type="checkbox"> <span>Items go to <b>Notch_</b>.</span></label>
+  </section>
+  <div style="position: absolute; left: 12px; right: 12px; bottom: 14px">
+    <a href="#" class="btn" style="width: 100%; height: 56px; font-size: 19px">Pay securely · $34.64</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

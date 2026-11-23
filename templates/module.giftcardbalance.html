@@ -1,0 +1,20 @@
+<div class="oz-panel oz-mod">
+  <h3>{{ module.header|default(__('Gift card balance')) }}</h3>
+  <form method="post" style="display:flex;gap:6px">
+    <label class="oz-sr" for="oz-gc">{{ __('Gift card number') }}</label>
+    <input class="oz-input" id="oz-gc" name="card" placeholder="{{ __('Card number') }}" required style="flex:1;min-width:0">
+    <button class="oz-btn" type="submit" style="padding:0 14px">{{ __('Check') }}</button>
+  </form>
+  {% if search and giftcard %}
+    <div class="oz-slot" style="display:block;padding:12px;margin-top:12px;font-size:13px">
+      {% if giftcard.void %}
+        <span style="color:var(--danger)">{{ __('This gift card is no longer valid.') }}</span>
+      {% else %}
+        <span class="oz-muted">{{ giftcard.card_number }}</span><br>
+        <strong style="font:700 22px var(--font-pixel)">{{ giftcard.remaining_balance|money }} {{ basket.currency }}</strong> {{ __('left') }}
+      {% endif %}
+    </div>
+  {% elseif search %}
+    <p style="color:var(--danger);font-size:13px;margin:10px 0 0">{{ __('Gift card not found.') }}</p>
+  {% endif %}
+</div>

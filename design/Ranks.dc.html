@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ranks table</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{--a:#D4FF3A;--b:#B9A6FF;font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px;background:#0B1020}
+.s a{color:var(--a);text-decoration:none}
+.h{font-family:"Pixelify Sans",sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px;box-sizing:border-box}
+.m{color:#A3ADC2}
+.k{font:600 12px/1.2 "Pixelify Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:#151B30;border:3px solid #05070F;box-shadow:inset 0 0 0 2px #232B47,inset 0 -6px 0 rgba(0,0,0,.25)}
+.slot{background:#0E1324;box-shadow:inset 4px 4px 0 rgba(0,0,0,.55),inset -4px -4px 0 rgba(255,255,255,.07);display:grid;place-items:center;position:relative}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border:3px solid #05070F;background:var(--a);color:#05070F !important;font:600 16px "Pixelify Sans",sans-serif;cursor:pointer;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28);box-sizing:border-box}
+.btn2{background:#2A3456;color:#E9EEF7 !important}
+.tag{display:inline-block;font:600 12px/1 "Pixelify Sans",sans-serif;padding:5px 7px;border:2px solid #05070F;background:var(--a);color:#05070F}
+.hb{display:flex;flex-direction:column;align-items:center;gap:6px;color:#C9D2E3 !important;font:600 12px "Pixelify Sans",sans-serif;width:72px}
+.hb .slot{width:58px;height:58px;border:3px solid #05070F}
+.sel .slot{outline:4px solid #fff;background:#1B2340}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px 12px;text-align:center;border-bottom:2px solid #0E1324}
+td:first-child,th:first-child{text-align:left;padding-left:20px;font-weight:600}
+.hot{background:#1C2440}
+.y{color:#6BE38F;font:700 20px "Pixelify Sans",sans-serif}.n{color:#5A6480;font:700 20px "Pixelify Sans",sans-serif}
+.chip{display:inline-block;padding:3px 8px;font:600 13px "Pixelify Sans",sans-serif;border:2px solid #05070F}
+</style>
+</helmet>
+<div class="s" style="min-height: 1650px">
+  <header style="position: relative; height: 250px; overflow: hidden; background: linear-gradient(180deg, #050816, #0B1534 55%, #17255A)">
+    <div aria-hidden="true" style="position: absolute; left: -10%; top: 10px; width: 70%; height: 160px; background: var(--a); opacity: .16; filter: blur(60px); border-radius: 50%"></div>
+    <div aria-hidden="true" style="position: absolute; right: -8%; top: 0; width: 60%; height: 160px; background: var(--b); opacity: .2; filter: blur(70px); border-radius: 50%"></div>
+    <svg aria-hidden="true" viewBox="0 0 160 40" preserveAspectRatio="none" shape-rendering="crispEdges" style="position: absolute; left: 0; right: 0; bottom: 44px; width: 100%; height: 110px"><path fill="#1C2B5C" d="M0 40V26h8v-4h6v-6h6v-4h6v6h4v4h8v-8h6V8h6v6h4v6h6v4h8v-6h6v-6h6V4h6v8h4v6h6v4h8v-8h6v-6h6v8h4v6h6v4h8v-4h6v-4h6v8h6v14z"></path></svg>
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 44px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 16px, transparent 16px 32px), repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0 16px, transparent 16px 32px), #6B4A2E; border-top: 10px solid #EEF4FF"></div>
+    <div class="wrap" style="position: relative; display: flex; justify-content: space-between; align-items: center; padding-top: 18px">
+      <a href="#" class="h" style="font-size: 48px; font-weight: 700; color: #fff !important; text-shadow: 0 4px 0 var(--a), 0 8px 0 #05070F">Frostvale</a>
+      <div style="display: flex; gap: 8px"><button class="btn btn2">play.frostvale.net</button><button class="btn">Basket · 0</button></div>
+    </div>
+  </header>
+  <nav class="wrap" style="position: relative; margin-top: -36px" aria-label="Categories">
+    <div class="pan" style="display: flex; gap: 8px; padding: 10px 12px; width: fit-content; margin: 0 auto">
+      <a href="#" class="hb sel"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path></svg></span>Ranks</a>
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path></svg></span>Keys</a>
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M5 2h6v1h2v2h1v6h-1v2h-2v1H5v-1H3v-2H2V5h1V3h2z"></path><path fill="#A9862A" d="M7 5h2v6H7z"></path></svg></span>Coins</a>
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#5BE0E6" d="M5 2h6v2h2v2h1v2h-1v2h-2v2H9v2H7v-2H5v-2H3V8H2V6h1V4h2z"></path></svg></span>Cosmetics</a>
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#9A5E2C" d="M2 3h12v4H2z"></path><path fill="#7A4A22" d="M2 7h12v7H2z"></path><path fill="#F2C94C" d="M7 5h2v4H7z"></path></svg></span>Bundles</a>
+    </div>
+  </nav>
+
+  <main class="wrap" style="padding-top: 28px; padding-bottom: 56px; display: flex; flex-direction: column; gap: 20px">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px">
+      <div><nav class="m" style="font-size: 13px">Home / Ranks</nav><h1 class="h" style="margin: 6px 0; font-size: 44px">Ranks</h1><p class="m" style="margin: 0">Permanent perks on every gamemode. Already ranked? You only pay the difference.</p></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px">
+      <section class="pan" style="padding: 18px; display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: center" aria-label="Rank preview">
+        <div class="slot" style="height: 250px; align-content: end; overflow: hidden; background: linear-gradient(180deg, #0B1534, #17255A)">
+          <span class="h" style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 4px 10px; background: rgba(0,0,0,.55); font-size: 17px; text-shadow: 2px 2px 0 rgba(0,0,0,.6)"><span style="color: #F2C94C">[MVP]</span> Notch_</span>
+          <span style="position: relative; z-index: 1; margin-bottom: 14px; filter: drop-shadow(0 6px 0 rgba(0,0,0,.35))"><svg width="86" height="172" viewBox="0 0 16 32" shape-rendering="crispEdges" aria-hidden="true"><path fill="#3B2A1A" d="M4 0h8v3H4z"/><path fill="#C99B6B" d="M4 3h8v5H4z"/><path fill="#fff" d="M5 4h2v1H5zM9 4h2v1H9z"/><path fill="#2E8B57" d="M6 4h1v1H6zM9 4h1v1H9z"/><path fill="#8A5A3A" d="M7 6h2v1H7z"/><path fill="#2FB5B5" d="M4 8h8v12H4z"/><path fill="#258F8F" d="M4 18h8v2H4z"/><path fill="#C99B6B" d="M0 8h4v12H0zM12 8h4v12h-4z"/><path fill="#2FB5B5" d="M0 8h4v4H0zM12 8h4v4h-4z"/><path fill="#3A4BA8" d="M4 20h4v10H4zM8 20h4v10H8z"/><path fill="#2C3A86" d="M7 20h2v10H7z"/><path fill="#6B6B6B" d="M4 30h4v2H4zM8 30h4v2H8z"/></svg></span>
+          <span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: #6B4A2E; border-top: 6px solid #EEF4FF"></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <span class="k">Rank preview</span>
+          <h2 class="h" style="margin: 0; font-size: 34px">MVP</h2>
+          <p class="m" style="margin: 0">This is how you will look in-game.</p>
+          <div class="h" style="padding: 10px 12px; background: rgba(0,0,0,.5); font-size: 17px; text-shadow: 2px 2px 0 rgba(0,0,0,.6)"><span style="color: #F2C94C">[MVP]</span> <b>Notch_</b>: gg! just ranked up</div>
+          <div style="display: flex; gap: 6px" role="group" aria-label="Preview rank"><button class="btn btn2" style="height: 40px">VIP</button><button class="btn btn2" style="height: 40px">VIP+</button><button class="btn" style="height: 40px" aria-pressed="true">MVP</button><button class="btn btn2" style="height: 40px">MVP+</button></div>
+        </div>
+      </section>
+      <aside class="pan" style="padding: 16px" aria-label="Shopping as">
+        <div class="k">Shopping as</div>
+        <div class="slot" style="height: 200px; margin-top: 10px; align-content: end; overflow: hidden; background: linear-gradient(180deg, #0B1534, #17255A)">
+          <span class="h" style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); padding: 3px 8px; background: rgba(0,0,0,.55); font-size: 15px">Notch_</span>
+          <span style="position: relative; z-index: 1; margin-bottom: 12px"><svg width="70" height="140" viewBox="0 0 16 32" shape-rendering="crispEdges" aria-hidden="true"><path fill="#3B2A1A" d="M4 0h8v3H4z"/><path fill="#C99B6B" d="M4 3h8v5H4z"/><path fill="#fff" d="M5 4h2v1H5zM9 4h2v1H9z"/><path fill="#2E8B57" d="M6 4h1v1H6zM9 4h1v1H9z"/><path fill="#8A5A3A" d="M7 6h2v1H7z"/><path fill="#2FB5B5" d="M4 8h8v12H4z"/><path fill="#258F8F" d="M4 18h8v2H4z"/><path fill="#C99B6B" d="M0 8h4v12H0zM12 8h4v12h-4z"/><path fill="#2FB5B5" d="M0 8h4v4H0zM12 8h4v4h-4z"/><path fill="#3A4BA8" d="M4 20h4v10H4zM8 20h4v10H8z"/><path fill="#2C3A86" d="M7 20h2v10H7z"/><path fill="#6B6B6B" d="M4 30h4v2H4zM8 30h4v2H8z"/></svg></span>
+          <span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 12px; background: #6B4A2E; border-top: 5px solid #EEF4FF"></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 13px"><span class="m">2 in basket</span><a href="#">Switch player</a></div>
+      </aside>
+    </div>
+
+    <div class="pan" style="padding: 0; overflow-x: auto">
+      <table>
+        <thead>
+          <tr>
+            <th style="vertical-align: bottom; width: 24%"><span class="k">Compare perks</span></th>
+            <th style="padding-top: 22px"><span class="slot" style="width: 84px; height: 84px; margin: 0 auto 10px"><svg width="56" height="56" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#C9CED6" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#8C97AE" d="M1 11h14v2H1z"></path><path fill="#fff" d="M2 6h1v4H2z"></path></svg></span><h3 class="h" style="margin: 0; font-size: 22px">VIP</h3><div class="h" style="font-size: 20px; margin: 6px 0 12px">$4.99</div><a href="#" class="btn" style="width: 130px">Buy</a></th>
+            <th style="padding-top: 22px"><span class="slot" style="width: 84px; height: 84px; margin: 0 auto 10px"><svg width="56" height="56" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#7AA2FF" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#4A6ACC" d="M1 11h14v2H1z"></path><path fill="#D6E2FF" d="M2 6h1v4H2z"></path></svg></span><h3 class="h" style="margin: 0; font-size: 22px">VIP+</h3><div class="h" style="font-size: 20px; margin: 6px 0 12px">$7.99</div><a href="#" class="btn" style="width: 130px">Buy</a></th>
+            <th class="hot" style="padding-top: 0; outline: 3px solid var(--a); outline-offset: -3px"><div class="h" style="background: var(--a); color: #05070F; padding: 6px 0; margin: 0 -12px 16px; font-size: 13px; letter-spacing: .1em">MOST POPULAR</div><span class="slot" style="width: 84px; height: 84px; margin: 0 auto 10px"><svg width="56" height="56" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#FFF0A8" d="M2 6h1v4H2zM7 3h1v2H7z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path></svg></span><h3 class="h" style="margin: 0; font-size: 22px">MVP</h3><div style="margin: 6px 0 12px"><s class="m" style="font-size: 13px">$14.99</s> <span class="h" style="font-size: 20px">$11.99</span></div><a href="#" class="btn" style="width: 130px">Buy</a></th>
+            <th style="padding-top: 22px"><span class="slot" style="width: 84px; height: 84px; margin: 0 auto 10px"><svg width="56" height="56" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#5BE0E6" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#2A9FA5" d="M1 11h14v2H1z"></path><path fill="#E5484D" d="M7 8h2v2H7z"></path></svg></span><h3 class="h" style="margin: 0; font-size: 22px">MVP+</h3><div class="h" style="font-size: 20px; margin: 6px 0 12px">$19.99</div><a href="#" class="btn" style="width: 130px">Buy</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Chat prefix</td><td><span class="chip" style="background: #3A4260">VIP</span></td><td><span class="chip" style="background: #2E4590">VIP+</span></td><td class="hot"><span class="chip" style="background: #F2C94C; color: #05070F">MVP</span></td><td><span class="chip" style="background: #5BE0E6; color: #05070F">MVP+</span></td></tr>
+          <tr><td>Homes</td><td class="h" style="font-size: 18px">2</td><td class="h" style="font-size: 18px">4</td><td class="hot h" style="font-size: 18px">6</td><td class="h" style="font-size: 18px">10</td></tr>
+          <tr><td>Event coin boost</td><td class="h" style="font-size: 18px">1.5×</td><td class="h" style="font-size: 18px">2.5×</td><td class="hot h" style="font-size: 18px">4.5×</td><td class="h" style="font-size: 18px">7.5×</td></tr>
+          <tr><td>No chat cooldown</td><td class="n">✕</td><td class="y">✓</td><td class="hot y">✓</td><td class="y">✓</td></tr>
+          <tr><td>Rank trails &amp; hats</td><td class="n">✕</td><td class="n">✕</td><td class="hot y">✓</td><td class="y">✓</td></tr>
+          <tr><td>/nick with colors</td><td class="n">✕</td><td class="n">✕</td><td class="hot y">✓</td><td class="y">✓</td></tr>
+          <tr><td>Queue priority</td><td class="n">✕</td><td class="n">✕</td><td class="hot n">✕</td><td class="y">✓</td></tr>
+          <tr><td style="border-bottom: 0">Monthly crate keys</td><td style="border-bottom: 0" class="h">1</td><td style="border-bottom: 0" class="h">2</td><td style="border-bottom: 0" class="hot h">3</td><td style="border-bottom: 0" class="h">5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="m" style="margin: 0; font-size: 13px">Rows are typed in the theme settings — one line per perk. Columns follow the packages in the category.</p>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1650}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

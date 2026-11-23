@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tebex store anatomy</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F4F1}
+.h{font-family:"Chakra Petch",sans-serif}
+.box{border:1.5px solid #1B1D1F;border-radius:8px;background:#fff;padding:12px 14px}
+.k{font:700 11px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#5A5F66}
+.must{background:#E9FFB0}
+.opt{background:#fff;border-style:dashed}
+.fl{display:flex;align-items:center;gap:10px}
+.st{border:1.5px solid #1B1D1F;border-radius:8px;background:#fff;padding:12px;width:148px;box-sizing:border-box}
+.ar{font:700 20px Inter,sans-serif;color:#1B1D1F}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1240px; box-sizing: border-box; padding: 56px; background: #F4F4F1; color: #1B1D1F; font-family: Inter, sans-serif; display: flex; flex-direction: column; gap: 40px">
+  <header>
+    <div class="k">Research summary · 8 premium themes + Tebex docs + player feedback</div>
+    <h1 class="h" style="margin: 8px 0 8px; font-size: 44px">How a Tebex store works</h1>
+    <p style="margin: 0; max-width: 900px; font-size: 16px; line-height: 1.6; color: #3B3F45">Every successful theme shares the same skeleton. These are the jobs a store must do — the template. The look on top is ours to invent. Green = required by Tebex or players. Dashed = optional, toggled in theme settings.</p>
+  </header>
+
+  <section>
+    <h2 class="h" style="margin: 0 0 14px; font-size: 22px">1 · The buyer's path</h2>
+    <div class="fl" style="flex-wrap: wrap">
+      <div class="st"><div class="k">01</div><strong>Land</strong><div style="font-size: 12px; color: #5A5F66; margin-top: 4px">Who is this server? Is it online?</div></div><span class="ar">→</span>
+      <div class="st"><div class="k">02</div><strong>Browse</strong><div style="font-size: 12px; color: #5A5F66; margin-top: 4px">Categories, featured, sale</div></div><span class="ar">→</span>
+      <div class="st"><div class="k">03</div><strong>Compare</strong><div style="font-size: 12px; color: #5A5F66; margin-top: 4px">Package detail, rank table</div></div><span class="ar">→</span>
+      <div class="st"><div class="k">04</div><strong>Identify</strong><div style="font-size: 12px; color: #5A5F66; margin-top: 4px">Username, Java / Bedrock</div></div><span class="ar">→</span>
+      <div class="st"><div class="k">05</div><strong>Basket</strong><div style="font-size: 12px; color: #5A5F66; margin-top: 4px">Qty, coupon, gift card</div></div><span class="ar">→</span>
+      <div class="st"><div class="k">06</div><strong>Pay</strong><div style="font-size: 12px; color: #5A5F66; margin-top: 4px">Tebex.js checkout</div></div><span class="ar">→</span>
+      <div class="st" style="background: #1B1D1F; color: #fff"><div class="k" style="color: #B9BEC6">07</div><strong>Delivered</strong><div style="font-size: 12px; color: #B9BEC6; margin-top: 4px">In-game, while online</div></div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: 620px minmax(0, 1fr); gap: 40px">
+    <div>
+      <h2 class="h" style="margin: 0 0 14px; font-size: 22px">2 · Regions of every page (layout.html)</h2>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <div class="box opt"><div class="k">Announcement bar</div>Sale or event message, optional countdown</div>
+        <div class="box must"><div class="k">Server header</div>Logo · copy-IP + players online · Discord + members · login / user · basket count &amp; total</div>
+        <div class="box must"><div class="k">Category navigation</div>All store.categories with sub-categories — sidebar or top bar</div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 8px">
+          <div class="box must" style="min-height: 150px"><div class="k">Content block</div>Page-specific: home, category, package, checkout, CMS page<br><br><span style="font-size: 12px; color: #5A5F66">Toasts from page.message sit on top</span></div>
+          <div class="box opt"><div class="k">Modules</div><span style="font-size: 13px">goal · community goal · top donor · recent payments · featured · server status · gift card · text</span></div>
+        </div>
+        <div class="box opt"><div class="k">Basket drawer</div>Quick view of basket.packages without leaving the page</div>
+        <div class="box must"><div class="k">Footer</div>"Not affiliated with Mojang / Rockstar / Facepunch" · Terms · Refunds · Tebex note</div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="h" style="margin: 0 0 14px; font-size: 22px">3 · Pages &amp; what each must answer</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <div class="box must"><div class="k">index.html</div>Where do I start? Categories, popular, current sale, store description</div>
+        <div class="box must"><div class="k">category.html</div>What can I get? Grid or list (displayType), price, sale, add / remove</div>
+        <div class="box must"><div class="k">package.html</div>Exactly what do I get? Media gallery, perks, one-time vs monthly, gift</div>
+        <div class="box must"><div class="k">username.html</div>Who receives it? ign field or external login (Steam, Discord, FiveM)</div>
+        <div class="box must"><div class="k">options.html</div>Pick server, variables, custom price</div>
+        <div class="box must"><div class="k">checkout.html</div>Hand-off to Tebex.js; terms</div>
+        <div class="box opt"><div class="k">cms/page.html</div>FAQ, rules, supporters, terms — any custom page</div>
+        <div class="box opt"><div class="k">Rank table</div>Tier comparison + upgrade price (cumulative packages)</div>
+      </div>
+      <h2 class="h" style="margin: 28px 0 14px; font-size: 22px">4 · What players complain about → rule</h2>
+      <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px">
+        <div class="box">Pay-to-win perks → label gameplay impact on every package</div>
+        <div class="box">"Where's my rank?" → delivery time on package + basket</div>
+        <div class="box">Upgrade confusion → show "you own X, pay only the difference"</div>
+        <div class="box">Fake sales / badges → badges only from real discount data</div>
+        <div class="box">Hidden currency / tax → currency always beside price, tax note in basket</div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

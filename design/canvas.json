@@ -1,0 +1,221 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Anatomy.dc.html": {
+      "h": 1240,
+      "title": "How a Tebex store works — the template",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Category.dc.html": {
+      "h": 1300,
+      "title": "Category — grid, quantity, basket drawer",
+      "w": 1440,
+      "x": 0,
+      "y": 1920
+    },
+    "Checkout.dc.html": {
+      "h": 1000,
+      "title": "Checkout",
+      "w": 1440,
+      "x": 1520,
+      "y": 3600
+    },
+    "Login.dc.html": {
+      "h": 900,
+      "title": "Login (username.html)",
+      "w": 1440,
+      "x": 0,
+      "y": 3600
+    },
+    "MCategory.dc.html": {
+      "h": 1500,
+      "title": "Phone — category",
+      "w": 390,
+      "x": 470,
+      "y": 4920
+    },
+    "MCheckout.dc.html": {
+      "h": 1300,
+      "title": "Phone — checkout",
+      "w": 390,
+      "x": 2350,
+      "y": 4920
+    },
+    "MLogin.dc.html": {
+      "h": 844,
+      "title": "Phone — login",
+      "w": 390,
+      "x": 1880,
+      "y": 4920
+    },
+    "MPackage.dc.html": {
+      "h": 1200,
+      "title": "Phone — package",
+      "w": 390,
+      "x": 1410,
+      "y": 4920
+    },
+    "MPage.dc.html": {
+      "h": 1200,
+      "title": "Phone — FAQ page",
+      "w": 390,
+      "x": 2820,
+      "y": 4920
+    },
+    "MRanks.dc.html": {
+      "h": 1300,
+      "title": "Phone — ranks",
+      "w": 390,
+      "x": 940,
+      "y": 4920
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 1800,
+      "title": "Home — Frost preset (every value editable)",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Mobile.dc.html": {
+      "h": 1700,
+      "title": "Phone — home",
+      "w": 390,
+      "x": 0,
+      "y": 4920
+    },
+    "Package.dc.html": {
+      "h": 1160,
+      "title": "Package popup — with rank preview",
+      "w": 1440,
+      "x": 3040,
+      "y": 1920
+    },
+    "Page.dc.html": {
+      "h": 1200,
+      "title": "Custom page — FAQ",
+      "w": 1440,
+      "x": 3040,
+      "y": 3600
+    },
+    "Ranks.dc.html": {
+      "h": 1650,
+      "title": "Category — rank table + rank preview + player card",
+      "w": 1440,
+      "x": 1520,
+      "y": 1920
+    },
+    "Settings.dc.html": {
+      "h": 1500,
+      "title": "Theme settings — what buyers can edit",
+      "w": 1200,
+      "x": 3040,
+      "y": 0
+    },
+    "ThemeCherry.dc.html": {
+      "h": 1800,
+      "title": "Preset — Cherry · round corners, flat panels, clean font",
+      "w": 1440,
+      "x": 1520,
+      "y": 8780
+    },
+    "ThemeDeepDark.dc.html": {
+      "h": 1800,
+      "title": "Preset — Deep Dark · minimal header, tabs, outline",
+      "w": 1440,
+      "x": 0,
+      "y": 10700
+    },
+    "ThemeDesert.dc.html": {
+      "h": 1800,
+      "title": "Preset — Desert · blocky font, outline panels",
+      "w": 1440,
+      "x": 3040,
+      "y": 8780
+    },
+    "ThemeEnd.dc.html": {
+      "h": 1800,
+      "title": "Preset — End",
+      "w": 1440,
+      "x": 3040,
+      "y": 6860
+    },
+    "ThemeJungle.dc.html": {
+      "h": 1800,
+      "title": "Preset — Jungle · compact header, soft corners",
+      "w": 1440,
+      "x": 1520,
+      "y": 10700
+    },
+    "ThemeNether.dc.html": {
+      "h": 1800,
+      "title": "Preset — Nether",
+      "w": 1440,
+      "x": 1520,
+      "y": 6860
+    },
+    "ThemeOcean.dc.html": {
+      "h": 1800,
+      "title": "Preset — Ocean · tabs, compact header, soft corners, tech font",
+      "w": 1440,
+      "x": 0,
+      "y": 8780
+    },
+    "ThemeOverworld.dc.html": {
+      "h": 1800,
+      "title": "Preset — Overworld",
+      "w": 1440,
+      "x": 0,
+      "y": 6860
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-23T20:10:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "themes": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "8 theme presets × layout formats — all from settings",
+      "w": 240,
+      "x": 0,
+      "y": 6540
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Anatomy.dc.html",
+    "Settings.dc.html",
+    "Category.dc.html",
+    "Ranks.dc.html",
+    "Package.dc.html",
+    "Login.dc.html",
+    "Checkout.dc.html",
+    "Page.dc.html",
+    "Mobile.dc.html",
+    "MCategory.dc.html",
+    "MRanks.dc.html",
+    "MPackage.dc.html",
+    "MLogin.dc.html",
+    "MCheckout.dc.html",
+    "MPage.dc.html",
+    "ThemeOverworld.dc.html",
+    "ThemeNether.dc.html",
+    "ThemeEnd.dc.html",
+    "ThemeOcean.dc.html",
+    "ThemeCherry.dc.html",
+    "ThemeDesert.dc.html",
+    "ThemeDeepDark.dc.html",
+    "ThemeJungle.dc.html"
+  ],
+  "pages": [],
+  "title": "OZ Tebex Theme Design"
+}

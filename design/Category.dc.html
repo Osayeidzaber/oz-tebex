@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Category page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{--a:#D4FF3A;--b:#B9A6FF;--bg:#0B1020;font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px;background:var(--bg)}
+.s a{color:var(--a);text-decoration:none}
+.h{font-family:"Pixelify Sans",sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px;box-sizing:border-box}
+.m{color:#A3ADC2}
+.k{font:600 12px/1.2 "Pixelify Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:#151B30;border:3px solid #05070F;box-shadow:inset 0 0 0 2px #232B47,inset 0 -6px 0 rgba(0,0,0,.25)}
+.slot{background:#0E1324;box-shadow:inset 4px 4px 0 rgba(0,0,0,.55),inset -4px -4px 0 rgba(255,255,255,.07);display:grid;place-items:center;position:relative}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 18px;border:3px solid #05070F;background:var(--a);color:#05070F !important;font:600 16px "Pixelify Sans",sans-serif;cursor:pointer;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28);box-sizing:border-box}
+.btn2{background:#2A3456;color:#E9EEF7 !important}
+.qty{position:absolute;right:8px;bottom:4px;font:700 20px "Pixelify Sans",sans-serif;color:#fff;text-shadow:2px 2px 0 #3A3A3A}
+.price{font:700 24px "Pixelify Sans",sans-serif;color:#fff}
+.old{color:#8C97AE;text-decoration:line-through;font-size:13px}
+.tag{display:inline-block;font:600 12px/1 "Pixelify Sans",sans-serif;padding:5px 7px;border:2px solid #05070F;background:var(--a);color:#05070F}
+.hb{display:flex;flex-direction:column;align-items:center;gap:6px;color:#C9D2E3 !important;font:600 12px "Pixelify Sans",sans-serif;width:72px}
+.hb .slot{width:58px;height:58px;border:3px solid #05070F}
+.sel .slot{outline:4px solid #fff;background:#1B2340}
+.qs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;background:#0E1324;border:3px solid #05070F}
+.qs button{height:34px;border:0;background:transparent;color:#C9D2E3;font:600 14px "Pixelify Sans",sans-serif;cursor:pointer}
+.qs .on{background:var(--a);color:#05070F}
+.st{width:34px;height:34px;border:3px solid #05070F;background:#2A3456;color:#E9EEF7;font:600 16px "Pixelify Sans",sans-serif;cursor:pointer}
+</style>
+</helmet>
+<div class="s" style="min-height: 1300px; position: relative; overflow: hidden">
+
+  <header style="position: relative; height: 250px; overflow: hidden; background: linear-gradient(180deg, #050816, #0B1534 55%, #17255A)">
+    <div aria-hidden="true" style="position: absolute; left: -10%; top: 10px; width: 70%; height: 160px; background: var(--a); opacity: .16; filter: blur(60px); border-radius: 50%"></div>
+    <div aria-hidden="true" style="position: absolute; right: -8%; top: 0; width: 60%; height: 160px; background: var(--b); opacity: .2; filter: blur(70px); border-radius: 50%"></div>
+    <svg aria-hidden="true" viewBox="0 0 160 40" preserveAspectRatio="none" shape-rendering="crispEdges" style="position: absolute; left: 0; right: 0; bottom: 44px; width: 100%; height: 110px"><path fill="#1C2B5C" d="M0 40V26h8v-4h6v-6h6v-4h6v6h4v4h8v-8h6V8h6v6h4v6h6v4h8v-6h6v-6h6V4h6v8h4v6h6v4h8v-8h6v-6h6v8h4v6h6v4h8v-4h6v-4h6v8h6v14z"></path></svg>
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 44px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 16px, transparent 16px 32px), repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0 16px, transparent 16px 32px), #6B4A2E; border-top: 10px solid #EEF4FF"></div>
+    <div class="wrap" style="position: relative; display: flex; justify-content: space-between; align-items: center; padding-top: 18px">
+      <a href="#" class="h" style="font-size: 48px; font-weight: 700; color: #fff !important; text-shadow: 0 4px 0 var(--a), 0 8px 0 #05070F">Frostvale</a>
+      <div style="display: flex; gap: 8px">
+        <button class="btn btn2" style="height: 44px">play.frostvale.net</button>
+        <button class="btn" style="height: 44px; outline: 3px solid #fff" aria-label="Basket open">Basket · 3 · $38.97</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="wrap" style="position: relative; margin-top: -36px" aria-label="Categories">
+    <div class="pan" style="display: flex; gap: 8px; padding: 10px 12px; width: fit-content; margin: 0 auto">
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path></svg></span>Ranks</a>
+      <a href="#" class="hb sel"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path><path fill="#FFF0A8" d="M1 5h6v1H1z"></path></svg></span>Keys</a>
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M5 2h6v1h2v2h1v6h-1v2h-2v1H5v-1H3v-2H2V5h1V3h2z"></path><path fill="#A9862A" d="M7 5h2v6H7z"></path></svg></span>Coins</a>
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#5BE0E6" d="M5 2h6v2h2v2h1v2h-1v2h-2v2H9v2H7v-2H5v-2H3V8H2V6h1V4h2z"></path><path fill="#C9FBFD" d="M5 3h3v2H5z"></path></svg></span>Cosmetics</a>
+      <a href="#" class="hb"><span class="slot"><svg width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#9A5E2C" d="M2 3h12v4H2z"></path><path fill="#7A4A22" d="M2 7h12v7H2z"></path><path fill="#F2C94C" d="M7 5h2v4H7z"></path></svg></span>Bundles</a>
+    </div>
+  </nav>
+
+  <main class="wrap" style="padding-top: 28px; padding-bottom: 56px; display: flex; flex-direction: column; gap: 20px">
+    <div class="pan" style="padding: 20px; display: flex; gap: 20px; align-items: center">
+      <span class="slot" style="width: 96px; height: 96px; flex: none"><svg width="64" height="64" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path><path fill="#FFF0A8" d="M1 5h6v1H1z"></path><path fill="#A9862A" d="M1 10h6v1H1z"></path></svg></span>
+      <div><nav class="m" style="font-size: 13px" aria-label="Breadcrumb">Home / Keys</nav><h1 class="h" style="margin: 4px 0; font-size: 40px">Crate keys</h1><p class="m" style="margin: 0">Open crates at /warp crates. Every crate lists its full drop table.</p></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+      <article class="pan" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+        <div class="slot" style="height: 150px"><svg width="84" height="84" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#A0784A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path><path fill="#C9A27A" d="M1 5h6v1H1z"></path></svg></div>
+        <h3 class="h" style="margin: 0; font-size: 22px">Wooden key</h3>
+        <div><span class="price">$0.75</span> <span class="m" style="font-size: 12px">USD</span></div>
+        <div class="qs" role="group" aria-label="Quantity"><button class="on" aria-pressed="true">×1</button><button>×5</button><button>×10</button><button>×15</button></div>
+        <div style="display: flex; gap: 6px"><button class="btn btn2" style="width: 46px; padding: 0" aria-label="Details">i</button><a href="#" class="btn" style="flex: 1">Add to basket</a></div>
+      </article>
+      <article class="pan" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+        <div class="slot" style="height: 150px"><svg width="84" height="84" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#C9CED6" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path><path fill="#fff" d="M1 5h6v1H1z"></path></svg><span class="qty">5</span></div>
+        <h3 class="h" style="margin: 0; font-size: 22px">Silver key</h3>
+        <div><span class="price">$1.50</span> <span class="m" style="font-size: 12px">USD</span></div>
+        <div class="qs" role="group" aria-label="Quantity"><button>×1</button><button class="on" aria-pressed="true">×5</button><button>×10</button><button>×15</button></div>
+        <div style="display: flex; gap: 6px"><button class="btn btn2" style="width: 46px; padding: 0" aria-label="Details">i</button><a href="#" class="btn" style="flex: 1">Add ×5 · $7.50</a></div>
+      </article>
+      <article class="pan" style="padding: 14px; display: flex; flex-direction: column; gap: 10px; position: relative">
+        <span class="tag" style="position: absolute; top: 22px; left: 22px; z-index: 1; background: var(--b)">Best value</span>
+        <div class="slot" style="height: 150px"><svg width="84" height="84" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path><path fill="#FFF0A8" d="M1 5h6v1H1z"></path></svg><span class="qty">10</span></div>
+        <h3 class="h" style="margin: 0; font-size: 22px">Golden key</h3>
+        <div><span class="price">$2.20</span> <span class="m" style="font-size: 12px">USD</span></div>
+        <div class="qs" role="group" aria-label="Quantity"><button>×1</button><button>×5</button><button class="on" aria-pressed="true">×10</button><button>×15</button></div>
+        <div style="display: flex; gap: 6px"><button class="btn btn2" style="width: 46px; padding: 0" aria-label="Details">i</button><a href="#" class="btn" style="flex: 1">Add ×10 · $22.00</a></div>
+      </article>
+      <article class="pan" style="padding: 14px; display: flex; flex-direction: column; gap: 10px; position: relative">
+        <span class="tag" style="position: absolute; top: 22px; left: 22px; z-index: 1">-50%</span>
+        <div class="slot" style="height: 150px"><svg width="84" height="84" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#4FD17A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path><path fill="#B8F5C9" d="M1 5h6v1H1z"></path></svg></div>
+        <h3 class="h" style="margin: 0; font-size: 22px">Emerald key</h3>
+        <div><span class="old">$5.60</span> <span class="price">$2.80</span></div>
+        <div class="qs" role="group" aria-label="Quantity"><button class="on" aria-pressed="true">×1</button><button>×5</button><button>×10</button><button>×15</button></div>
+        <div style="display: flex; gap: 6px"><button class="btn btn2" style="width: 46px; padding: 0" aria-label="Details">i</button><a href="#" class="btn" style="flex: 1">Add to basket</a></div>
+      </article>
+    </div>
+  </main>
+
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(3,5,12,.6)"></div>
+  <aside class="pan" aria-label="Basket" style="position: absolute; top: 0; right: 0; bottom: 0; width: 420px; display: flex; flex-direction: column; border-right: 0">
+    <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #05070F">
+      <div><h2 class="h" style="margin: 0; font-size: 28px">Basket</h2><span class="m" style="font-size: 12px">3 items · Notch_</span></div>
+      <button class="btn btn2" style="width: 46px; padding: 0" aria-label="Close">×</button>
+    </div>
+    <div style="flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <div class="pan" style="padding: 10px; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; align-items: center">
+        <span class="slot" style="width: 52px; height: 52px"><svg width="34" height="34" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path></svg></span>
+        <div><b class="h" style="font-size: 17px">MVP rank</b><div class="m" style="font-size: 12px">$11.99</div></div>
+        <button class="st" aria-label="Remove">×</button>
+      </div>
+      <div class="pan" style="padding: 10px; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; align-items: center">
+        <span class="slot" style="width: 52px; height: 52px"><svg width="34" height="34" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path></svg><span class="qty" style="font-size: 15px; right: 4px; bottom: 1px">10</span></span>
+        <div><b class="h" style="font-size: 17px">Golden key</b><div class="m" style="font-size: 12px">10 × $2.20</div></div>
+        <div style="display: flex; gap: 4px"><button class="st" aria-label="Decrease">−</button><button class="st" aria-label="Increase">+</button></div>
+      </div>
+      <div class="pan" style="padding: 10px; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; align-items: center">
+        <span class="slot" style="width: 52px; height: 52px"><svg width="34" height="34" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#C9CED6" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path></svg><span class="qty" style="font-size: 15px; right: 4px; bottom: 1px">3</span></span>
+        <div><b class="h" style="font-size: 17px">Silver key</b><div class="m" style="font-size: 12px">3 × $1.50</div></div>
+        <div style="display: flex; gap: 4px"><button class="st" aria-label="Decrease">−</button><button class="st" aria-label="Increase">+</button></div>
+      </div>
+    </div>
+    <div style="padding: 20px; border-top: 3px solid #05070F; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><span class="k">Total</span><span class="h" style="font-size: 30px; font-weight: 700">$38.49</span></div>
+      <a href="#" class="btn" style="height: 56px; font-size: 18px">Proceed to checkout</a>
+      <span class="m" style="font-size: 12px; text-align: center">Taxes calculated at checkout</span>
+    </div>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

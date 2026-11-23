@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Package popup</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{--a:#D4FF3A;--b:#B9A6FF;font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px}
+.h{font-family:"Pixelify Sans",sans-serif}
+.m{color:#A3ADC2}
+.k{font:600 12px/1.2 "Pixelify Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:#151B30;border:3px solid #05070F;box-shadow:inset 0 0 0 2px #232B47,inset 0 -6px 0 rgba(0,0,0,.25)}
+.slot{background:#0E1324;box-shadow:inset 4px 4px 0 rgba(0,0,0,.55),inset -4px -4px 0 rgba(255,255,255,.07);display:grid;place-items:center;position:relative}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 18px;border:3px solid #05070F;background:var(--a);color:#05070F;font:600 16px "Pixelify Sans",sans-serif;cursor:pointer;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28);box-sizing:border-box;text-decoration:none}
+.btn2{background:#2A3456;color:#E9EEF7}
+.tag{display:inline-block;font:600 12px/1 "Pixelify Sans",sans-serif;padding:5px 7px;border:2px solid #05070F;background:var(--a);color:#05070F}
+.th{height:76px;border:3px solid #05070F;cursor:pointer}
+li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:2px solid #0E1324}
+</style>
+</helmet>
+<div class="s" style="width: 1440px; height: 1160px; position: relative; overflow: hidden; background: #0B1020">
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 32px, transparent 32px 64px), #0B1020"></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(3,5,12,.72)"></div>
+
+  <div class="pan" role="dialog" aria-modal="true" aria-labelledby="pt" style="position: absolute; left: 50%; top: 70px; transform: translateX(-50%); width: 1080px; display: grid; grid-template-columns: 440px minmax(0, 1fr); gap: 28px; padding: 24px; box-sizing: border-box; box-shadow: inset 0 0 0 2px #232B47, 0 40px 100px rgba(0,0,0,.6)">
+    <button class="btn btn2" style="position: absolute; top: 14px; right: 14px; width: 46px; padding: 0" aria-label="Close">×</button>
+    <div>
+      <div class="slot" style="height: 380px">
+        <span class="tag" style="position: absolute; top: 14px; left: 14px">-20% · 2d 14h left</span>
+        <svg width="220" height="220" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#8A6414" d="M1 13h14v1H1z"></path><path fill="#FFF0A8" d="M2 6h1v4H2zM7 3h1v2H7z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path><path fill="#E5484D" d="M3 9h1v1H3zM12 9h1v1h-1z"></path></svg>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 12px">
+        <button class="slot th" style="outline: 3px solid var(--a)" aria-label="Image 1"><svg width="44" height="44" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path></svg></button>
+        <button class="slot th" aria-label="Image 2"><span class="k">Trail</span></button>
+        <button class="slot th" aria-label="Image 3"><span class="k">Prefix</span></button>
+        <button class="slot th" aria-label="Play video" style="color: #fff"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></button>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; padding-right: 40px">
+      <div class="m" style="font-size: 13px">Ranks / MVP</div>
+      <h2 id="pt" class="h" style="margin: 0; font-size: 52px; line-height: 1">MVP Rank</h2>
+      <div style="display: flex; align-items: baseline; gap: 10px"><s class="m">$14.99</s><span class="h" style="font-size: 38px; font-weight: 700">$11.99</span><span class="m">USD</span></div>
+      <div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; align-items: center">
+        <div class="slot" style="height: 150px; align-content: end; overflow: hidden; background: linear-gradient(180deg, #0B1534, #17255A)"><span class="h" style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 2px 6px; background: rgba(0,0,0,.55); font-size: 12px"><span style="color: #F2C94C">[MVP]</span> You</span><span style="position: relative; z-index: 1; margin-bottom: 4px; transform: scale(.85); transform-origin: bottom"><svg width="70" height="140" viewBox="0 0 16 32" shape-rendering="crispEdges" aria-hidden="true"><path fill="#3B2A1A" d="M4 0h8v3H4z"/><path fill="#C99B6B" d="M4 3h8v5H4z"/><path fill="#fff" d="M5 4h2v1H5zM9 4h2v1H9z"/><path fill="#2E8B57" d="M6 4h1v1H6zM9 4h1v1H9z"/><path fill="#8A5A3A" d="M7 6h2v1H7z"/><path fill="#2FB5B5" d="M4 8h8v12H4z"/><path fill="#258F8F" d="M4 18h8v2H4z"/><path fill="#C99B6B" d="M0 8h4v12H0zM12 8h4v12h-4z"/><path fill="#2FB5B5" d="M0 8h4v4H0zM12 8h4v4h-4z"/><path fill="#3A4BA8" d="M4 20h4v10H4zM8 20h4v10H8z"/><path fill="#2C3A86" d="M7 20h2v10H7z"/><path fill="#6B6B6B" d="M4 30h4v2H4zM8 30h4v2H8z"/></svg></span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px"><span class="k">Preview on your skin</span><div class="h" style="padding: 10px 12px; background: rgba(0,0,0,.5); font-size: 16px"><span style="color: #F2C94C">[MVP]</span> <b>You</b>: gg! just ranked up</div><span class="m" style="font-size: 12px">Log in to see it on your own skin.</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+        <div class="slot" style="display: block; padding: 12px"><b class="h" style="font-size: 16px">Instant</b><div class="m" style="font-size: 12px">Delivered in-game</div></div>
+        <div class="slot" style="display: block; padding: 12px"><b class="h" style="font-size: 16px">Lifetime</b><div class="m" style="font-size: 12px">Never expires</div></div>
+        <div class="slot" style="display: block; padding: 12px"><b class="h" style="font-size: 16px">Fair play</b><div class="m" style="font-size: 12px">No pay-to-win</div></div>
+      </div>
+      <ul style="list-style: none; margin: 0; padding: 0; color: #C9D2E3">
+        <li><span class="tag" style="background: #F2C94C">MVP</span>Gold chat prefix on every server</li>
+        <li><span class="h" style="color: #6BE38F; font-size: 18px">✓</span>6 homes and 3 player warps</li>
+        <li><span class="h" style="color: #6BE38F; font-size: 18px">✓</span>4.5× coins during weekend events</li>
+        <li><span class="h" style="color: #6BE38F; font-size: 18px">✓</span>Rank trail, hat and join message</li>
+        <li style="border-bottom: 0"><span class="h" style="color: #6BE38F; font-size: 18px">✓</span>/nick with colors, /hat, /workbench</li>
+      </ul>
+      <div style="display: flex; gap: 10px; margin-top: auto">
+        <a href="#" class="btn" style="flex: 1; height: 58px; font-size: 20px">Add to basket · $11.99</a>
+        <a href="#" class="btn btn2" style="height: 58px">Gift</a>
+      </div>
+      <div class="m" style="font-size: 12px">Be online in-game to receive your items. Buying for a friend? Log in with their username.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1160}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{#
+  OZ Theme — oz-preview.twig  (upload as an Asset named exactly "oz-preview.twig")
+  Live rank preview: 3D skin + nametag, chat line, tab list.
+  Inputs: pvSkin, pvLabel, pvPrefix, pvColor, pvName, pvChoices (optional list of {name,prefix,color,href}), pvMedia (optional package.media)
+#}
+{% set pvTabs = config('preview-tabs')|default('3d,chat,tab')|lower|split(',') %}
+{% set pv3d = config('preview-3d')|default('on')|lower == 'on' %}
+<div class="oz-preview oz-preview--big" data-oz-preview data-oz-skin="{{ pvSkin }}" data-oz-skin-label="{{ __('Skin preview of') }} {{ pvLabel }}" data-oz-anim="{{ config('preview-animation')|default('walk')|lower }}" data-oz-rotate="{{ config('preview-autorotate')|default('on')|lower }}" data-oz-state="{{ pv3d ? 'idle' : 'fallback' }}">
+  <div class="oz-pv-head">
+    <div role="tablist" class="oz-pv-tabs" aria-label="{{ __('Preview') }}">
+      {% set first = true %}
+      {% for t in pvTabs %}{% set t = t|trim %}
+        {% if t in ['3d','chat','tab'] or (t == 'media' and pvMedia is defined and pvMedia|length) %}
+          <button type="button" role="tab" data-oz-pv-tab="{{ t }}" aria-selected="{{ first ? 'true' : 'false' }}" tabindex="{{ first ? 0 : -1 }}">{{ {'3d': __('In-game'), 'chat': __('Chat'), 'tab': __('Tab list'), 'media': __('Gallery')}[t] }}</button>
+          {% set first = false %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  {% set firstTab = pvTabs|first|trim %}
+  <div data-oz-pv-panel="3d" {% if firstTab != '3d' %}hidden{% endif %}>
+    <div class="oz-slot oz-stage3d" data-oz-3d>
+      <span class="oz-nametag oz-preview__overlay-tag" data-oz-preview-tag><span style="color:{{ pvColor }}">{{ pvPrefix }}</span> {{ pvLabel }}</span>
+      <img class="oz-preview__skin" src="https://mc-heads.net/body/{{ pvSkin|url_encode }}/260" alt="" data-oz-skin-fallback>
+    </div>
+    <span class="oz-preview__hint">{{ __('Drag to rotate') }}</span>
+    <button class="oz-btn oz-btn--alt oz-btn--sm oz-preview__play" type="button" data-oz-preview-play aria-pressed="true" hidden>{{ __('Pause') }}</button>
+  </div>
+
+  <div data-oz-pv-panel="chat" {% if firstTab != 'chat' %}hidden{% endif %}>
+    <div class="oz-slot oz-stage3d" style="align-content:end;padding:16px 16px 40px">
+      <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:4px;width:100%">
+        <div class="oz-chat" style="opacity:.6">Steve: {{ __('anyone up for a dungeon?') }}</div>
+        <div class="oz-chat"><span data-oz-preview-chat style="color:{{ pvColor }}">{{ pvPrefix }}</span> <b>{{ pvLabel }}</b>: {{ config('preview-chat')|default('gg! just ranked up') }}</div>
+        <div class="oz-chat" style="opacity:.6">Alex: {{ __('congrats!') }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div data-oz-pv-panel="tab" {% if firstTab != 'tab' %}hidden{% endif %}>
+    <div class="oz-slot oz-stage3d" style="align-content:center;padding:24px">
+      <div class="oz-tablist" style="position:relative;z-index:1;width:100%;max-width:340px;margin:0 auto">
+        <div><img src="https://mc-heads.net/avatar/MHF_Alex/18" alt=""> Alex <span class="oz-ping"><i style="height:4px"></i><i style="height:7px"></i><i style="height:10px"></i></span></div>
+        <div style="background:rgba(255,255,255,.14)"><img src="https://mc-heads.net/avatar/{{ pvSkin|url_encode }}/18" alt=""> <span data-oz-preview-tab style="color:{{ pvColor }}">{{ pvPrefix }}</span> {{ pvLabel }} <span class="oz-ping"><i style="height:4px"></i><i style="height:7px"></i><i style="height:10px"></i></span></div>
+        <div><img src="https://mc-heads.net/avatar/MHF_Steve/18" alt=""> Steve <span class="oz-ping"><i style="height:4px"></i><i style="height:7px"></i><i style="height:10px;opacity:.3"></i></span></div>
+      </div>
+    </div>
+  </div>
+
+  {% if pvMedia is defined and pvMedia|length %}
+  <div data-oz-pv-panel="media" {% if firstTab != 'media' %}hidden{% endif %} data-oz-gallery>
+    <div class="oz-slot oz-gallery__main" data-oz-gallery-main>
+      {% set m0 = pvMedia|first %}
+      {% if m0.type == 'video' %}<iframe data-oz-yt="{{ m0.url }}" title="{{ pvName }}" allowfullscreen></iframe>{% else %}<img src="{{ m0.url }}" alt="{{ pvName }}" loading="lazy">{% endif %}
+    </div>
+    {% if pvMedia|length > 1 %}
+    <div class="oz-gallery__thumbs">
+      {% for media in pvMedia %}
+        <button type="button" class="oz-slot" data-oz-media-type="{{ media.type }}" data-oz-media-url="{{ media.url }}" aria-current="{{ loop.first ? 'true' : 'false' }}" aria-label="{{ media.type == 'video' ? __('Play video') : __('Image') ~ ' ' ~ loop.index }}">{% if media.type == 'video' %}▶{% else %}<img src="{{ media.url }}" alt="" loading="lazy">{% endif %}</button>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if pvChoices is defined and pvChoices|length > 1 %}
+  <div class="oz-preview__picks" role="group" aria-label="{{ __('Preview a rank') }}" style="margin-top:12px">
+    {% for c in pvChoices %}
+      <button type="button" class="oz-btn oz-btn--alt oz-btn--sm" data-oz-preview-set data-prefix="{{ c.prefix }}" data-color="{{ c.color }}" data-name="{{ c.name }}" data-href="{{ c.href }}" aria-pressed="{{ c.name|lower == pvName|lower ? 'true' : 'false' }}">{{ c.name }}</button>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

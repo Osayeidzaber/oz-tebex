@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phone login</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{--a:#D4FF3A;--b:#B9A6FF;font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px}
+.s a{color:#A3ADC2;text-decoration:none}
+.h{font-family:"Pixelify Sans",sans-serif}
+.m{color:#A3ADC2}
+.k{font:600 11px/1.2 "Pixelify Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:#151B30;border:3px solid #05070F;box-shadow:inset 0 0 0 2px #232B47,inset 0 -6px 0 rgba(0,0,0,.25)}
+.ed{height:52px;border:3px solid #05070F;background:#0E1324;color:#A3ADC2;font:600 16px "Pixelify Sans",sans-serif;cursor:pointer}
+.ed[aria-pressed=true]{background:var(--a);color:#05070F;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28)}
+</style>
+</helmet>
+<div class="s" style="width: 390px; height: 844px; overflow: hidden; position: relative; background: linear-gradient(180deg, #050816, #0B1534 50%, #17255A)">
+  <div aria-hidden="true" style="position: absolute; left: -20%; top: 30px; width: 90%; height: 160px; background: var(--a); opacity: .2; filter: blur(50px); border-radius: 50%"></div>
+  <div aria-hidden="true" style="position: absolute; right: -20%; top: 0; width: 80%; height: 160px; background: var(--b); opacity: .24; filter: blur(50px); border-radius: 50%"></div>
+  <svg aria-hidden="true" viewBox="0 0 80 40" preserveAspectRatio="none" shape-rendering="crispEdges" style="position: absolute; left: 0; right: 0; bottom: 50px; width: 100%; height: 140px"><path fill="#1C2B5C" d="M0 40V26h8v-4h6v-6h6v-4h6v6h4v4h8v-8h6V8h6v6h4v6h6v4h8v-6h6v26z"></path></svg>
+  <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 50px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 12px, transparent 12px 24px), #6B4A2E; border-top: 10px solid #EEF4FF"></div>
+  <a href="#" class="h" style="position: absolute; left: 16px; top: 18px">← Store</a>
+  <div class="h" style="text-align: center; padding-top: 70px; font-size: 52px; font-weight: 700; text-shadow: 0 4px 0 var(--a), 0 8px 0 #05070F">Frostvale</div>
+  <form class="pan" style="position: absolute; left: 14px; right: 14px; top: 170px; padding: 22px; display: flex; flex-direction: column; gap: 16px" aria-labelledby="lt">
+    <div><h1 id="lt" class="h" style="margin: 0; font-size: 28px">Please log in</h1><p class="m" style="margin: 6px 0 0">Enter your in-game name.</p></div>
+    <fieldset style="border: 0; padding: 0; margin: 0"><legend class="k" style="margin-bottom: 8px">Edition</legend>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><button type="button" class="ed" aria-pressed="false">Java</button><button type="button" class="ed" aria-pressed="true">Bedrock</button></div>
+    </fieldset>
+    <div>
+      <label class="k" for="ign" style="display: block; margin-bottom: 8px">Username</label>
+      <div style="display: flex; align-items: center; gap: 8px; padding: 5px; border: 3px solid var(--a); background: #0E1324">
+        <span class="h" style="width: 40px; height: 40px; display: grid; place-items: center; background: #2A3456; font-size: 20px" aria-hidden="true">.</span>
+        <input id="ign" name="ign" value="Steve 123" style="flex: 1; min-width: 0; height: 40px; border: 0; background: transparent; color: #fff; font: 600 18px 'Pixelify Sans', sans-serif; outline: none">
+      </div>
+      <p class="m" style="font-size: 12px; margin: 8px 0 0">Sent as <b style="color: #E9EEF7">.Steve_123</b> — the Bedrock prefix is added for you.</p>
+    </div>
+    <button type="submit" class="h" style="height: 54px; border: 3px solid #05070F; background: var(--a); color: #05070F; font-size: 18px; cursor: pointer; box-shadow: inset 0 3px 0 rgba(255,255,255,.45), inset 0 -5px 0 rgba(0,0,0,.28)">Continue</button>
+  </form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

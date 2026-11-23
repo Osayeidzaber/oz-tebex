@@ -1,0 +1,13 @@
+{
+  "name": "oz-tebex-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OZ — Minecraft-style Tebex webstore theme",
+  "scripts": {
+    "test": "node tools/render.js . .preview",
+    "preview": "node tools/render.js . .preview && node tools/serve.js .preview 5173",
+    "docs": "node tools/settings-doc.js",
+    "package": "npm test && node tools/settings-doc.js && rm -rf dist && mkdir dist && zip -rq dist/oz-theme-v$npm_package_version.zip templates assets schema.json README.md AGENT.md docs -x '.*'"
+  },
+  "devDependencies": { "twig": "1.17.1" }
+}

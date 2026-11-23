@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <article class="oz-panel oz-welcome">
+    <nav class="oz-crumbs" aria-label="Breadcrumb"><a href="/">{{ __('Home') }}</a> / {{ title }}</nav>
+    <h1>{{ title }}</h1>
+    <div class="oz-prose" data-oz-faq>{{ metaData.content|raw }}</div>
+  </article>
+{% endblock %}

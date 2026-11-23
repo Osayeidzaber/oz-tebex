@@ -1,0 +1,14 @@
+<div class="oz-panel oz-mod">
+  <h3 style="color:var(--b)">{{ module.header|default(__('Top supporter')) }}</h3>
+  {% if module.donor %}
+    <div class="oz-donor">
+      <span class="oz-slot"><img src="https://mc-heads.net/avatar/{{ module.ign|url_encode }}/64" alt="" loading="lazy"></span>
+      <div>
+        <b>{{ module.ign }}</b>
+        {% if module.displayAmount %}<span class="oz-muted" style="font-size:13px">{{ module.total|money }} {{ basket.currency }} · {{ module.period }}</span>{% endif %}
+      </div>
+    </div>
+  {% else %}
+    <p class="oz-muted" style="margin:0;font-size:13px">{{ __('No supporter yet this period.') }}</p>
+  {% endif %}
+</div>

@@ -1,0 +1,866 @@
+{
+  "author": "OZ Themes",
+  "support_email": "support@example.com",
+  "config": [
+    {
+      "header": "1. Look & feel",
+      "options": [
+        {
+          "id": "preset",
+          "name": "Color preset",
+          "type": "select",
+          "default": "Frost",
+          "values": [
+            "Frost",
+            "Overworld",
+            "Nether",
+            "End",
+            "Ocean",
+            "Cherry",
+            "Desert",
+            "Deep Dark",
+            "Jungle",
+            "Custom"
+          ]
+        },
+        {
+          "id": "color-accent",
+          "name": "Accent color (Custom preset only)",
+          "type": "colour-picker",
+          "default": "#D4FF3A"
+        },
+        {
+          "id": "color-secondary",
+          "name": "Secondary color (Custom preset only)",
+          "type": "colour-picker",
+          "default": "#B9A6FF"
+        },
+        {
+          "id": "color-background",
+          "name": "Background color (Custom preset only)",
+          "type": "colour-picker",
+          "default": "#0B1020"
+        },
+        {
+          "id": "color-mode",
+          "name": "Light / dark mode",
+          "type": "select",
+          "default": "Dark",
+          "values": [
+            "Dark",
+            "Light",
+            "Player"
+          ]
+        },
+        {
+          "id": "ground",
+          "name": "Ground blocks under the header",
+          "type": "select",
+          "default": "Preset",
+          "values": [
+            "Preset",
+            "Snow",
+            "Grass",
+            "Sand",
+            "Nether",
+            "End",
+            "Cherry",
+            "Sculk",
+            "None"
+          ]
+        },
+        {
+          "id": "header-banner",
+          "name": "Header background image (optional, replaces the pixel sky)",
+          "type": "image-uploader",
+          "default": ""
+        },
+        {
+          "id": "header-style",
+          "name": "Header style",
+          "type": "select",
+          "default": "Scene",
+          "values": [
+            "Scene",
+            "Compact",
+            "Minimal"
+          ]
+        },
+        {
+          "id": "corners",
+          "name": "Corners",
+          "type": "select",
+          "default": "Square",
+          "values": [
+            "Square",
+            "Soft",
+            "Round"
+          ]
+        },
+        {
+          "id": "panel-style",
+          "name": "Panel style",
+          "type": "select",
+          "default": "Bevel",
+          "values": [
+            "Bevel",
+            "Flat",
+            "Outline"
+          ]
+        },
+        {
+          "id": "heading-font",
+          "name": "Heading font",
+          "type": "select",
+          "default": "Pixel",
+          "values": [
+            "Pixel",
+            "Blocky",
+            "Tech",
+            "Clean"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "2. Branding",
+      "options": [
+        {
+          "id": "logo-image",
+          "name": "Logo image (optional — otherwise the text logo is shown)",
+          "type": "image-uploader",
+          "default": ""
+        },
+        {
+          "id": "logo-text",
+          "name": "Text logo / server name",
+          "type": "textarea",
+          "default": "Frostvale"
+        },
+        {
+          "id": "header-links",
+          "name": "Header links — Label|URL, comma separated",
+          "type": "textarea",
+          "default": "Rules|/rules, Vote|/vote"
+        },
+        {
+          "id": "footer-links",
+          "name": "Footer community links — Label|URL, comma separated",
+          "type": "textarea",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "header": "3. Server & Discord",
+      "options": [
+        {
+          "id": "server-ip",
+          "name": "Server IP (shown + copy button)",
+          "type": "textarea",
+          "default": "play.example.com"
+        },
+        {
+          "id": "show-player-count",
+          "name": "Live player count (Minecraft Java/Bedrock only)",
+          "type": "select",
+          "default": "Show",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        },
+        {
+          "id": "discord-invite",
+          "name": "Discord invite link",
+          "type": "url",
+          "default": ""
+        },
+        {
+          "id": "discord-label",
+          "name": "Discord button text",
+          "type": "textarea",
+          "default": "Join Discord"
+        },
+        {
+          "id": "discord-id",
+          "name": "Discord server ID (for live member count — enable the server widget)",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "editions",
+          "name": "Login editions",
+          "type": "select",
+          "default": "Java + Bedrock",
+          "values": [
+            "Java + Bedrock",
+            "Java only",
+            "Bedrock only"
+          ]
+        },
+        {
+          "id": "bedrock-prefix",
+          "name": "Bedrock username prefix (Geyser/Floodgate)",
+          "type": "textarea",
+          "default": "."
+        },
+        {
+          "id": "player-card",
+          "name": "Show logged-in player skin card",
+          "type": "select",
+          "default": "Show",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "4. Announcement bar",
+      "options": [
+        {
+          "id": "announcement",
+          "name": "Show announcement bar",
+          "type": "select",
+          "default": "Hide",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        },
+        {
+          "id": "announcement-text",
+          "name": "Announcement text",
+          "type": "textarea",
+          "default": "Winter sale — 20% off all ranks"
+        },
+        {
+          "id": "announcement-link",
+          "name": "Announcement link (optional)",
+          "type": "url",
+          "default": ""
+        },
+        {
+          "id": "announcement-end",
+          "name": "Countdown end, e.g. 2026-12-31T23:59:00Z (optional)",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "announcement-style",
+          "name": "Announcement style",
+          "type": "select",
+          "default": "Static",
+          "values": [
+            "Static",
+            "Marquee"
+          ]
+        },
+        {
+          "id": "announcement-dismissible",
+          "name": "Visitors can close the announcement",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "5. Categories & packages",
+      "options": [
+        {
+          "id": "category-style",
+          "name": "Category navigation",
+          "type": "select",
+          "default": "Hotbar",
+          "values": [
+            "Hotbar",
+            "Tabs",
+            "Sidebar",
+            "None"
+          ]
+        },
+        {
+          "id": "category-icons",
+          "name": "Category icons — Name=icon, comma separated. Icons: crown, key, coin, gem, chest, pet, gift, sword, star, potion",
+          "type": "textarea",
+          "default": "Ranks=crown, Keys=key, Coins=coin"
+        },
+        {
+          "id": "packages-per-row",
+          "name": "Packages per row (desktop)",
+          "type": "select",
+          "default": "3",
+          "values": [
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        {
+          "id": "package-click",
+          "name": "Clicking a package opens",
+          "type": "select",
+          "default": "Popup",
+          "values": [
+            "Popup",
+            "Page"
+          ]
+        },
+        {
+          "id": "quantity-categories",
+          "name": "Quantity buttons in these categories — names or IDs, comma separated, * for all",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "quantity-options",
+          "name": "Quantity choices",
+          "type": "textarea",
+          "default": "1,5,10,15"
+        },
+        {
+          "id": "package-facts",
+          "name": "Show 3 info tiles on package pages",
+          "type": "select",
+          "default": "Show",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        },
+        {
+          "id": "fact-1-title",
+          "name": "Package tile 1 title",
+          "type": "textarea",
+          "default": "Instant"
+        },
+        {
+          "id": "fact-1-text",
+          "name": "Package tile 1 text",
+          "type": "textarea",
+          "default": "Delivered in-game"
+        },
+        {
+          "id": "fact-2-title",
+          "name": "Package tile 2 title",
+          "type": "textarea",
+          "default": "Secure"
+        },
+        {
+          "id": "fact-2-text",
+          "name": "Package tile 2 text",
+          "type": "textarea",
+          "default": "Checkout by Tebex"
+        },
+        {
+          "id": "fact-3-title",
+          "name": "Package tile 3 title",
+          "type": "textarea",
+          "default": "Fair play"
+        },
+        {
+          "id": "fact-3-text",
+          "name": "Package tile 3 text",
+          "type": "textarea",
+          "default": "No pay-to-win"
+        },
+        {
+          "id": "package-note",
+          "name": "Note under the buy button",
+          "type": "textarea",
+          "default": "Be online in-game to receive your items. Buying for a friend? Log in with their username."
+        },
+        {
+          "id": "category-tools",
+          "name": "Filter & sort bar on categories (4+ packages)",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "package-badges",
+          "name": "Package badges — one per line: Package name=BADGE, BADGE (POPULAR, BEST VALUE, NEW, LIMITED, SUBSCRIPTION, GIFTABLE or your own)",
+          "type": "textarea",
+          "default": "MVP=POPULAR\nMythic crate=BEST VALUE"
+        }
+      ]
+    },
+    {
+      "header": "6. Rank comparison table",
+      "options": [
+        {
+          "id": "rank-category",
+          "name": "Category that shows the rank table (name or ID)",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "rank-highlight",
+          "name": "Highlighted rank (package name)",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "rank-table",
+          "name": "Rows — one per line: Perk | value for 1st package | 2nd | … (yes / no or any text)",
+          "type": "textarea",
+          "default": "Chat prefix | [VIP] | [VIP+] | [MVP]\nHomes | 2 | 4 | 6\nNo chat cooldown | no | yes | yes\nRank cosmetics | no | no | yes"
+        },
+        {
+          "id": "rank-preview",
+          "name": "Show rank preview (skin + nametag + chat)",
+          "type": "select",
+          "default": "Show",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        },
+        {
+          "id": "rank-styles",
+          "name": "Rank styles — one per line: Package name | chat prefix | color",
+          "type": "textarea",
+          "default": "VIP | [VIP] | #C9CED6\nVIP+ | [VIP+] | #7AA2FF\nMVP | [MVP] | #F2C94C\nMVP+ | [MVP+] | #5BE0E6"
+        },
+        {
+          "id": "preview-chat",
+          "name": "Example chat message in the preview",
+          "type": "textarea",
+          "default": "gg! just ranked up"
+        },
+        {
+          "id": "preview-skin",
+          "name": "Skin shown to logged-out visitors (Minecraft username)",
+          "type": "textarea",
+          "default": "MHF_Steve"
+        }
+      ]
+    },
+    {
+      "header": "7. Homepage",
+      "options": [
+        {
+          "id": "home-categories",
+          "name": "Show category grid on homepage",
+          "type": "select",
+          "default": "Show",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        },
+        {
+          "id": "home-categories-title",
+          "name": "Category grid title",
+          "type": "textarea",
+          "default": "Browse the store"
+        },
+        {
+          "id": "welcome-title",
+          "name": "Welcome title (store description is set in Tebex)",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "info-cards",
+          "name": "Show 3 info cards",
+          "type": "select",
+          "default": "Show",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        },
+        {
+          "id": "info-1-title",
+          "name": "Card 1 title",
+          "type": "textarea",
+          "default": "Fast delivery"
+        },
+        {
+          "id": "info-1-text",
+          "name": "Card 1 text",
+          "type": "textarea",
+          "default": "Items arrive in-game within a few minutes. Make sure you are online."
+        },
+        {
+          "id": "info-2-title",
+          "name": "Card 2 title",
+          "type": "textarea",
+          "default": "Refund policy"
+        },
+        {
+          "id": "info-2-text",
+          "name": "Card 2 text",
+          "type": "textarea",
+          "default": "All digital purchases are final. Chargebacks result in a permanent ban."
+        },
+        {
+          "id": "info-3-title",
+          "name": "Card 3 title",
+          "type": "textarea",
+          "default": "Need help?"
+        },
+        {
+          "id": "info-3-text",
+          "name": "Card 3 text",
+          "type": "textarea",
+          "default": "Open a ticket on our Discord with your transaction ID."
+        }
+      ]
+    },
+    {
+      "header": "8. Checkout & legal",
+      "options": [
+        {
+          "id": "checkout-terms",
+          "name": "Show agreement checkboxes on checkout",
+          "type": "select",
+          "default": "Show",
+          "values": [
+            "Show",
+            "Hide"
+          ]
+        },
+        {
+          "id": "terms-url",
+          "name": "Terms of sale URL",
+          "type": "url",
+          "default": ""
+        },
+        {
+          "id": "refund-url",
+          "name": "Refund policy URL",
+          "type": "url",
+          "default": ""
+        },
+        {
+          "id": "faq-url",
+          "name": "FAQ URL",
+          "type": "url",
+          "default": ""
+        },
+        {
+          "id": "disclaimer-game",
+          "name": "Footer disclaimer",
+          "type": "select",
+          "default": "Minecraft",
+          "values": [
+            "Minecraft",
+            "FiveM",
+            "Rust",
+            "Hytale",
+            "Custom",
+            "None"
+          ]
+        },
+        {
+          "id": "disclaimer-text",
+          "name": "Custom disclaimer text",
+          "type": "textarea",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "header": "9. Motion & effects",
+      "options": [
+        {
+          "id": "fx-page-loader",
+          "name": "Page loading indicator",
+          "type": "select",
+          "default": "Bar",
+          "values": [
+            "Bar",
+            "Screen",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-page-transitions",
+          "name": "Smooth page transitions",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-scroll-reveal",
+          "name": "Reveal sections on scroll",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-card-tilt",
+          "name": "3D tilt on package cards",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-card-shine",
+          "name": "Shine sweep on hover",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-fly-to-cart",
+          "name": "Item flies to basket on add",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-confetti",
+          "name": "Confetti",
+          "type": "select",
+          "default": "Checkout",
+          "values": [
+            "Checkout",
+            "Add",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-particles",
+          "name": "Header particles",
+          "type": "select",
+          "default": "Auto",
+          "values": [
+            "Auto",
+            "Snow",
+            "Fireflies",
+            "Embers",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-parallax",
+          "name": "Parallax header",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-sticky-header",
+          "name": "Compact header when scrolling",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-back-to-top",
+          "name": "Back-to-top button",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-sounds",
+          "name": "Retro click sounds (with mute button)",
+          "type": "select",
+          "default": "Off",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "fx-cursor",
+          "name": "Cursor",
+          "type": "select",
+          "default": "Default",
+          "values": [
+            "Default",
+            "Pixel"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "10. Product & rank pages",
+      "options": [
+        {
+          "id": "product-layout",
+          "name": "Package page layout",
+          "type": "select",
+          "default": "Big",
+          "values": [
+            "Big",
+            "Compact"
+          ]
+        },
+        {
+          "id": "preview-3d",
+          "name": "Live 3D skin preview (falls back to 2D)",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "preview-animation",
+          "name": "Preview animation",
+          "type": "select",
+          "default": "Walk",
+          "values": [
+            "Walk",
+            "Run",
+            "Idle",
+            "None"
+          ]
+        },
+        {
+          "id": "preview-autorotate",
+          "name": "Auto-rotate preview",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "preview-tabs",
+          "name": "Preview tabs, in order (3d, chat, tab, media)",
+          "type": "textarea",
+          "default": "3d,chat,tab,media"
+        },
+        {
+          "id": "rank-ladder",
+          "name": "Rank ladder above the rank table",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "sticky-buy-bar",
+          "name": "Sticky buy bar on package pages",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "11. Search, basket & social",
+      "options": [
+        {
+          "id": "search",
+          "name": "Store search (press / or Ctrl+K)",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "basket-goal-amount",
+          "name": "Free-gift goal amount (empty = off)",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "basket-goal-text",
+          "name": "Free-gift text (:amount = amount left)",
+          "type": "textarea",
+          "default": "Spend :amount more for a free gift!"
+        },
+        {
+          "id": "basket-goal-done",
+          "name": "Free-gift unlocked text",
+          "type": "textarea",
+          "default": "Free gift unlocked!"
+        },
+        {
+          "id": "social-popups",
+          "name": "Show recent real purchases as small popups",
+          "type": "select",
+          "default": "Off",
+          "values": [
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "id": "checkout-theme",
+          "name": "Tebex checkout window theme",
+          "type": "select",
+          "default": "Auto",
+          "values": [
+            "Auto",
+            "Dark",
+            "Light",
+            "Default"
+          ]
+        },
+        {
+          "id": "checkout-redirect",
+          "name": "Redirect after payment (optional URL)",
+          "type": "url",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "header": "12. SEO & sharing",
+      "options": [
+        {
+          "id": "seo-description",
+          "name": "Search & share description",
+          "type": "textarea",
+          "default": ""
+        },
+        {
+          "id": "seo-image",
+          "name": "Share image (1200×630)",
+          "type": "image-uploader",
+          "default": ""
+        }
+      ]
+    }
+  ]
+}

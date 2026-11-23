@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Login</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{--a:#D4FF3A;--b:#B9A6FF;font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px}
+.s a{color:#A3ADC2;text-decoration:none}
+.h{font-family:"Pixelify Sans",sans-serif}
+.m{color:#A3ADC2}
+.k{font:600 12px/1.2 "Pixelify Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:#151B30;border:3px solid #05070F;box-shadow:inset 0 0 0 2px #232B47,inset 0 -6px 0 rgba(0,0,0,.25)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 18px;border:3px solid #05070F;background:var(--a);color:#05070F;font:600 18px "Pixelify Sans",sans-serif;cursor:pointer;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28)}
+.ed{height:56px;border:3px solid #05070F;background:#0E1324;color:#A3ADC2;font:600 17px "Pixelify Sans",sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+.ed[aria-pressed=true]{background:var(--a);color:#05070F;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28)}
+.star{position:absolute;width:4px;height:4px;background:#E9EEF7}
+</style>
+</helmet>
+<div class="s" style="width: 1440px; height: 900px; position: relative; overflow: hidden; background: linear-gradient(180deg, #050816, #0B1534 50%, #17255A)">
+  <div aria-hidden="true" style="position: absolute; left: -10%; top: 40px; width: 70%; height: 260px; background: var(--a); opacity: .18; filter: blur(80px); border-radius: 50%"></div>
+  <div aria-hidden="true" style="position: absolute; right: -8%; top: 0; width: 60%; height: 240px; background: var(--b); opacity: .22; filter: blur(90px); border-radius: 50%"></div>
+  <span class="star" style="left: 10%; top: 90px"></span><span class="star" style="left: 26%; top: 200px; opacity: .6"></span><span class="star" style="left: 74%; top: 70px"></span><span class="star" style="left: 88%; top: 220px; opacity: .6"></span><span class="star" style="left: 60%; top: 150px; opacity: .5"></span>
+  <svg aria-hidden="true" viewBox="0 0 160 40" preserveAspectRatio="none" shape-rendering="crispEdges" style="position: absolute; left: 0; right: 0; bottom: 70px; width: 100%; height: 260px"><path fill="#1C2B5C" d="M0 40V26h8v-4h6v-6h6v-4h6v6h4v4h8v-8h6V8h6v6h4v6h6v4h8v-6h6v-6h6V4h6v8h4v6h6v4h8v-8h6v-6h6v8h4v6h6v4h8v-4h6v-4h6v8h6v14z"></path><path fill="#26386E" d="M0 40V32h12v-4h10v4h14v-6h12v4h16v-2h12v6h14v-6h10v2h16v-4h12v6h12v-4h10v12z"></path></svg>
+  <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 16px, transparent 16px 32px), repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0 16px, transparent 16px 32px), #6B4A2E; border-top: 12px solid #EEF4FF"></div>
+
+  <a href="#" class="h" style="position: absolute; left: 40px; top: 32px; font-size: 16px">← Back to store</a>
+
+  <form class="pan" style="position: absolute; left: 50%; top: 80px; transform: translateX(-50%); width: 500px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 20px; box-shadow: inset 0 0 0 2px #232B47, 0 30px 80px rgba(0,0,0,.55)" aria-labelledby="lt">
+    <div style="text-align: center">
+      <div class="h" style="font-size: 44px; font-weight: 700; text-shadow: 0 4px 0 var(--a), 0 8px 0 #05070F">Frostvale</div>
+      <h1 id="lt" class="h" style="margin: 22px 0 6px; font-size: 30px">Please log in</h1>
+      <p class="m" style="margin: 0">Enter your in-game name so we know where to deliver.</p>
+    </div>
+    <fieldset style="border: 0; padding: 0; margin: 0">
+      <legend class="k" style="margin-bottom: 10px">Edition</legend>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <button type="button" class="ed" aria-pressed="true">Java</button>
+        <button type="button" class="ed" aria-pressed="false">Bedrock</button>
+      </div>
+    </fieldset>
+    <div>
+      <label class="k" for="ign" style="display: block; margin-bottom: 8px">Username</label>
+      <div style="display: flex; align-items: center; gap: 10px; padding: 6px; border: 3px solid var(--a); background: #0E1324">
+        <svg width="48" height="48" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="#3B2A1A" d="M0 0h8v8H0z"></path><path fill="#C99B6B" d="M0 3h8v5H0z"></path><path fill="#fff" d="M1 4h2v1H1zM5 4h2v1H5z"></path><path fill="#2E8B57" d="M2 4h1v1H2zM5 4h1v1H5z"></path><path fill="#8A5A3A" d="M3 6h2v1H3z"></path></svg>
+        <input id="ign" name="ign" value="Notch_" style="flex: 1; min-width: 0; height: 48px; border: 0; background: transparent; color: #fff; font: 600 20px 'Pixelify Sans', sans-serif; outline: none">
+      </div>
+      <p class="m" style="font-size: 12px; margin: 8px 0 0">Bedrock players get the server prefix added automatically. Buying a gift? Use your friend's name.</p>
+    </div>
+    <button type="submit" class="btn">Continue</button>
+  </form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

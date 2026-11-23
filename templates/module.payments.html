@@ -1,0 +1,24 @@
+<div class="oz-panel oz-mod">
+  <h3>{{ module.header|default(__('Recent payments')) }}</h3>
+  {% if module.payments|length %}
+    {% if module.displayPackage or module.displayPrice %}
+      <div class="oz-feed">
+        {% for payment in module.payments|slice(0, 6) %}
+          <div>
+            <img src="https://mc-heads.net/avatar/{{ payment.ign|url_encode }}/32" alt="" width="26" height="26" loading="lazy">
+            <span><strong>{{ payment.ign }}</strong>{% if module.displayPackage %} · {{ payment.name }}{% endif %}</span>
+            {% if module.displayPrice %}<small class="oz-muted">{{ payment.price|money }} {{ payment.currency }}</small>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="oz-heads">
+        {% for payment in module.payments|slice(0, 10) %}
+          <span class="oz-slot" title="{{ payment.ign }}"><img src="https://mc-heads.net/avatar/{{ payment.ign|url_encode }}/40" alt="{{ payment.ign }}" loading="lazy"></span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% else %}
+    <p class="oz-muted" style="margin:0;font-size:13px">{{ __('Be the first to support the server!') }}</p>
+  {% endif %}
+</div>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phone ranks</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{--a:#D4FF3A;--b:#B9A6FF;font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px}
+.s a{color:var(--a);text-decoration:none}
+.h{font-family:"Pixelify Sans",sans-serif}
+.m{color:#A3ADC2}
+.k{font:600 11px/1.2 "Pixelify Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:#151B30;border:3px solid #05070F;box-shadow:inset 0 0 0 2px #232B47,inset 0 -6px 0 rgba(0,0,0,.25)}
+.slot{background:#0E1324;box-shadow:inset 4px 4px 0 rgba(0,0,0,.55),inset -4px -4px 0 rgba(255,255,255,.07);display:grid;place-items:center;position:relative}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;padding:0 12px;border:3px solid #05070F;background:var(--a);color:#05070F !important;font:600 15px "Pixelify Sans",sans-serif;cursor:pointer;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28);box-sizing:border-box}
+.btn2{background:#2A3456;color:#E9EEF7 !important}
+.rt{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;background:#0E1324;border:3px solid #05070F}
+.rt button{height:56px;border:0;background:transparent;color:#C9D2E3;font:600 13px "Pixelify Sans",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0}
+.rt .on{background:var(--a);color:#05070F}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:2px solid #0E1324}
+.y{color:#6BE38F;font:700 20px "Pixelify Sans",sans-serif}.n{color:#5A6480;font:700 20px "Pixelify Sans",sans-serif}
+</style>
+</helmet>
+<div class="s" style="width: 390px; height: 1300px; overflow: hidden; position: relative; background: #0B1020">
+  <header style="position: relative; height: 140px; overflow: hidden; background: linear-gradient(180deg, #050816, #17255A)">
+    <div aria-hidden="true" style="position: absolute; right: -20%; top: 0; width: 90%; height: 100px; background: var(--b); opacity: .22; filter: blur(40px); border-radius: 50%"></div>
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 30px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 12px, transparent 12px 24px), #6B4A2E; border-top: 8px solid #EEF4FF"></div>
+    <div style="position: relative; display: flex; justify-content: space-between; align-items: center; padding: 12px">
+      <button class="btn btn2" style="width: 44px; padding: 0" aria-label="Menu">≡</button>
+      <a href="#" class="h" style="font-size: 30px; font-weight: 700; color: #fff !important; text-shadow: 0 3px 0 var(--a), 0 6px 0 #05070F">Frostvale</a>
+      <button class="btn" style="width: 44px; padding: 0" aria-label="Basket, 0 items">0</button>
+    </div>
+  </header>
+
+  <div style="padding: 16px 12px 0">
+    <div class="m" style="font-size: 12px">Home / Ranks</div>
+    <h1 class="h" style="margin: 4px 0 6px; font-size: 34px">Ranks</h1>
+    <p class="m" style="margin: 0 0 14px; line-height: 1.5">Tap a rank to compare. Already ranked? You only pay the difference.</p>
+
+    <div class="rt" role="tablist" aria-label="Ranks">
+      <button role="tab"><svg width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#C9CED6" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path></svg>VIP</button>
+      <button role="tab"><svg width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#7AA2FF" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path></svg>VIP+</button>
+      <button role="tab" class="on" aria-selected="true"><svg width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#05070F" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path></svg>MVP</button>
+      <button role="tab"><svg width="22" height="22" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#5BE0E6" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path></svg>MVP+</button>
+    </div>
+
+    <article class="pan" style="margin-top: 14px; padding: 16px; outline: 3px solid var(--a); outline-offset: -3px">
+      <div class="h" style="background: var(--a); color: #05070F; text-align: center; padding: 5px; margin: -16px -16px 14px; font-size: 12px; letter-spacing: .1em">MOST POPULAR</div>
+      <div style="display: flex; gap: 14px; align-items: center">
+        <span class="slot" style="width: 88px; height: 88px; flex: none"><svg width="60" height="60" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#FFF0A8" d="M2 6h1v4H2zM7 3h1v2H7z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path></svg></span>
+        <div><h2 class="h" style="margin: 0; font-size: 30px">MVP</h2><s class="m" style="font-size: 12px">$14.99</s> <span class="h" style="font-size: 24px">$11.99</span></div>
+      </div>
+      <div style="margin-top: 12px">
+        <div class="row"><span>Chat prefix</span><span class="h" style="padding: 3px 8px; background: #F2C94C; color: #05070F; border: 2px solid #05070F; font-size: 13px">MVP</span></div>
+        <div class="row"><span>Homes</span><span class="h" style="font-size: 18px">6</span></div>
+        <div class="row"><span>Event coin boost</span><span class="h" style="font-size: 18px">4.5×</span></div>
+        <div class="row"><span>No chat cooldown</span><span class="y">✓</span></div>
+        <div class="row"><span>Rank trails &amp; hats</span><span class="y">✓</span></div>
+        <div class="row"><span>/nick with colors</span><span class="y">✓</span></div>
+        <div class="row"><span>Queue priority</span><span class="n">✕</span></div>
+        <div class="row" style="border-bottom: 0"><span>Monthly crate keys</span><span class="h" style="font-size: 18px">3</span></div>
+      </div>
+      <a href="#" class="btn" style="width: 100%; height: 54px; font-size: 18px; margin-top: 10px">Buy MVP · $11.99</a>
+    </article>
+    <div style="display: flex; justify-content: center; gap: 6px; margin-top: 12px" aria-hidden="true"><span style="width: 8px; height: 8px; background: #2A3456"></span><span style="width: 8px; height: 8px; background: #2A3456"></span><span style="width: 20px; height: 8px; background: var(--a)"></span><span style="width: 8px; height: 8px; background: #2A3456"></span></div>
+    <p class="m" style="text-align: center; font-size: 12px; margin: 8px 0 0">Swipe for the next rank</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<div class="oz-panel oz-mod">
+  <h3>{{ __('Community goal') }}</h3>
+  {% if module.communitygoal.image %}<span class="oz-slot" style="height:96px;margin-bottom:12px"><img src="{{ module.communitygoal.image }}" alt="" style="max-height:72px;width:auto"></span>{% endif %}
+  <div class="oz-xp__lvl">{{ module.percentage|round }}%</div>
+  <div class="oz-xp__bar {% if module.bar.style == 'animated' %}oz-xp__bar--animated{% elseif module.bar.style == 'striped' %}oz-xp__bar--striped{% endif %}" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ module.percentage|round }}">
+    <span class="oz-xp__fill" style="width: {{ min(module.percentage, 100) }}%"></span>
+  </div>
+  {% if module.displayAmount %}<div class="oz-xp__meta">{{ module.total|money }} / {{ module.target|money }} {{ basket.currency }}{% if module.communitygoal.repeatable and module.communitygoal.times_achieved %} · {{ __('reached') }} {{ module.communitygoal.times_achieved }}&times;{% endif %}</div>{% endif %}
+  {% if module.communitygoal.description %}<div class="oz-prose" style="font-size:13px;margin-top:10px">{{ module.communitygoal.description|raw }}</div>{% endif %}
+</div>

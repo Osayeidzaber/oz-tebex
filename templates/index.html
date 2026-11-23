@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block hero_class %}{% endblock %}
+
+{% block content %}
+  {% if config('home-categories')|default('show')|lower == 'show' and store.categories|length %}
+    {% set iconNames = ['crown','key','coin','gem','chest','pet','gift','sword','star','potion'] %}
+    {% set iconMap = {} %}
+    {% for pair in config('category-icons')|default('')|split(',') %}
+      {% set kv = pair|split('=') %}
+      {% if kv|length == 2 %}{% set iconMap = iconMap|merge({ (kv[0]|trim|lower): kv[1]|trim|lower }) %}{% endif %}
+    {% endfor %}
+    <section aria-labelledby="oz-cats-h">
+      <div class="oz-section-head">
+        <h2 id="oz-cats-h">{{ config('home-categories-title')|default(__('Browse the store')) }}</h2>
+        <span class="oz-label">{{ store.categories|length }} {{ __('categories') }}</span>
+      </div>
+      <div class="oz-cats">
+        {% set n = 0 %}
+        {% for category in store.categories %}
+          {% set ic = iconMap[category.name|lower]|default(iconMap[category.id ~ '']|default(iconNames[n % 10])) %}
+          {% set n = n + 1 %}
+          <a class="oz-panel oz-cat" href="/category/{{ category.id }}">
+            <span class="oz-slot"><span class="oz-ico oz-ico--{{ ic }}"></span></span>
+            <span><strong>{{ category.name }}</strong><span class="oz-muted" style="font-size:13px">{{ __('View items') }} &rarr;</span></span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <article class="oz-panel oz-welcome">
+    <div class="oz-label">{{ __('Welcome to') }}</div>
+    <h1>{{ config('welcome-title')|default(store.name) }}</h1>
+    {% if description %}
+      <div class="oz-prose">{{ description|raw }}</div>
+    {% endif %}
+
+    {% if config('info-cards')|default('show')|lower == 'show' %}
+    <div class="oz-info">
+      <div class="oz-slot">
+        <h3 style="color:var(--a)">{{ config('info-1-title')|default(__('Fast delivery')) }}</h3>
+        <p>{{ config('info-1-text')|default(__('Items arrive in-game within a few minutes. Make sure you are online.')) }}</p>
+      </div>
+      <div class="oz-slot">
+        <h3 style="color:var(--danger)">{{ config('info-2-title')|default(__('Refund policy')) }}</h3>
+        <p>{{ config('info-2-text')|default(__('All digital purchases are final. Chargebacks result in a permanent ban.')) }}</p>
+      </div>
+      <div class="oz-slot">
+        <h3 style="color:var(--b)">{{ config('info-3-title')|default(__('Need help?')) }}</h3>
+        <p>{{ config('info-3-text')|default(__('Open a ticket on our Discord with your transaction ID.')) }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </article>
+{% endblock %}

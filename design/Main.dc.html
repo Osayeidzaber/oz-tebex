@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Store home demo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B1020}
+.s{font-family:Inter,sans-serif;color:#E9EEF7;font-size:14px}
+.s a{color:var(--a);text-decoration:none}
+.h{font-family:var(--hf);letter-spacing:.01em}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px;box-sizing:border-box}
+.m{color:#A3ADC2}
+.k{font:600 12px/1.2 var(--hf);letter-spacing:.08em;text-transform:uppercase;color:#A3ADC2}
+.pan{background:var(--panel);border:3px solid #05070F;border-radius:var(--r);box-shadow:var(--bev)}
+.scene{display:var(--sceneD)}
+.tabs a{padding:12px 16px;color:#C9D2E3 !important;font:600 16px var(--hf);border-radius:var(--r)}
+.tabs a.on{background:var(--a);color:#05070F !important}
+.slot{background:var(--slot);border-radius:var(--r);box-shadow:inset 4px 4px 0 rgba(0,0,0,.55),inset -4px -4px 0 rgba(255,255,255,.07);display:grid;place-items:center;position:relative}
+.btn{display:inline-flex;border-radius:var(--r);align-items:center;justify-content:center;gap:8px;height:46px;padding:0 20px;border:3px solid #05070F;background:var(--a);color:#05070F !important;font:600 16px var(--hf);cursor:pointer;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.28);box-sizing:border-box}
+.btn:hover{filter:brightness(1.08)}
+.btn2{background:var(--raise);color:#E9EEF7 !important}
+.qty{position:absolute;right:8px;bottom:4px;font:700 20px var(--hf);color:#fff;text-shadow:2px 2px 0 #3A3A3A}
+.price{font:700 24px var(--hf);color:#fff}
+.old{color:#8C97AE;text-decoration:line-through;font-size:13px}
+.tag{display:inline-block;border-radius:calc(var(--r) / 2);font:600 12px/1 var(--hf);padding:5px 7px;border:2px solid #05070F}
+.hb{display:flex;flex-direction:column;align-items:center;gap:8px;color:#C9D2E3 !important;font:600 13px var(--hf)}
+.hb .slot{width:72px;height:72px;border:3px solid #05070F}
+.hb:hover .slot{box-shadow:inset 4px 4px 0 rgba(0,0,0,.55),inset -4px -4px 0 rgba(255,255,255,.07),0 0 0 3px #fff}
+.sel .slot{outline:4px solid #fff;outline-offset:0;background:#1B2340}
+.star{display:var(--sceneD);position:absolute;width:4px;height:4px;background:#E9EEF7}
+.foot a{display:block;color:#C9D2E3 !important;padding:4px 0}
+</style>
+</helmet>
+<div class="s" style="{{cssVars}}; background: var(--bg); min-height: 1800px">
+
+  <sc-if value="{{showAnnouncement}}" hint-placeholder-val="{{ true }}">
+    <div style="background: var(--a); color: #05070F; border-bottom: 3px solid #05070F">
+      <div class="wrap h" style="height: 38px; display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 15px">
+        <span>Winter sale — 20% off all ranks</span><span style="background: #05070F; color: var(--a); padding: 2px 8px">02d 14h 36m</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <header style="position: relative; height: var(--heroH); overflow: hidden; background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 50%, var(--sky3) 100%)">
+    <div class="scene" aria-hidden="true" style="position: absolute; left: -10%; top: 30px; width: 70%; height: 220px; background: var(--a); opacity: .2; filter: blur(70px); transform: rotate(-8deg); border-radius: 50%"></div>
+    <div class="scene" aria-hidden="true" style="position: absolute; right: -8%; top: 0; width: 60%; height: 200px; background: var(--b); opacity: .24; filter: blur(80px); transform: rotate(10deg); border-radius: 50%"></div>
+    <span class="star" style="left: 8%; top: 70px"></span><span class="star" style="left: 22%; top: 150px; opacity: .6"></span><span class="star" style="left: 36%; top: 60px; opacity: .8"></span><span class="star" style="left: 58%; top: 120px; opacity: .5"></span><span class="star" style="left: 71%; top: 48px"></span><span class="star" style="left: 86%; top: 140px; opacity: .7"></span><span class="star" style="left: 94%; top: 80px; opacity: .5"></span>
+    <svg class="scene" aria-hidden="true" viewBox="0 0 160 40" preserveAspectRatio="none" shape-rendering="crispEdges" style="position: absolute; left: 0; right: 0; bottom: 60px; width: 100%; height: 200px"><path style="fill: var(--hill1)" d="M0 40V26h8v-4h6v-6h6v-4h6v6h4v4h8v-8h6V8h6v6h4v6h6v4h8v-6h6v-6h6V4h6v8h4v6h6v4h8v-8h6v-6h6v8h4v6h6v4h8v-4h6v-4h6v8h6v14z"></path><path style="fill: var(--hill2)" d="M0 40V32h12v-4h10v4h14v-6h12v4h16v-2h12v6h14v-6h10v2h16v-4h12v6h12v-4h10v12z"></path></svg>
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 64px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 16px, transparent 16px 32px), repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0 16px, transparent 16px 32px), var(--g2); border-top: 12px solid var(--g1)"></div>
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 64px; height: 8px; background: repeating-linear-gradient(90deg, var(--g1) 0 16px, transparent 16px 48px)"></div>
+
+    <div class="wrap" style="position: relative; height: 100%; display: flex; flex-direction: column">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 18px">
+        <nav style="display: flex; gap: 8px" aria-label="Site"><a href="#" class="btn btn2" style="height: 40px; font-size: 14px">Rules</a><a href="#" class="btn btn2" style="height: 40px; font-size: 14px">Vote</a><a href="#" class="btn btn2" style="height: 40px; font-size: 14px">FAQ</a></nav>
+        <div style="display: flex; gap: 8px; align-items: center">
+          <a href="#" class="pan" style="display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 14px 0 6px; color: #E9EEF7 !important; box-sizing: border-box">
+            <svg width="34" height="34" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="#3B2A1A" d="M0 0h8v8H0z"></path><path fill="#C99B6B" d="M0 3h8v5H0z"></path><path fill="#fff" d="M1 4h2v1H1zM5 4h2v1H5z"></path><path fill="#2E8B57" d="M2 4h1v1H2zM5 4h1v1H5z"></path><path fill="#8A5A3A" d="M3 6h2v1H3z"></path></svg>
+            <span><span class="h" style="display: block; font-size: 15px; color: #fff">Notch_</span><span class="m" style="font-size: 11px">Java · switch</span></span>
+          </a>
+          <a href="#" class="btn" style="height: 48px" aria-label="Basket, 2 items">Basket · 2 · $36.98</a>
+        </div>
+      </div>
+
+      <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 24px; padding-bottom: 90px">
+        <button style="justify-self: start; display: flex; align-items: center; gap: 14px; border: 0; background: none; color: #E9EEF7; text-align: left; cursor: pointer; padding: 0" aria-label="Copy server IP">
+          <span class="btn" style="width: 60px; height: 60px; padding: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></span>
+          <span><span class="k" style="color: var(--a); display: block">Play now · 412 online</span><span class="h" style="display: block; font-size: 24px; margin-top: 2px">{{ip}}</span><span class="m" style="font-size: 12px">Click to copy</span></span>
+        </button>
+        <div style="text-align: center">
+          <div class="h" style="font-size: 104px; font-weight: 700; line-height: .9; color: #fff; text-shadow: 0 5px 0 var(--a), 0 10px 0 #05070F, 0 24px 40px rgba(0,0,0,.6)">{{serverName}}</div>
+          <div class="k" style="margin-top: 22px; color: #C9D2E3">Official store</div>
+        </div>
+        <a href="#" style="justify-self: end; display: flex; align-items: center; gap: 14px; color: #E9EEF7 !important; text-align: right">
+          <span><span class="k" style="color: var(--b); display: block">Discord · 2,318 online</span><span class="h" style="display: block; font-size: 24px; margin-top: 2px">{{discord}}</span><span class="m" style="font-size: 12px">Join the community</span></span>
+          <span class="btn" style="width: 60px; height: 60px; padding: 0; background: var(--b)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17c-2 0-4-1-4-1V8l2-3h4l1 2h4l1-2h4l2 3v8s-2 1-4 1l-1-2H8z"></path><circle cx="9.5" cy="12" r="1.1"></circle><circle cx="14.5" cy="12" r="1.1"></circle></svg></span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{showHotbar}}" hint-placeholder-val="{{ true }}">
+  <nav class="wrap" style="position: relative; margin-top: -52px" aria-label="Categories">
+    <div class="pan" style="display: flex; justify-content: center; gap: 10px; padding: 14px 14px 12px; flex-wrap: wrap; width: fit-content; margin: 0 auto">
+      <a href="#" class="hb sel"><span class="slot"><svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#FFF0A8" d="M2 6h1v4H2zM7 3h1v2H7z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path></svg></span>Ranks</a>
+      <a href="#" class="hb"><span class="slot"><svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M1 5h6v6H1zM7 7h8v2H7zM11 9h2v2h-2zM13 9h1v3h-1z"></path><path fill="#0E1324" d="M3 7h2v2H3z"></path><path fill="#FFF0A8" d="M1 5h6v1H1z"></path></svg><span class="qty">6</span></span>Keys</a>
+      <a href="#" class="hb"><span class="slot"><svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E0B84A" d="M5 2h6v1h2v2h1v6h-1v2h-2v1H5v-1H3v-2H2V5h1V3h2z"></path><path fill="#A9862A" d="M7 5h2v6H7z"></path><path fill="#FFF0A8" d="M5 3h3v1H5zM3 5h1v3H3z"></path></svg><span class="qty">64</span></span>Coins</a>
+      <a href="#" class="hb"><span class="slot"><svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#5BE0E6" d="M5 2h6v2h2v2h1v2h-1v2h-2v2H9v2H7v-2H5v-2H3V8H2V6h1V4h2z"></path><path fill="#C9FBFD" d="M5 3h3v2H5zM3 6h2v1H3z"></path><path fill="#2A9FA5" d="M9 10h2v1H9zM7 12h2v1H7z"></path></svg></span>Cosmetics</a>
+      <a href="#" class="hb"><span class="slot"><svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#9A5E2C" d="M2 3h12v4H2z"></path><path fill="#7A4A22" d="M2 7h12v7H2z"></path><path fill="#4A2C12" d="M2 6h12v1H2z"></path><path fill="#C9CED6" d="M1 3h1v11H1zM14 3h1v11h-1z"></path><path fill="#F2C94C" d="M7 5h2v4H7z"></path></svg></span>Bundles</a>
+      <a href="#" class="hb"><span class="slot"><svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E8E8E8" d="M3 6h9v6H3zM12 7h2v3h-2zM4 12h2v2H4zM9 12h2v2H9z"></path><path fill="#F2A0B8" d="M12 7h2v1h-2z"></path><path fill="#222" d="M12 8h1v1h-1z"></path><path fill="#BDBDBD" d="M3 10h9v2H3z"></path></svg></span>Pets</a>
+      <a href="#" class="hb"><span class="slot"><svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#E5484D" d="M2 6h12v8H2z"></path><path fill="#F2C94C" d="M7 4h2v10H7zM2 8h12v1H2zM4 3h3v2H4zM9 3h3v2H9z"></path></svg></span>Gift cards</a>
+    </div>
+  </nav>
+  </sc-if>
+  <sc-if value="{{showTabs}}" hint-placeholder-val="{{ false }}">
+    <nav class="wrap" style="position: relative; margin-top: -30px" aria-label="Categories">
+      <div class="pan tabs" style="display: flex; gap: 4px; padding: 6px; flex-wrap: wrap"><a href="#" class="on">Ranks</a><a href="#">Keys</a><a href="#">Coins</a><a href="#">Cosmetics</a><a href="#">Bundles</a><a href="#">Pets</a><a href="#" style="margin-left: auto">Gift cards</a></div>
+    </nav>
+  </sc-if>
+
+  <section class="wrap" style="padding-top: 40px">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px"><h2 class="h" style="margin: 0; font-size: 30px; color: #fff">Featured</h2><span class="k">Picked by the server owner</span></div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+      <article class="pan" style="padding: 14px; display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 16px; align-items: center">
+        <div class="slot" style="height: 128px"><svg width="84" height="84" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#F2C94C" d="M1 5h2v1h1v1h1V4h1V3h1V2h2v1h1v1h1v3h1V6h1V5h2v8H1z"></path><path fill="#C8961E" d="M1 11h14v2H1z"></path><path fill="#8A6414" d="M1 13h14v1H1z"></path><path fill="#FFF0A8" d="M2 6h1v4H2zM7 3h1v2H7z"></path><path fill="#5BE0E6" d="M7 8h2v2H7z"></path><path fill="#E5484D" d="M3 9h1v1H3zM12 9h1v1h-1z"></path></svg></div>
+        <div><span class="tag" style="background: var(--a); color: #05070F">-20%</span><h3 class="h" style="margin: 10px 0 2px; font-size: 26px; color: #fff">MVP</h3><div class="m" style="font-size: 12px">Lifetime rank</div><div style="margin-top: 8px"><span class="old">$14.99</span> <span class="price">$11.99</span></div></div>
+      </article>
+      <article class="pan" style="padding: 14px; display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 16px; align-items: center">
+        <div class="slot" style="height: 128px"><svg width="84" height="84" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#9A5E2C" d="M2 3h12v4H2z"></path><path fill="#7A4A22" d="M2 7h12v7H2z"></path><path fill="#4A2C12" d="M2 6h12v1H2zM2 13h12v1H2z"></path><path fill="#C9CED6" d="M1 3h1v11H1zM14 3h1v11h-1z"></path><path fill="#B8773E" d="M3 4h10v1H3z"></path><path fill="#F2C94C" d="M7 5h2v4H7z"></path></svg><span class="qty">5</span></div>
+        <div><span class="tag" style="background: var(--b); color: #05070F">Best value</span><h3 class="h" style="margin: 10px 0 2px; font-size: 26px; color: #fff">Mythic crate</h3><div class="m" style="font-size: 12px">5 keys · odds shown</div><div style="margin-top: 8px"><span class="price">$9.99</span></div></div>
+      </article>
+      <article class="pan" style="padding: 14px; display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 16px; align-items: center">
+        <div class="slot" style="height: 128px"><svg width="84" height="84" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><path fill="#C8961E" d="M2 9h6v1h1v4H1v-4h1zM8 10h6v1h1v3H8z"></path><path fill="#F2C94C" d="M3 8h4v1H3zM9 9h4v1H9zM5 4h6v1h1v4H4V5h1z"></path><path fill="#FFF0A8" d="M5 5h2v1H5zM3 10h2v1H3zM9 11h2v1H9z"></path><path fill="#8A6414" d="M7 6h2v2H7z"></path></svg><span class="qty">64</span></div>
+        <div><h3 class="h" style="margin: 0 0 2px; font-size: 26px; color: #fff">5,000 coins</h3><div class="m" style="font-size: 12px">+500 bonus</div><div style="margin-top: 8px"><span class="price">$19.99</span></div></div>
+      </article>
+    </div>
+  </section>
+
+  <div class="wrap" style="display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; padding-top: 32px; padding-bottom: 56px; align-items: start">
+    <article class="pan" style="padding: 30px">
+      <div class="k">Welcome to</div>
+      <h1 class="h" style="margin: 6px 0 14px; font-size: 44px; color: var(--a)">{{serverName}} store</h1>
+      <p style="margin: 0 0 22px; line-height: 1.7; color: #C9D2E3; font-size: 15px">Your welcome text goes here — written in the Tebex panel. Tell players what you sell, that perks are cosmetic, and how fast items are delivered.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+        <div class="slot" style="padding: 16px; place-items: start; display: block"><div class="h" style="font-size: 17px; color: var(--a)">Delivery</div><div class="m" style="font-size: 13px; margin-top: 6px; line-height: 1.5">Under 2 minutes. Be online in-game.</div></div>
+        <div class="slot" style="padding: 16px; place-items: start; display: block"><div class="h" style="font-size: 17px; color: #FF8A8A">Refunds</div><div class="m" style="font-size: 13px; margin-top: 6px; line-height: 1.5">Digital items are final. Chargebacks = ban.</div></div>
+        <div class="slot" style="padding: 16px; place-items: start; display: block"><div class="h" style="font-size: 17px; color: var(--b)">Support</div><div class="m" style="font-size: 13px; margin-top: 6px; line-height: 1.5">Open a Discord ticket with your transaction ID.</div></div>
+      </div>
+    </article>
+
+    <aside style="display: flex; flex-direction: column; gap: 14px" aria-label="Server activity">
+      <sc-if value="{{showGoal}}" hint-placeholder-val="{{ true }}">
+        <div class="pan" style="padding: 18px">
+          <div class="k">Community goal</div>
+          <div class="h" style="text-align: center; font-size: 26px; color: var(--a); text-shadow: 2px 2px 0 #05070F; margin: 8px 0 4px">94</div>
+          <div style="display: grid; grid-template-columns: repeat(18, minmax(0, 1fr)); height: 14px; border: 3px solid #05070F; background: #0E1324" aria-hidden="true">
+            <span style="background: var(--a); grid-column: span 17; box-shadow: inset 0 3px 0 rgba(255,255,255,.35)"></span>
+          </div>
+          <div class="m" style="font-size: 12px; margin-top: 10px; text-align: center">$946 / $1,000 · new map unlock</div>
+        </div>
+      </sc-if>
+      <div class="pan" style="padding: 18px; display: flex; gap: 14px; align-items: center">
+        <div class="slot" style="width: 64px; height: 64px; flex: none"><svg width="44" height="44" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="#2B2B2B" d="M0 0h8v8H0z"></path><path fill="#D9A77D" d="M0 3h8v5H0z"></path><path fill="#fff" d="M1 4h2v1H1zM5 4h2v1H5z"></path><path fill="#6A4FD8" d="M2 4h1v1H2zM5 4h1v1H5z"></path></svg></div>
+        <div><div class="k" style="color: var(--b)">Top supporter</div><div class="h" style="font-size: 22px; margin-top: 4px; color: #fff">Luxen2017</div></div>
+      </div>
+      <div class="pan" style="padding: 18px">
+        <div class="k">Recent payments</div>
+        <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin-top: 12px">
+          <span class="slot" style="aspect-ratio: 1"><svg width="30" height="30" viewBox="0 0 8 8" shape-rendering="crispEdges" role="img" aria-label="Fratage"><path fill="#7A2E1E" d="M0 0h8v8H0z"></path><path fill="#D9A27A" d="M0 3h8v5H0z"></path><path fill="#fff" d="M1 4h2v1H1zM5 4h2v1H5z"></path><path fill="#222" d="M2 4h1v1H2zM5 4h1v1H5z"></path></svg></span>
+          <span class="slot" style="aspect-ratio: 1"><svg width="30" height="30" viewBox="0 0 8 8" shape-rendering="crispEdges" role="img" aria-label="willo_mc"><path fill="#E8E2D0" d="M0 0h8v8H0z"></path><path fill="#F0C9A8" d="M0 3h8v5H0z"></path><path fill="#fff" d="M1 4h2v1H1zM5 4h2v1H5z"></path><path fill="#3B82F6" d="M2 4h1v1H2zM5 4h1v1H5z"></path></svg></span>
+          <span class="slot" style="aspect-ratio: 1"><svg width="30" height="30" viewBox="0 0 8 8" shape-rendering="crispEdges" role="img" aria-label="Sojahn09"><path fill="#1E3A5F" d="M0 0h8v8H0z"></path><path fill="#8D5A3B" d="M0 3h8v5H0z"></path><path fill="#fff" d="M1 4h2v1H1zM5 4h2v1H5z"></path><path fill="#111" d="M2 4h1v1H2zM5 4h1v1H5z"></path></svg></span>
+          <span class="slot" style="aspect-ratio: 1"><svg width="30" height="30" viewBox="0 0 8 8" shape-rendering="crispEdges" role="img" aria-label="AdamoMel"><path fill="#5B2A86" d="M0 0h8v8H0z"></path><path fill="#EAC6A6" d="M0 3h8v5H0z"></path><path fill="#fff" d="M1 4h2v1H1zM5 4h2v1H5z"></path><path fill="#9B5DE5" d="M2 4h1v1H2zM5 4h1v1H5z"></path></svg></span>
+          <span class="slot" style="aspect-ratio: 1"><svg width="30" height="30" viewBox="0 0 8 8" shape-rendering="crispEdges" role="img" aria-label="KnechtR"><path fill="#3F6212" d="M0 0h8v8H0z"></path><path fill="#5A8A2A" d="M0 3h8v5H0z"></path><path fill="#111" d="M1 4h2v2H1zM5 4h2v2H5zM3 6h2v2H3z"></path></svg></span>
+        </div>
+      </div>
+      <form class="pan" style="padding: 18px">
+        <label class="k" for="gc">Gift card balance</label>
+        <div style="display: flex; gap: 6px; margin-top: 10px"><input id="gc" placeholder="Card number" class="slot" style="flex: 1; min-width: 0; height: 46px; border: 0; color: #E9EEF7; padding: 0 12px; font: 14px Inter, sans-serif; display: block"><button type="button" class="btn" style="padding: 0 14px">Check</button></div>
+      </form>
+    </aside>
+  </div>
+
+  <footer style="border-top: 3px solid #05070F; background: #070B16">
+    <div class="wrap foot" style="padding-top: 36px; padding-bottom: 28px; display: grid; grid-template-columns: 2fr repeat(3, minmax(0, 1fr)); gap: 32px; font-size: 13px">
+      <div><div class="h" style="font-size: 26px; color: #fff">{{serverName}}</div><p class="m" style="line-height: 1.6; max-width: 340px">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p></div>
+      <div><div class="k" style="margin-bottom: 8px">Store</div><a href="#">Ranks</a><a href="#">Keys</a><a href="#">Coins</a></div>
+      <div><div class="k" style="margin-bottom: 8px">Help</div><a href="#">FAQ</a><a href="#">Terms</a><a href="#">Refunds</a></div>
+      <div><div class="k" style="margin-bottom: 8px">Community</div><a href="#">Discord</a><a href="#">Vote</a></div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"preset":{"editor":"enum","options":["frost","overworld","nether","end","ocean","cherry","desert","deepdark","jungle"],"default":"frost","section":"Theme"},"serverName":{"editor":"text","default":"Frostvale","section":"Server"},"ip":{"editor":"text","default":"play.frostvale.net","section":"Server"},"discord":{"editor":"text","default":"discord.gg/frostvale","section":"Server"},"accent":{"editor":"color","default":"#D4FF3A","options":["#D4FF3A","#5BE0E6","#FF8A3D","#E5484D"],"section":"Colors"},"accent2":{"editor":"color","default":"#B9A6FF","options":["#B9A6FF","#7AA2FF","#FFD166","#FF8FB1"],"section":"Colors"},"bg":{"editor":"color","default":"#0B1020","options":["#0B1020","#120B0B","#0B1410","#14110B"],"section":"Colors"},"ground":{"editor":"enum","options":["snow","grass","sand","nether"],"default":"snow","section":"Scene"},"showAnnouncement":{"editor":"boolean","default":true,"section":"Sections"},"showGoal":{"editor":"boolean","default":true,"section":"Sections"},"nav":{"editor":"enum","options":["hotbar","tabs","none"],"default":"hotbar","section":"Format"},"header":{"editor":"enum","options":["scene","compact","minimal"],"default":"scene","section":"Format"},"corners":{"editor":"enum","options":["square","soft","round"],"default":"square","section":"Format"},"panels":{"editor":"enum","options":["bevel","flat","outline"],"default":"bevel","section":"Format"},"headingFont":{"editor":"enum","options":["pixel","blocky","tech","clean"],"default":"pixel","section":"Format"},"$preview":{"width":1440,"height":1800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const presets = {
+      frost:     { a: '#D4FF3A', b: '#B9A6FF', bg: '#0B1020', sky: ['#050816', '#0B1534', '#17255A'], hill: ['#1C2B5C', '#26386E'], panel: ['#151B30', '#232B47', '#0E1324', '#2A3456'], ground: 'snow' },
+      overworld: { a: '#6BD84A', b: '#FFD166', bg: '#0E1512', sky: ['#3E86C9', '#6FAEE6', '#A9D8FF'], hill: ['#3F7F3A', '#2F6A2C'], panel: ['#18241C', '#2A3D2F', '#0F1812', '#2E4434'], ground: 'grass' },
+      nether:    { a: '#FF8A3D', b: '#FFD166', bg: '#140A0A', sky: ['#1A0606', '#320B0B', '#5A1414'], hill: ['#5A1A1A', '#6E2222'], panel: ['#1F1414', '#3A2424', '#160D0D', '#4A2A2A'], ground: 'nether' },
+      end:       { a: '#C77DFF', b: '#5BE0E6', bg: '#0D0B18', sky: ['#0B0A1A', '#1A1233', '#2A1A4A'], hill: ['#2E2552', '#3A2F66'], panel: ['#17142A', '#2A2448', '#0F0D1F', '#332C58'], ground: 'end' },
+      ocean:     { a: '#3DE0D0', b: '#FFD166', bg: '#071820', sky: ['#04121C', '#0A2C40', '#125A6E'], hill: ['#0E3C4E', '#145066'], panel: ['#0E2230', '#1A3A4C', '#081820', '#1E4256'], ground: 'sand' },
+      cherry:    { a: '#FF8FB8', b: '#FFE08A', bg: '#1A0F17', sky: ['#2A1030', '#5A2350', '#C26A90'], hill: ['#6E2E5A', '#8A3E6E'], panel: ['#24151F', '#3E2436', '#190E16', '#4A2A40'], ground: 'cherry' },
+      desert:    { a: '#FFB347', b: '#7AD3FF', bg: '#17110A', sky: ['#E07A3A', '#F2A65A', '#FFD89A'], hill: ['#C98A4A', '#B0733A'], panel: ['#221A10', '#3A2C1A', '#18120A', '#46351E'], ground: 'sand' },
+      deepdark:  { a: '#2EE6D6', b: '#6E8BFF', bg: '#05080A', sky: ['#020405', '#061214', '#0A2226'], hill: ['#0B1C20', '#10292E'], panel: ['#0B1215', '#16262A', '#060B0D', '#18302F'], ground: 'sculk' },
+      jungle:    { a: '#A6E22E', b: '#FF9F43', bg: '#0A140B', sky: ['#0F2A1A', '#1E5A34', '#4EA06A'], hill: ['#1E4A26', '#285E30'], panel: ['#122016', '#203A26', '#0B160E', '#26442C'], ground: 'grass' }
+    };
+    const p = presets[this.props.preset ?? 'frost'] || presets.frost;
+    const grounds = { snow: ['#EEF4FF', '#6B4A2E'], grass: ['#5DBB3A', '#7A5230'], sand: ['#E6D59A', '#C9B271'], nether: ['#A33A3A', '#5A1E1E'], end: ['#E8E4A8', '#CFCB8A'], cherry: ['#F4A6C8', '#7A5230'], sculk: ['#0E6E70', '#141A1E'] };
+    const g = grounds[this.props.ground ?? p.ground] || grounds.snow;
+    const a = this.props.accent ?? p.a;
+    const b = this.props.accent2 ?? p.b;
+    const bg = this.props.bg ?? p.bg;
+    const nav = this.props.nav ?? "hotbar";
+    const hdr = { scene: ["540px", "block"], compact: ["380px", "block"], minimal: ["300px", "none"] }[this.props.header ?? "scene"] || ["540px", "block"];
+    const r = { square: "0px", soft: "6px", round: "14px" }[this.props.corners ?? "square"] || "0px";
+    const bev = { bevel: "inset 0 0 0 2px var(--panelhi), inset 0 -6px 0 rgba(0,0,0,.25)", flat: "none", outline: "inset 0 0 0 2px var(--a)" }[this.props.panels ?? "bevel"] || "none";
+    const hf = { pixel: "'Pixelify Sans', sans-serif", blocky: "Silkscreen, sans-serif", tech: "'Chakra Petch', sans-serif", clean: "Inter, sans-serif" }[this.props.headingFont ?? "pixel"];
+    return {
+      cssVars: '--heroH:' + hdr[0] + ';--sceneD:' + hdr[1] + ';--r:' + r + ';--bev:' + bev + ';--hf:' + hf + ';--a:' + a + ';--b:' + b + ';--bg:' + bg + ';--g1:' + g[0] + ';--g2:' + g[1] +
+        ';--sky1:' + p.sky[0] + ';--sky2:' + p.sky[1] + ';--sky3:' + p.sky[2] + ';--hill1:' + p.hill[0] + ';--hill2:' + p.hill[1] +
+        ';--panel:' + p.panel[0] + ';--panelhi:' + p.panel[1] + ';--slot:' + p.panel[2] + ';--raise:' + p.panel[3],
+      serverName: this.props.serverName ?? 'Frostvale',
+      ip: this.props.ip ?? 'play.frostvale.net',
+      discord: this.props.discord ?? 'discord.gg/frostvale',
+      showAnnouncement: this.props.showAnnouncement ?? true,
+      showGoal: this.props.showGoal ?? true,
+      showHotbar: nav === "hotbar",
+      showTabs: nav === "tabs"
+    };
+  }
+}
+</script>
+</body>
+</html>
