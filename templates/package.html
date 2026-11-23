@@ -41,7 +41,7 @@
           {% elseif package.image is defined and package.image and package.image.url %}
             <img src="{{ package.image.url }}" alt="{{ package.name }}">
           {% else %}
-            <span class="oz-ico oz-ico--chest" style="width:180px;height:180px"></span>
+            <span class="oz-pkg-hero-ico">{% include "oz-icon.twig" with { ic: pkgIconMap[package.name|lower]|default(pkgIconDefault), size: 'xl' } %}</span>
           {% endif %}
         </div>
         {% if package.media is defined and package.media|length > 1 %}

@@ -8,12 +8,16 @@
   <div class="oz-panel oz-login">
     <div>
       <div class="oz-label">{{ __('Step 1 of 2') }}</div>
-      <h1 style="margin-top:8px">{{ __('Please log in') }}</h1>
-      <p class="oz-muted" style="margin:8px 0 0">{{ __('Enter your in-game name so we know where to deliver. No password needed.') }}</p>
+      <h1 class="oz-mt-8">{{ __('Please log in') }}</h1>
+      <p class="oz-muted oz-mt-8 oz-m0b">{{ __('Enter your in-game name so we know where to deliver. No password needed.') }}</p>
     </div>
 
+    {% if store.userMessage is defined and store.userMessage %}
+      <div class="oz-panel oz-toast oz-toast--error" role="alert">{{ store.userMessage }}</div>
+    {% endif %}
+
     {% if external %}
-      <a class="oz-btn oz-btn--block" href="{{ url }}" style="min-height:56px">{{ __('Log in with') }} {{ provider }}</a>
+      <a class="oz-btn oz-btn--block oz-btn--tall" href="{{ url }}">{{ __('Log in with') }} {{ provider }}</a>
     {% else %}
       <form method="post" data-oz-login>
         {% if editions == 'java + bedrock' %}
@@ -27,16 +31,16 @@
         {% endif %}
         <input type="hidden" data-oz-edition-value value="{{ editions == 'bedrock only' ? 'bedrock' : 'java' }}">
 
-        <label class="oz-label" for="oz-ign" style="display:block;margin-bottom:8px">{{ __('Username') }}</label>
+        <label class="oz-label oz-block-mb" for="oz-ign">{{ __('Username') }}</label>
         <div class="oz-ign">
           <img src="https://mc-heads.net/avatar/MHF_Steve/64" alt="" width="44" height="44" data-oz-ign-head>
           <input id="oz-ign" type="text" name="ign" required autocomplete="username" maxlength="32" placeholder="{{ __('Your username') }}" autofocus>
         </div>
         <p class="oz-note" style="margin:8px 0 18px">{{ __('Buying a gift? Enter your friend’s name instead.') }}</p>
 
-        <button class="oz-btn oz-btn--block" type="submit" style="min-height:56px">{{ __('Continue') }}</button>
+        <button class="oz-btn oz-btn--block oz-btn--tall" type="submit">{{ __('Continue') }}</button>
       </form>
     {% endif %}
-    <a class="oz-muted" href="/" style="text-align:center">{{ __('Go back') }}</a>
+    <a class="oz-muted oz-center" href="/">{{ __('Go back') }}</a>
   </div>
 {% endblock %}

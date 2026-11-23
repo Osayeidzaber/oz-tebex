@@ -21,25 +21,29 @@
             "Deep Dark",
             "Jungle",
             "Custom"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "color-accent",
           "name": "Accent color (Custom preset only)",
           "type": "colour-picker",
-          "default": "#D4FF3A"
+          "default": "#D4FF3A",
+          "description": ""
         },
         {
           "id": "color-secondary",
           "name": "Secondary color (Custom preset only)",
           "type": "colour-picker",
-          "default": "#B9A6FF"
+          "default": "#B9A6FF",
+          "description": ""
         },
         {
           "id": "color-background",
           "name": "Background color (Custom preset only)",
           "type": "colour-picker",
-          "default": "#0B1020"
+          "default": "#0B1020",
+          "description": ""
         },
         {
           "id": "color-mode",
@@ -50,7 +54,8 @@
             "Dark",
             "Light",
             "Player"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "ground",
@@ -67,13 +72,15 @@
             "Cherry",
             "Sculk",
             "None"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "header-banner",
           "name": "Header background image (optional, replaces the pixel sky)",
           "type": "image-uploader",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "header-style",
@@ -84,7 +91,8 @@
             "Scene",
             "Compact",
             "Minimal"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "corners",
@@ -95,7 +103,8 @@
             "Square",
             "Soft",
             "Round"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "panel-style",
@@ -106,7 +115,8 @@
             "Bevel",
             "Flat",
             "Outline"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "heading-font",
@@ -118,7 +128,8 @@
             "Blocky",
             "Tech",
             "Clean"
-          ]
+          ],
+          "description": ""
         }
       ]
     },
@@ -127,27 +138,88 @@
       "options": [
         {
           "id": "logo-image",
-          "name": "Logo image (optional — otherwise the text logo is shown)",
+          "name": "Full logo image (replaces icon + text completely)",
           "type": "image-uploader",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "logo-text",
           "name": "Text logo / server name",
           "type": "textarea",
-          "default": "Frostvale"
+          "default": "Frostvale",
+          "description": ""
+        },
+        {
+          "id": "logo-icon-image",
+          "name": "Hero icon: upload an image shown above your server name (e.g. your server icon)",
+          "type": "image-uploader",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "logo-icon",
+          "name": "Hero icon from the icon set (used if no icon image is uploaded): icon name like crown-gold, or an image URL",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "logo-icon-only",
+          "name": "Show only the hero icon (hide the server name text)",
+          "type": "select",
+          "default": "Off",
+          "values": [
+            "On",
+            "Off"
+          ],
+          "description": ""
+        },
+        {
+          "id": "logo-subtitle",
+          "name": "Text under the logo (empty = hide)",
+          "type": "textarea",
+          "default": "Official store",
+          "description": ""
+        },
+        {
+          "id": "logo-size",
+          "name": "Hero logo size",
+          "type": "select",
+          "default": "Medium",
+          "values": [
+            "Small",
+            "Medium",
+            "Large"
+          ],
+          "description": ""
+        },
+        {
+          "id": "logo-animation",
+          "name": "Hero logo animation: Float (gentle bob), Bounce (letter wave), Glow (light sweep), None",
+          "type": "select",
+          "default": "Float",
+          "values": [
+            "Float",
+            "Bounce",
+            "Glow",
+            "None"
+          ],
+          "description": ""
         },
         {
           "id": "header-links",
           "name": "Header links — Label|URL, comma separated",
           "type": "textarea",
-          "default": "Rules|/rules, Vote|/vote"
+          "default": "Rules|/rules, Vote|/vote",
+          "description": ""
         },
         {
           "id": "footer-links",
           "name": "Footer community links — Label|URL, comma separated",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         }
       ]
     },
@@ -158,7 +230,8 @@
           "id": "server-ip",
           "name": "Server IP (shown + copy button)",
           "type": "textarea",
-          "default": "play.example.com"
+          "default": "play.example.com",
+          "description": ""
         },
         {
           "id": "show-player-count",
@@ -168,25 +241,29 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "discord-invite",
           "name": "Discord invite link",
           "type": "url",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "discord-label",
           "name": "Discord button text",
           "type": "textarea",
-          "default": "Join Discord"
+          "default": "Join Discord",
+          "description": ""
         },
         {
           "id": "discord-id",
           "name": "Discord server ID (for live member count — enable the server widget)",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "editions",
@@ -197,13 +274,15 @@
             "Java + Bedrock",
             "Java only",
             "Bedrock only"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "bedrock-prefix",
           "name": "Bedrock username prefix (Geyser/Floodgate)",
           "type": "textarea",
-          "default": "."
+          "default": ".",
+          "description": ""
         },
         {
           "id": "player-card",
@@ -213,7 +292,8 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
         }
       ]
     },
@@ -228,25 +308,29 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "announcement-text",
           "name": "Announcement text",
           "type": "textarea",
-          "default": "Winter sale — 20% off all ranks"
+          "default": "Winter sale — 20% off all ranks",
+          "description": ""
         },
         {
           "id": "announcement-link",
           "name": "Announcement link (optional)",
           "type": "url",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "announcement-end",
           "name": "Countdown end, e.g. 2026-12-31T23:59:00Z (optional)",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "announcement-style",
@@ -256,7 +340,8 @@
           "values": [
             "Static",
             "Marquee"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "announcement-dismissible",
@@ -266,7 +351,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         }
       ]
     },
@@ -283,13 +369,41 @@
             "Tabs",
             "Sidebar",
             "None"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "category-icons",
-          "name": "Category icons — Name=icon, comma separated. Icons: crown, key, coin, gem, chest, pet, gift, sword, star, potion",
+          "name": "Category icons: Category name=icon, comma separated (e.g. Ranks=crown-gold, Keys=key-diamond). Use any of 290 icon names (see the setup page Icons tab) or an image URL",
           "type": "textarea",
-          "default": "Ranks=crown, Keys=key, Coins=coin"
+          "default": "Ranks=crown, Keys=key, Coins=coin",
+          "description": ""
+        },
+        {
+          "id": "package-icons",
+          "name": "Package icons (for packages without an image): Package name=icon, one per line or comma separated (e.g. MVP=crown-gold). Icon name or image URL",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "package-icon-default",
+          "name": "Default icon for packages without an image",
+          "type": "textarea",
+          "default": "chest",
+          "description": ""
+        },
+        {
+          "id": "fx-icon-motion",
+          "name": "Icon animation: Hover (hop on hover), Idle (gentle float + sparkle on rare items), Off",
+          "type": "select",
+          "default": "Hover",
+          "values": [
+            "Hover",
+            "Idle",
+            "Off"
+          ],
+          "description": ""
         },
         {
           "id": "packages-per-row",
@@ -300,7 +414,8 @@
             "2",
             "3",
             "4"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "package-click",
@@ -310,19 +425,22 @@
           "values": [
             "Popup",
             "Page"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "quantity-categories",
           "name": "Quantity buttons in these categories — names or IDs, comma separated, * for all",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "quantity-options",
           "name": "Quantity choices",
           "type": "textarea",
-          "default": "1,5,10,15"
+          "default": "1,5,10,15",
+          "description": ""
         },
         {
           "id": "package-facts",
@@ -332,49 +450,57 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fact-1-title",
           "name": "Package tile 1 title",
           "type": "textarea",
-          "default": "Instant"
+          "default": "Instant",
+          "description": ""
         },
         {
           "id": "fact-1-text",
           "name": "Package tile 1 text",
           "type": "textarea",
-          "default": "Delivered in-game"
+          "default": "Delivered in-game",
+          "description": ""
         },
         {
           "id": "fact-2-title",
           "name": "Package tile 2 title",
           "type": "textarea",
-          "default": "Secure"
+          "default": "Secure",
+          "description": ""
         },
         {
           "id": "fact-2-text",
           "name": "Package tile 2 text",
           "type": "textarea",
-          "default": "Checkout by Tebex"
+          "default": "Checkout by Tebex",
+          "description": ""
         },
         {
           "id": "fact-3-title",
           "name": "Package tile 3 title",
           "type": "textarea",
-          "default": "Fair play"
+          "default": "Fair play",
+          "description": ""
         },
         {
           "id": "fact-3-text",
           "name": "Package tile 3 text",
           "type": "textarea",
-          "default": "No pay-to-win"
+          "default": "No pay-to-win",
+          "description": ""
         },
         {
           "id": "package-note",
           "name": "Note under the buy button",
           "type": "textarea",
-          "default": "Be online in-game to receive your items. Buying for a friend? Log in with their username."
+          "default": "Be online in-game to receive your items. Buying for a friend? Log in with their username.",
+          "description": ""
         },
         {
           "id": "category-tools",
@@ -384,13 +510,15 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "package-badges",
           "name": "Package badges — one per line: Package name=BADGE, BADGE (POPULAR, BEST VALUE, NEW, LIMITED, SUBSCRIPTION, GIFTABLE or your own)",
           "type": "textarea",
-          "default": "MVP=POPULAR\nMythic crate=BEST VALUE"
+          "default": "MVP=POPULAR\nMythic crate=BEST VALUE",
+          "description": ""
         }
       ]
     },
@@ -401,19 +529,22 @@
           "id": "rank-category",
           "name": "Category that shows the rank table (name or ID)",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "rank-highlight",
           "name": "Highlighted rank (package name)",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "rank-table",
           "name": "Rows — one per line: Perk | value for 1st package | 2nd | … (yes / no or any text)",
           "type": "textarea",
-          "default": "Chat prefix | [VIP] | [VIP+] | [MVP]\nHomes | 2 | 4 | 6\nNo chat cooldown | no | yes | yes\nRank cosmetics | no | no | yes"
+          "default": "Chat prefix | [VIP] | [VIP+] | [MVP]\nHomes | 2 | 4 | 6\nNo chat cooldown | no | yes | yes\nRank cosmetics | no | no | yes",
+          "description": ""
         },
         {
           "id": "rank-preview",
@@ -423,25 +554,40 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
+        },
+        {
+          "id": "rank-current-picker",
+          "name": "\"Your current rank\" picker on the rank page (logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest)",
+          "type": "select",
+          "default": "On",
+          "values": [
+            "On",
+            "Off"
+          ],
+          "description": ""
         },
         {
           "id": "rank-styles",
           "name": "Rank styles — one per line: Package name | chat prefix | color",
           "type": "textarea",
-          "default": "VIP | [VIP] | #C9CED6\nVIP+ | [VIP+] | #7AA2FF\nMVP | [MVP] | #F2C94C\nMVP+ | [MVP+] | #5BE0E6"
+          "default": "VIP | [VIP] | #C9CED6\nVIP+ | [VIP+] | #7AA2FF\nMVP | [MVP] | #F2C94C\nMVP+ | [MVP+] | #5BE0E6",
+          "description": ""
         },
         {
           "id": "preview-chat",
           "name": "Example chat message in the preview",
           "type": "textarea",
-          "default": "gg! just ranked up"
+          "default": "gg! just ranked up",
+          "description": ""
         },
         {
           "id": "preview-skin",
           "name": "Skin shown to logged-out visitors (Minecraft username)",
           "type": "textarea",
-          "default": "MHF_Steve"
+          "default": "MHF_Steve",
+          "description": ""
         }
       ]
     },
@@ -456,19 +602,22 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "home-categories-title",
           "name": "Category grid title",
           "type": "textarea",
-          "default": "Browse the store"
+          "default": "Browse the store",
+          "description": ""
         },
         {
           "id": "welcome-title",
           "name": "Welcome title (store description is set in Tebex)",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "info-cards",
@@ -478,43 +627,50 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "info-1-title",
           "name": "Card 1 title",
           "type": "textarea",
-          "default": "Fast delivery"
+          "default": "Fast delivery",
+          "description": ""
         },
         {
           "id": "info-1-text",
           "name": "Card 1 text",
           "type": "textarea",
-          "default": "Items arrive in-game within a few minutes. Make sure you are online."
+          "default": "Items arrive in-game within a few minutes. Make sure you are online.",
+          "description": ""
         },
         {
           "id": "info-2-title",
           "name": "Card 2 title",
           "type": "textarea",
-          "default": "Refund policy"
+          "default": "Refund policy",
+          "description": ""
         },
         {
           "id": "info-2-text",
           "name": "Card 2 text",
           "type": "textarea",
-          "default": "All digital purchases are final. Chargebacks result in a permanent ban."
+          "default": "All digital purchases are final. Chargebacks result in a permanent ban.",
+          "description": ""
         },
         {
           "id": "info-3-title",
           "name": "Card 3 title",
           "type": "textarea",
-          "default": "Need help?"
+          "default": "Need help?",
+          "description": ""
         },
         {
           "id": "info-3-text",
           "name": "Card 3 text",
           "type": "textarea",
-          "default": "Open a ticket on our Discord with your transaction ID."
+          "default": "Open a ticket on our Discord with your transaction ID.",
+          "description": ""
         }
       ]
     },
@@ -529,25 +685,29 @@
           "values": [
             "Show",
             "Hide"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "terms-url",
           "name": "Terms of sale URL",
           "type": "url",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "refund-url",
           "name": "Refund policy URL",
           "type": "url",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "faq-url",
           "name": "FAQ URL",
           "type": "url",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "disclaimer-game",
@@ -561,13 +721,15 @@
             "Hytale",
             "Custom",
             "None"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "disclaimer-text",
           "name": "Custom disclaimer text",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         }
       ]
     },
@@ -583,17 +745,43 @@
             "Bar",
             "Screen",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-page-transitions",
-          "name": "Smooth page transitions",
+          "name": "Page transitions: Blocks (pixel wipe), Fade, or Off",
+          "type": "select",
+          "default": "Blocks",
+          "values": [
+            "Blocks",
+            "Fade",
+            "Off"
+          ],
+          "description": ""
+        },
+        {
+          "id": "fx-reveal-style",
+          "name": "How items appear on scroll: Drop (fall into slot), Rise, Pop",
+          "type": "select",
+          "default": "Drop",
+          "values": [
+            "Drop",
+            "Rise",
+            "Pop"
+          ],
+          "description": ""
+        },
+        {
+          "id": "fx-loading-states",
+          "name": "Loading spinners on buttons, forms and basket actions",
           "type": "select",
           "default": "On",
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-scroll-reveal",
@@ -603,7 +791,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-card-tilt",
@@ -613,7 +802,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-card-shine",
@@ -623,7 +813,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-fly-to-cart",
@@ -633,7 +824,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-confetti",
@@ -644,7 +836,8 @@
             "Checkout",
             "Add",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-particles",
@@ -657,7 +850,8 @@
             "Fireflies",
             "Embers",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-parallax",
@@ -667,7 +861,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-sticky-header",
@@ -677,7 +872,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-back-to-top",
@@ -687,7 +883,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-sounds",
@@ -697,7 +894,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "fx-cursor",
@@ -707,7 +905,8 @@
           "values": [
             "Default",
             "Pixel"
-          ]
+          ],
+          "description": ""
         }
       ]
     },
@@ -722,7 +921,8 @@
           "values": [
             "Big",
             "Compact"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "preview-3d",
@@ -732,7 +932,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "preview-animation",
@@ -744,7 +945,8 @@
             "Run",
             "Idle",
             "None"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "preview-autorotate",
@@ -754,13 +956,15 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "preview-tabs",
           "name": "Preview tabs, in order (3d, chat, tab, media)",
           "type": "textarea",
-          "default": "3d,chat,tab,media"
+          "default": "3d,chat,tab,media",
+          "description": ""
         },
         {
           "id": "rank-ladder",
@@ -770,7 +974,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "sticky-buy-bar",
@@ -780,7 +985,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         }
       ]
     },
@@ -795,25 +1001,29 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "basket-goal-amount",
           "name": "Free-gift goal amount (empty = off)",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "basket-goal-text",
           "name": "Free-gift text (:amount = amount left)",
           "type": "textarea",
-          "default": "Spend :amount more for a free gift!"
+          "default": "Spend :amount more for a free gift!",
+          "description": ""
         },
         {
           "id": "basket-goal-done",
           "name": "Free-gift unlocked text",
           "type": "textarea",
-          "default": "Free gift unlocked!"
+          "default": "Free gift unlocked!",
+          "description": ""
         },
         {
           "id": "social-popups",
@@ -823,7 +1033,8 @@
           "values": [
             "On",
             "Off"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "checkout-theme",
@@ -835,13 +1046,15 @@
             "Dark",
             "Light",
             "Default"
-          ]
+          ],
+          "description": ""
         },
         {
           "id": "checkout-redirect",
           "name": "Redirect after payment (optional URL)",
           "type": "url",
-          "default": ""
+          "default": "",
+          "description": ""
         }
       ]
     },
@@ -852,13 +1065,245 @@
           "id": "seo-description",
           "name": "Search & share description",
           "type": "textarea",
-          "default": ""
+          "default": "",
+          "description": ""
         },
         {
           "id": "seo-image",
           "name": "Share image (1200×630)",
           "type": "image-uploader",
-          "default": ""
+          "default": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "header": "13. Homepage extras",
+      "options": [
+        {
+          "id": "sale",
+          "name": "Sale banner on homepage",
+          "type": "select",
+          "default": "Hide",
+          "values": [
+            "Show",
+            "Hide"
+          ],
+          "description": ""
+        },
+        {
+          "id": "sale-badge",
+          "name": "Sale badge (e.g. 50% SALE)",
+          "type": "textarea",
+          "default": "50% SALE",
+          "description": ""
+        },
+        {
+          "id": "sale-title",
+          "name": "Sale title",
+          "type": "textarea",
+          "default": "Black Friday",
+          "description": ""
+        },
+        {
+          "id": "sale-end",
+          "name": "Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "sale-link",
+          "name": "Sale banner link (optional)",
+          "type": "url",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "slides",
+          "name": "Slider: one slide per line — image or YouTube URL | title | link",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "slides-autoplay",
+          "name": "Slider autoplay seconds (0 = off)",
+          "type": "textarea",
+          "default": "6",
+          "description": ""
+        },
+        {
+          "id": "currencies",
+          "name": "Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "header": "14. Discount pop-up",
+      "options": [
+        {
+          "id": "promo",
+          "name": "Show discount pop-up (once per visitor)",
+          "type": "select",
+          "default": "Off",
+          "values": [
+            "On",
+            "Off"
+          ],
+          "description": ""
+        },
+        {
+          "id": "promo-title",
+          "name": "Pop-up title",
+          "type": "textarea",
+          "default": "10% off your first order",
+          "description": ""
+        },
+        {
+          "id": "promo-text",
+          "name": "Pop-up text",
+          "type": "textarea",
+          "default": "Use this code at checkout.",
+          "description": ""
+        },
+        {
+          "id": "promo-code",
+          "name": "Coupon / creator code to show",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "promo-delay",
+          "name": "Delay before showing (seconds)",
+          "type": "textarea",
+          "default": "4",
+          "description": ""
+        },
+        {
+          "id": "promo-button",
+          "name": "Button text",
+          "type": "textarea",
+          "default": "Start shopping",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "header": "15. Info pages (Staff, Vote, FAQ, Patrons, Rules, News)",
+      "options": [
+        {
+          "id": "staff-list",
+          "name": "Staff: one per line — Name | Role | Minecraft name",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "vote-list",
+          "name": "Vote sites: one per line — Site name | URL",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "faq-list",
+          "name": "FAQ: one per line — Question | Answer",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "patrons-list",
+          "name": "Patrons: one per line — Minecraft name | Tier",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "patrons-note",
+          "name": "Text under the patrons list",
+          "type": "textarea",
+          "default": "Thank you for keeping the server running.",
+          "description": ""
+        },
+        {
+          "id": "rules-list",
+          "name": "Rules: one per line — Section | Rule (lines with the same section are grouped)",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "news-list",
+          "name": "News: one per line — Date | Title | Text | Image URL (optional)",
+          "type": "textarea",
+          "default": "",
+          "description": ""
+        },
+        {
+          "id": "page-slug-staff",
+          "name": "URL slug of your Staff page",
+          "type": "textarea",
+          "default": "staff",
+          "description": ""
+        },
+        {
+          "id": "page-slug-vote",
+          "name": "URL slug of your Vote page",
+          "type": "textarea",
+          "default": "vote",
+          "description": ""
+        },
+        {
+          "id": "page-slug-faq",
+          "name": "URL slug of your FAQ page",
+          "type": "textarea",
+          "default": "faq",
+          "description": ""
+        },
+        {
+          "id": "page-slug-patrons",
+          "name": "URL slug of your Patrons page",
+          "type": "textarea",
+          "default": "patrons",
+          "description": ""
+        },
+        {
+          "id": "page-slug-rules",
+          "name": "URL slug or title of your Rules page",
+          "type": "textarea",
+          "default": "rules",
+          "description": ""
+        },
+        {
+          "id": "page-slug-news",
+          "name": "URL slug or title of your News page",
+          "type": "textarea",
+          "default": "news",
+          "description": ""
+        },
+        {
+          "id": "setup-page",
+          "name": "Setup page (checklist + admin editors on your Tebex page titled \"Setup\"). Turn Off before launch: it is public",
+          "type": "select",
+          "default": "Off",
+          "values": [
+            "On",
+            "Off"
+          ],
+          "description": ""
+        },
+        {
+          "id": "page-slug-setup",
+          "name": "URL slug or title of your Setup page",
+          "type": "textarea",
+          "default": "setup",
+          "description": ""
         }
       ]
     }

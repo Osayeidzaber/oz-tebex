@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{# Tebex quote page (custom-price quotes sent by the store owner). Tebex renders the quote body as `content`. #}
+
+{% block grid_class %}oz-grid--full{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+  <article class="oz-panel oz-welcome oz-narrow oz-quote">
+    <div class="oz-label">{{ __('Your quote') }}</div>
+    <h1>{{ __('Quote') }}</h1>
+    {% if content is defined and content %}
+      <div class="oz-prose">{{ content|raw }}</div>
+    {% else %}
+      <div class="oz-empty">{{ __('This quote is no longer available.') }}</div>
+    {% endif %}
+  </article>
+{% endblock %}

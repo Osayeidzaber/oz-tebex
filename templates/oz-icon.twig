@@ -1,0 +1,11 @@
+{#
+  One icon. Vars: ic (icon name like "crown-gold", or an image URL), size ('' | 'sm' | 'lg' | 'xl'), label (optional alt text).
+  Names: see the icon gallery (npm run preview → /icons.html) or the Icons tab on the setup page.
+#}
+{%- set icv = ic|default('chest')|trim -%}
+{%- set sz = size is defined and size ? ' oz-ico--' ~ size : '' -%}
+{%- if '/' in icv -%}
+  <img class="oz-ico oz-ico--img{{ sz }}" src="{{ icv }}" alt="{{ label is defined ? label : '' }}" loading="lazy">
+{%- else -%}
+  <span class="oz-ico{{ sz }} oz-ico--{{ icv|lower|replace({' ': '-'}) }}" {% if label is defined and label %}role="img" aria-label="{{ label }}"{% else %}aria-hidden="true"{% endif %}></span>
+{%- endif -%}

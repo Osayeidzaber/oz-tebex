@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OZ Workbench</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root { --bg:#0B1020; --panel:#151B30; --hi:#232B47; --line:#05070F; --text:#E9EEF7; --muted:#A3ADC2; --a:#D4FF3A; --ink:#05070F; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { display: grid; grid-template-columns: 270px 1fr; background: var(--bg); color: var(--text); font: 14px/1.45 Inter, system-ui, sans-serif; }
+  aside { display: flex; flex-direction: column; gap: 14px; padding: 14px; background: var(--panel); border-right: 3px solid var(--line); overflow-y: auto; }
+  h1 { margin: 0; font: 700 22px "Pixelify Sans", sans-serif; color: var(--a); }
+  h1 small { display: block; font: 500 12px Inter, sans-serif; color: var(--muted); }
+  h2 { margin: 0 0 6px; font: 600 11px Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  input[type=search], select { width: 100%; height: 34px; padding: 0 10px; background: var(--line); color: var(--text); border: 2px solid var(--hi); font: inherit; }
+  .group { display: grid; gap: 2px; }
+  .pages button { display: flex; justify-content: space-between; width: 100%; padding: 8px 12px; background: none; border: 0; color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+  .pages button:hover { background: var(--hi); }
+  .pages button[aria-current="true"] { background: var(--a); color: var(--ink); font-weight: 600; }
+  .pages small { color: inherit; opacity: .6; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .seg { display: flex; gap: 0; border: 2px solid var(--hi); }
+  .seg button { flex: 1; padding: 8px 10px; background: none; border: 0; color: var(--muted); font: 600 12px Inter, sans-serif; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--hi); color: var(--text); }
+  label { display: grid; gap: 3px; font-size: 12px; color: var(--muted); }
+  main { display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 3px solid var(--line); background: var(--panel); }
+  .bar code { flex: 1; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar a, .bar button { padding: 8px 12px; background: var(--hi); color: var(--text); border: 2px solid var(--line); font: 600 12px Inter, sans-serif; text-decoration: none; cursor: pointer; }
+  .stage { display: grid; place-items: start center; padding: 16px; overflow: auto; background: repeating-conic-gradient(#0e1428 0 25%, #0b1020 0 50%) 0 0 / 24px 24px; }
+  iframe { width: 100%; height: 100%; min-height: 600px; border: 3px solid var(--line); background: var(--bg); transition: width .25s; }
+  .hint { font-size: 12px; color: var(--muted); }
+  kbd { padding: 0 4px; border: 1px solid var(--hi); font-size: 11px; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; } aside { max-height: 45vh; } }
+</style>
+</head>
+<body>
+<aside>
+  <h1>OZ Workbench <small>Every page with mock data. Run <code>npm run preview</code> after edits.</small></h1>
+
+  <label>Find a page <input type="search" id="q" placeholder="checkout, staff, v-ocean…" autocomplete="off"></label>
+  <div class="pages" id="pages"></div>
+
+  <div>
+    <h2>Device</h2>
+    <div class="seg" id="device">
+      <button type="button" data-w="100%" aria-pressed="true">Desktop</button>
+      <button type="button" data-w="820px" aria-pressed="false">Tablet</button>
+      <button type="button" data-w="390px" aria-pressed="false">Phone</button>
+    </div>
+  </div>
+
+  <div>
+    <h2>Live style (no re-render)</h2>
+    <div class="row">
+      <label>Preset <select data-attr="preset"><option value="">From page</option><option>frost</option><option>overworld</option><option>nether</option><option>end</option><option>ocean</option><option>cherry</option><option>desert</option><option>deep dark</option><option>jungle</option></select></label>
+      <label>Mode <select data-attr="mode"><option value="">From page</option><option>dark</option><option>light</option></select></label>
+      <label>Corners <select data-attr="corners"><option value="">From page</option><option>square</option><option>soft</option><option>round</option></select></label>
+      <label>Panels <select data-attr="panels"><option value="">From page</option><option>bevel</option><option>flat</option><option>outline</option></select></label>
+      <label>Font <select data-attr="font"><option value="">From page</option><option>pixel</option><option>blocky</option><option>tech</option><option>clean</option></select></label>
+      <label>Reveal <select data-attr="reveal"><option value="">From page</option><option>drop</option><option>rise</option><option>pop</option></select></label>
+    </div>
+    <p class="hint">These only change the preview. To keep a choice, set it in Tebex theme settings.</p>
+  </div>
+
+  <div>
+    <h2>Shortcuts</h2>
+    <p class="hint"><kbd>↑</kbd> <kbd>↓</kbd> previous / next page · <kbd>R</kbd> reload · <kbd>1</kbd>–<kbd>3</kbd> device</p>
+  </div>
+</aside>
+
+<main>
+  <div class="bar">
+    <code id="cur"></code>
+    <button type="button" id="reload">Reload</button>
+    <a id="open" href="#" target="_blank" rel="noopener">Open in tab ↗</a>
+  </div>
+  <div class="stage"><iframe id="frame" title="Page preview"></iframe></div>
+</main>
+
+<script>
+  var PAGES = /*PAGES*/[];
+  var frame = document.getElementById('frame'), list = document.getElementById('pages');
+  var state = { page: 0, attrs: {} };
+  try { Object.assign(state, JSON.parse(localStorage.getItem('oz-workbench') || '{}')); } catch (e) {}
+  function save() { try { localStorage.setItem('oz-workbench', JSON.stringify(state)); } catch (e) {} }
+
+  // Group pages by type so the list is easy to scan.
+  function groupOf(f) {
+    if (f.indexOf('v-') === 0) return 'Presets & formats';
+    if (f.indexOf('email-') === 0) return 'Emails';
+    if (f.indexOf('page') === 0 || f === 'quote.html') return 'Pages';
+    if (f.indexOf('category') === 0) return 'Categories';
+    return 'Store';
+  }
+  function draw(filter) {
+    list.innerHTML = '';
+    var groups = {};
+    PAGES.forEach(function (p, i) {
+      if (filter && p.file.indexOf(filter) < 0 && p.path.indexOf(filter) < 0) return;
+      (groups[groupOf(p.file)] = groups[groupOf(p.file)] || []).push(i);
+    });
+    Object.keys(groups).forEach(function (g) {
+      var h = document.createElement('h2'); h.textContent = g; list.appendChild(h);
+      var box = document.createElement('div'); box.className = 'group';
+      groups[g].forEach(function (i) {
+        var b = document.createElement('button'); b.type = 'button';
+        b.innerHTML = '<span></span><small></small>';
+        b.firstChild.textContent = PAGES[i].file.replace('.html', '');
+        b.lastChild.textContent = PAGES[i].path;
+        b.setAttribute('aria-current', i === state.page ? 'true' : 'false');
+        b.onclick = function () { show(i); };
+        box.appendChild(b);
+      });
+      list.appendChild(box);
+    });
+  }
+  function show(i) {
+    state.page = Math.max(0, Math.min(PAGES.length - 1, i)); save();
+    var p = PAGES[state.page];
+    frame.src = p.file;
+    document.getElementById('cur').textContent = p.file + '  ←  ' + p.template + '  ' + p.path;
+    document.getElementById('open').href = p.file;
+    draw(document.getElementById('q').value.trim());
+  }
+  // Apply live style overrides to the preview's <html> data-* attributes.
+  function applyAttrs() {
+    try {
+      var de = frame.contentDocument.documentElement;
+      Object.keys(state.attrs).forEach(function (k) { if (state.attrs[k]) de.setAttribute('data-' + k, state.attrs[k]); });
+    } catch (e) {}
+  }
+  frame.addEventListener('load', applyAttrs);
+  document.querySelectorAll('[data-attr]').forEach(function (sel) {
+    var k = sel.getAttribute('data-attr');
+    sel.value = state.attrs[k] || '';
+    sel.onchange = function () {
+      state.attrs[k] = sel.value; save();
+      if (!sel.value) frame.contentWindow.location.reload(); else applyAttrs();
+    };
+  });
+  var devBtns = document.querySelectorAll('#device button');
+  function device(n) {
+    devBtns.forEach(function (b, i) { b.setAttribute('aria-pressed', i === n ? 'true' : 'false'); });
+    frame.style.width = devBtns[n].getAttribute('data-w'); state.device = n; save();
+  }
+  devBtns.forEach(function (b, i) { b.onclick = function () { device(i); }; });
+  document.getElementById('reload').onclick = function () { frame.contentWindow.location.reload(); };
+  document.getElementById('q').oninput = function (e) { draw(e.target.value.trim()); };
+  document.addEventListener('keydown', function (e) {
+    if (e.target.matches('input, select')) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); show(state.page + 1); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); show(state.page - 1); }
+    if (e.key === 'r') frame.contentWindow.location.reload();
+    if (e.key >= '1' && e.key <= '3') device(+e.key - 1);
+  });
+  device(state.device || 0);
+  show(state.page || 0);
+</script>
+</body>
+</html>

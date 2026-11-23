@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1 style="margin:0 0 12px;font:700 22px/1.2 'Courier New',monospace;color:#E9EEF7;">Thanks for your purchase!</h1>
+  {% if content is defined and content %}{{ content|raw }}{% else %}
+  <p style="margin:0 0 20px;">Your items are on their way in-game. If anything is missing after a few minutes, contact {{ store.name }} with your transaction ID.</p>
+  {% endif %}
+{% endblock %}

@@ -79,6 +79,28 @@ Source of truth for what Tebex exposes: https://docs.tebex.io/developers/templat
 | Themed scrollbar, focus styles, ARIA, reduced motion | ✅ | |
 | Lazy images, cached API calls (sessionStorage) | ✅ | |
 | OG / SEO meta | ✅ | `seo-*` |
+| Sale banner with day/hour/min/sec countdown | ✅ | `sale-*` |
+| Homepage image + YouTube slider (swipe, arrows, dots, autoplay) | ✅ | `slides`, `slides-autoplay` |
+| Discount / creator-code pop-up (once per visitor, copy code) | ✅ | `promo-*` |
+| Currency picker in basket | ✅ (URL unverified) | `currencies` |
+| Staff, Vote, FAQ, Patrons pages from settings | ✅ | `*-list`, `page-slug-*` |
+| Setup page: live checklist of what is configured + admin row editors that output paste-ready settings | ✅ | `setup-page` |
+| Footer lists the store's custom pages; Tebex policy pages by default | ✅ | |
+| Login error message, quote page | ✅ | |
+| Block-wipe pixel page transition (or fade / off) | ✅ | `fx-page-transitions` |
+| Reveal styles: Drop into slot, Rise, Pop | ✅ | `fx-reveal-style` |
+| Hotbar selection bob, icon hop, basket line stagger, bars fill on view, button press | ✅ | |
+| Loading states: form submits, basket remove/checkout/logout, currency switch, live counts, slider/video/skins | ✅ | `fx-loading-states` |
+| Offline / back-online notice | ✅ | |
+| Rules and News pages from settings | ✅ | `rules-list`, `news-list` |
+| Tiered category page, quote page, branded emails | ✅ (Tebex vars unverified) | |
+| 290 pixel icons (tools & armor tiers, ores, potions, keys, crates, ranks, food, blocks, mobs, world, UI) | ✅ | `category-icons`, `package-icons`, `package-icon-default` |
+| Icon = name or image URL; icon pickers with live preview + searchable icon browser on the setup page | ✅ | |
+| Icon motion: hop on hover, idle float with sparkle on rare items, or off | ✅ | `fx-icon-motion` |
+| Logo drop-in, icons spin into slots, popup/search pixel zoom, slot glow, price nudge | ✅ | |
+| "Your current rank" picker: player picks the rank they own (saved per username on their device); preview opens on it, shows "VIP → MVP+" upgrades, ladder + table mark owned and included ranks | ✅ (player-declared; Tebex does not expose owned ranks) | `rank-current-picker` |
+| Hero logo: uploadable icon or any icon-set icon above the name, icon-only mode, editable subtitle, 3 sizes | ✅ | `logo-icon-image`, `logo-icon`, `logo-icon-only`, `logo-subtitle`, `logo-size` |
+| Hero logo animation: icon pop + letter-by-letter drop-in, then Float / Bounce (letter wave) / Glow (light sweep); letters jump on hover | ✅ | `logo-animation` |
 | Custom 404 / maintenance | ⛔ no such template pages | |
 
 ## Selling it

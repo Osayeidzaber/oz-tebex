@@ -24,13 +24,13 @@
             <tr>
               <td>
                 <div style="display:flex;gap:12px;align-items:center">
-                  <span class="oz-slot" style="width:52px;height:52px;flex:none">{% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img src="{{ item.image.url }}" alt="" style="max-height:36px;width:auto">{% else %}<span class="oz-ico oz-ico--sm oz-ico--chest"></span>{% endif %}</span>
-                  <strong style="font-family:var(--font-pixel);font-size:18px">{{ item.name }}</strong>
+                  <span class="oz-slot" style="width:52px;height:52px;flex:none">{% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img src="{{ item.image.url }}" alt="" style="max-height:36px;width:auto">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[item.name|lower]|default(pkgIconDefault), size: 'sm' } %}{% endif %}</span>
+                  <strong class="oz-pixel-18">{{ item.name }}</strong>
                 </div>
               </td>
               <td>{{ item.price|money }} {{ basket.currency }}</td>
               <td>{{ item.quantity|default(1) }}</td>
-              <td style="text-align:right"><a class="oz-btn oz-btn--alt oz-btn--icon oz-btn--sm" href="/checkout/packages/remove/{{ item.id }}" aria-label="{{ __('Remove') }} {{ item.name }}">&times;</a></td>
+              <td class="oz-right"><a class="oz-btn oz-btn--alt oz-btn--icon oz-btn--sm" href="/checkout/packages/remove/{{ item.id }}" aria-label="{{ __('Remove') }} {{ item.name }}">&times;</a></td>
             </tr>
           {% endfor %}
         </tbody>
@@ -47,14 +47,14 @@
       {% if config('checkout-redirect') %}data-oz-redirect="{{ config('checkout-redirect') }}"{% endif %}>
       <h2 style="font-size:24px">{{ __('Summary') }}</h2>
       {% if basket.coupons is defined and basket.coupons|length %}
-        <div class="oz-muted" style="font-size:13px">{{ __('Coupons') }}: {% for c in basket.coupons %}{{ c.code|default(c) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>
+        <div class="oz-muted oz-small">{{ __('Coupons') }}: {% for c in basket.coupons %}{{ c.code|default(c) }}{% if not loop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
       <div class="oz-total"><span class="oz-label">{{ __('Total') }}</span><strong>{{ basket.price|money }} {{ basket.currency }}</strong></div>
-      <p class="oz-note" style="margin:0">{{ __('Coupons, gift cards and creator codes can be entered in the secure checkout.') }}</p>
+      <p class="oz-note oz-m0">{{ __('Coupons, gift cards and creator codes can be entered in the secure checkout.') }}</p>
 
       {% if config('checkout-terms')|default('show')|lower == 'show' and not empty %}
       <div style="display:flex;flex-direction:column;gap:10px" data-oz-terms>
-        <label class="oz-check"><input type="checkbox"> <span>{{ __('I agree to the') }} {% if config('terms-url') %}<a href="{{ config('terms-url') }}" target="_blank" rel="noopener">{{ __('terms of sale') }}</a>{% else %}{{ __('terms of sale') }}{% endif %}.</span></label>
+        <label class="oz-check"><input type="checkbox"> <span>{{ __('I agree to the') }} <a href="{{ config('terms-url')|default('/terms/checkout') }}" target="_blank" rel="noopener">{{ __('terms of sale') }}</a>.</span></label>
         <label class="oz-check"><input type="checkbox"> <span>{{ __('I understand digital items are delivered instantly and are non-refundable.') }}</span></label>
         {% if basket.ign %}<label class="oz-check"><input type="checkbox"> <span>{{ __('Items go to') }} <strong>{{ basket.ign }}</strong>.</span></label>{% endif %}
       </div>
@@ -65,7 +65,7 @@
       <a class="oz-btn oz-btn--alt oz-btn--block" href="/login" data-oz-login-link hidden>{{ __('Log in') }}</a>
       <noscript><a class="oz-btn oz-btn--alt oz-btn--block" href="/checkout/basket">{{ __('Continue to payment') }}</a></noscript>
       <div class="oz-muted" style="font-size:12px;text-align:center">{{ __('Payments are handled securely by Tebex.') }}</div>
-      <a class="oz-muted" href="/" style="text-align:center">&larr; {{ __('Continue shopping') }}</a>
+      <a class="oz-muted oz-center" href="/">&larr; {{ __('Continue shopping') }}</a>
     </aside>
   </div>
 {% endblock %}

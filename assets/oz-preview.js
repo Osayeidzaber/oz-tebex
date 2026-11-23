@@ -112,7 +112,8 @@
         box.querySelectorAll('[data-oz-preview-set]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
         var prefix = b.getAttribute('data-prefix'), color = b.getAttribute('data-color');
         box.querySelectorAll('[data-oz-preview-tag] span, [data-oz-preview-chat], [data-oz-preview-tab]').forEach(function (el) { el.textContent = prefix; el.style.color = color; });
-        var nm = box.querySelector('[data-oz-preview-name]'); if (nm) nm.textContent = b.getAttribute('data-name');
+        // The rank heading lives in the info panel next to the preview, not inside it.
+        var nm = (box.closest('.oz-rankhero, .oz-content') || box).querySelector('[data-oz-preview-name]'); if (nm) nm.textContent = b.getAttribute('data-name');
         var buy = box.querySelector('[data-oz-preview-buy]');
         if (buy && b.getAttribute('data-href')) { buy.href = b.getAttribute('data-href'); buy.querySelector('span').textContent = b.getAttribute('data-name'); }
         if (box._setTag) box._setTag();
@@ -133,9 +134,69 @@
       n.focus(); n.click();
     });
   }
+  /* ---------- "Your current rank" (rank page) ----------
+     Tebex doesn't tell the theme which rank a player owns, so the player picks it once.
+     Saved per username in localStorage. Ranks are ordered as listed on the page (lowest → highest). */
+  function initMyRank(picker) {
+    var sel = picker.querySelector('select');
+    var status = picker.querySelector('[data-oz-upgrade]');
+    var page = picker.closest('.oz-content') || document;
+    var preview = page.querySelector('.oz-rankhero [data-oz-preview]');
+    var key = 'oz-rank:' + (picker.getAttribute('data-ign') || 'guest');
+    var order = Array.prototype.map.call(sel.options, function (o) { return o.value; }).filter(Boolean);
+    var get = function () { try { return localStorage.getItem(key) || ''; } catch (e) { return ''; } };
+    var put = function (v) { try { if (v) localStorage.setItem(key, v); else localStorage.removeItem(key); } catch (e) {} };
+    var esc = function (s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+    var label = function (v) { var o = sel.querySelector('option[value="' + v.replace(/"/g, '') + '"]'); return o ? o.textContent : v; };
+
+    // Mark owned / lower ranks everywhere they appear: preview picks, ladder, comparison table.
+    function mark() {
+      var mine = sel.value, mi = order.indexOf(mine);
+      page.querySelectorAll('[data-oz-rank]').forEach(function (el) {
+        var i = order.indexOf(el.getAttribute('data-oz-rank'));
+        el.classList.toggle('is-mine', mi >= 0 && i === mi);
+        el.classList.toggle('is-below', mi >= 0 && i >= 0 && i < mi);
+      });
+      page.querySelectorAll('.oz-ranks__mine').forEach(function (t) { t.hidden = !t.parentElement.classList.contains('is-mine'); });
+      describe();
+    }
+    // Status line under the picker, based on the rank being previewed.
+    function describe() {
+      if (!status) return;
+      var mine = sel.value, mi = order.indexOf(mine);
+      var on = preview && preview.querySelector('[data-oz-preview-set][aria-pressed="true"]');
+      var viewing = on ? on.getAttribute('data-oz-rank') : '';
+      var vi = order.indexOf(viewing);
+      status.className = 'oz-myrank__status';
+      if (mi < 0) { status.textContent = viewing ? '' : (OZ.rankNone || ''); return; }
+      if (vi < 0 || vi === mi) { status.textContent = OZ.rankMine || 'This is your rank.'; status.classList.add('is-mine'); }
+      else if (vi > mi) {
+        status.innerHTML = '<span>' + esc(OZ.rankUpgrade || 'Upgrade') + ':</span> <b>' + esc(label(mine)) + '</b> <span aria-hidden="true">→</span> <b class="oz-a">' + esc(label(viewing)) + '</b>';
+        status.classList.add('is-up');
+      } else { status.textContent = OZ.rankBelow || 'Already included in your rank.'; status.classList.add('is-below'); }
+    }
+
+    sel.value = order.indexOf(get()) >= 0 ? get() : '';
+    // Open the preview on the rank the player owns (if it has a preview style).
+    if (sel.value && preview) {
+      var btn = preview.querySelector('[data-oz-preview-set][data-oz-rank="' + sel.value.replace(/"/g, '') + '"]');
+      if (btn) btn.click();
+    }
+    mark();
+    sel.addEventListener('change', function () {
+      put(sel.value);
+      var btn = preview && preview.querySelector('[data-oz-preview-set][data-oz-rank="' + sel.value.replace(/"/g, '') + '"]');
+      if (btn) btn.click();
+      mark();
+      picker.classList.remove('is-saved'); picker.offsetWidth; picker.classList.add('is-saved');
+    });
+    if (preview) preview.addEventListener('click', function (e) { if (e.target.closest('[data-oz-preview-set]')) setTimeout(describe, 0); });
+  }
+
   OZ.initPreview = function (root) {
     Array.prototype.slice.call((root || document).querySelectorAll('[data-oz-preview]')).forEach(initBox);
   };
   OZ.initPreview(document);
+  Array.prototype.slice.call(document.querySelectorAll('[data-oz-myrank]')).forEach(initMyRank);
   window.OZ = OZ;
 })();

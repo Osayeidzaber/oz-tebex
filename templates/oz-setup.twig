@@ -1,0 +1,146 @@
+{#
+  OZ setup & admin page. Shown on the CMS page whose slug/title is "setup" while the
+  "setup-page" setting is On. Turn it Off before launch: Tebex pages are public.
+  Nothing here can change settings by itself — it reads them and builds text to paste
+  into Tebex → Webstore → Appearance → Theme settings.
+#}
+{% set checks = [
+  ['Store basics', [
+    ['server-ip', 'Server IP', 'Copy-IP button and live player count', 'play.example.com'],
+    ['discord-invite', 'Discord invite', 'Discord button and member count'],
+    ['discord-id', 'Discord server ID', 'Live online count (enable the server widget in Discord)'],
+    ['logo-image', 'Logo image', 'Falls back to your store logo, then pixel text'],
+    ['header-links', 'Header links', 'Rules, Vote, Staff… in the top bar', 'Rules|/rules, Vote|/vote'],
+    ['seo-description', 'Search / share description', 'Text shown on Google and Discord embeds'],
+    ['seo-image', 'Share image', 'Picture shown when the store link is shared']
+  ]],
+  ['Selling', [
+    ['rank-category', 'Rank category', 'Turns that category into the rank table + preview'],
+    ['rank-table', 'Rank comparison rows', 'Perks table on the rank page (still the example?)', 'Chat prefix |'],
+    ['quantity-categories', 'Quantity categories', 'Shows ×1 ×5 ×10 buttons (keys, coins)'],
+    ['package-badges', 'Package badges', 'HOT / NEW / BEST VALUE tags', 'MVP=POPULAR'],
+    ['basket-goal-amount', 'Free-gift goal', 'Progress bar in the basket'],
+    ['currencies', 'Currencies', 'Currency picker in the basket']
+  ]],
+  ['Homepage', [
+    ['slides', 'Slider', 'Images or YouTube videos at the top'],
+    ['sale-title', 'Sale banner', 'Badge, title and countdown', '', 'sale', 'show'],
+    ['promo-code', 'Discount pop-up code', 'Coupon shown once per visitor', '', 'promo', 'on'],
+    ['announcement-text', 'Announcement bar', 'Message bar above the header', '', 'announcement', 'show']
+  ]],
+  ['Pages', [
+    ['staff-list', 'Staff list', 'Create a Tebex page titled "Staff"'],
+    ['vote-list', 'Vote sites', 'Create a Tebex page titled "Vote"'],
+    ['faq-list', 'FAQ', 'Create a Tebex page titled "FAQ"'],
+    ['patrons-list', 'Patrons', 'Create a Tebex page titled "Patrons"'],
+    ['rules-list', 'Rules', 'Create a Tebex page titled "Rules"'],
+    ['news-list', 'News', 'Create a Tebex page titled "News"'],
+    ['terms-url', 'Terms link', 'Defaults to Tebex /terms/checkout']
+  ]]
+] %}
+
+{% set done = 0 %}{% set total = 0 %}
+{% for g in checks %}{% for c in g[1] %}{% set total = total + 1 %}{%- set v = config(c[0])|trim -%}
+{%- set ok = v and not (c|length > 3 and c[3] and v starts with c[3]) and not (c|length > 4 and config(c[4])|default('')|lower != c[5]) -%}{% if ok %}{% set done = done + 1 %}{% endif %}{% endfor %}{% endfor %}
+
+<div class="oz-setup" data-oz-setup>
+  <div class="oz-slot oz-setup__warn" role="note">
+    <strong>{{ __('This page is public while it is on.') }}</strong>
+    {{ __('When you are done, set "Setup page" to Off in your theme settings.') }}
+  </div>
+
+  {# ---------- Progress ---------- #}
+  <section class="oz-setup__sec" aria-labelledby="oz-setup-progress">
+    <div class="oz-section-head">
+      <h2 id="oz-setup-progress">{{ __('Setup checklist') }}</h2>
+      <span class="oz-label">{{ done }} / {{ total }} {{ __('done') }}</span>
+    </div>
+    <div class="oz-xp"><div class="oz-xp__bar"><span class="oz-xp__fill" style="width: {{ (done / total * 100)|round }}%"></span></div></div>
+
+    <div class="oz-setup__groups">
+      {% for g in checks %}
+        <div class="oz-slot oz-setup__group">
+          <h3>{{ g[0] }}</h3>
+          <ul class="oz-setup__list">
+            {% for c in g[1] %}
+              {%- set v = config(c[0])|trim -%}
+{%- set ok = v and not (c|length > 3 and c[3] and v starts with c[3]) and not (c|length > 4 and config(c[4])|default('')|lower != c[5]) -%}
+              <li class="{{ ok ? 'is-ok' : 'is-todo' }}">
+                <span class="oz-setup__dot" aria-hidden="true">{{ ok ? '✓' : '' }}</span>
+                <span><b>{{ c[1] }}</b> <code>{{ c[0] }}</code><small>{{ c[2] }}{% if c|length > 4 %} · {{ __('switch') }} <code>{{ c[4] }}</code> {{ __('must be') }} {{ c[5]|capitalize }}{% endif %}</small></span>
+                <span class="oz-sr">{{ ok ? __('Done') : __('Not set') }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {# ---------- Store data Tebex gives the theme ---------- #}
+  <section class="oz-setup__sec" aria-labelledby="oz-setup-store">
+    <div class="oz-section-head"><h2 id="oz-setup-store">{{ __('Your store') }}</h2></div>
+    <div class="oz-setup__stats">
+      <div class="oz-slot"><b>{{ store.categories|length }}</b><small>{{ __('categories') }}</small></div>
+      <div class="oz-slot"><b>{{ store.pages is defined ? store.pages|length : '—' }}</b><small>{{ __('custom pages') }}</small></div>
+      <div class="oz-slot"><b>{{ config('preset')|default('Frost') }}</b><small>{{ __('color preset') }}</small></div>
+      <div class="oz-slot"><b>{{ config('category-style')|default('Hotbar') }}</b><small>{{ __('menu style') }}</small></div>
+    </div>
+    <p class="oz-muted oz-small">{{ __('Open each page once to check it:') }}
+      <a href="/">{{ __('Home') }}</a>{% for c in store.categories %} · <a href="/category/{{ c.id }}">{{ c.name }}</a>{% endfor %} · <a href="/login">{{ __('Login') }}</a> · <a href="/checkout/basket">{{ __('Checkout') }}</a>
+    </p>
+  </section>
+
+  {# ---------- Admin panel: list editors ---------- #}
+  <section class="oz-setup__sec" aria-labelledby="oz-setup-admin">
+    <div class="oz-section-head">
+      <h2 id="oz-setup-admin">{{ __('Admin panel') }}</h2>
+      <span class="oz-label">{{ __('Edit here, then paste into Tebex') }}</span>
+    </div>
+    <p class="oz-muted">{{ __('Fill the rows, press Copy, and paste into the setting with the same name in Tebex. Your current values are already loaded.') }}</p>
+
+    {# [setting, tab label, columns, separator between columns, separator between rows] #}
+    {% set editors = [
+      ['staff-list', 'Staff team', ['Name', 'Role', 'Minecraft name'], '|', 'line'],
+      ['vote-list', 'Vote sites', ['Site name', 'Vote URL'], '|', 'line'],
+      ['faq-list', 'FAQ', ['Question', 'Answer'], '|', 'line'],
+      ['patrons-list', 'Patrons', ['Minecraft name', 'Tier'], '|', 'line'],
+      ['rules-list', 'Rules', ['Section', 'Rule'], '|', 'line'],
+      ['news-list', 'News', ['Date', 'Title', 'Text', 'Image URL'], '|', 'line'],
+      ['slides', 'Homepage slider', ['Image or YouTube URL', 'Title', 'Link'], '|', 'line'],
+      ['rank-table', 'Rank table', ['Perk', 'Rank 1', 'Rank 2', 'Rank 3', 'Rank 4'], '|', 'line'],
+      ['category-icons', 'Category icons', ['Category name', 'Icon name or image URL'], '=', 'comma'],
+      ['package-icons', 'Package icons', ['Package name', 'Icon name or image URL'], '=', 'line'],
+      ['header-links', 'Header links', ['Label', 'URL'], '|', 'comma']
+    ] %}
+    <div class="oz-tabs__bar oz-panel oz-setup__tabs" role="tablist">
+      {% for e in editors %}<button type="button" role="tab" id="oz-tab-{{ e[0] }}" aria-controls="oz-ed-{{ e[0] }}" aria-selected="{{ loop.first ? 'true' : 'false' }}" data-oz-setup-tab="{{ e[0] }}">{{ e[1] }}</button>{% endfor %}
+      <button type="button" role="tab" id="oz-tab-icons" aria-controls="oz-ed-icons" aria-selected="false" data-oz-setup-tab="icons">{{ __('Browse icons') }}</button>
+    </div>
+
+    {% for e in editors %}
+      <div class="oz-setup__editor" id="oz-ed-{{ e[0] }}" role="tabpanel" aria-labelledby="oz-tab-{{ e[0] }}" {% if not loop.first %}hidden{% endif %}
+        data-oz-editor="{{ e[0] }}" data-oz-sep="{{ e[3] }}" data-oz-join="{{ e[4] }}" data-oz-cols="{{ e[2]|join('||') }}" {% if 'icons' in e[0] %}data-oz-icon-col="1"{% endif %}>
+        <textarea class="oz-sr" data-oz-source aria-hidden="true" tabindex="-1">{{ config(e[0]) }}</textarea>
+        <div class="oz-setup__rows" data-oz-rows></div>
+        <div class="oz-setup__bar">
+          <button class="oz-btn oz-btn--alt oz-btn--sm" type="button" data-oz-add-row>+ {{ __('Add row') }}</button>
+          <span class="oz-muted oz-small">{{ __('Setting') }}: <code>{{ e[0] }}</code></span>
+        </div>
+        <label class="oz-label" for="oz-out-{{ e[0] }}">{{ __('Paste this into Tebex') }}</label>
+        <div class="oz-setup__out">
+          <textarea class="oz-input" id="oz-out-{{ e[0] }}" rows="5" readonly data-oz-output></textarea>
+          <button class="oz-btn" type="button" data-oz-copy-out>{{ __('Copy') }}</button>
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="oz-setup__editor" id="oz-ed-icons" role="tabpanel" aria-labelledby="oz-tab-icons" hidden>
+      <p class="oz-muted">{{ __('Click an icon to copy its name, then use it in Category icons or Package icons.') }}</p>
+      <label class="oz-sr" for="oz-icon-q">{{ __('Search icons') }}</label>
+      <input class="oz-input oz-setup__iconq" id="oz-icon-q" type="search" placeholder="{{ __('Search icons: sword, crown, key…') }}" autocomplete="off">
+      <div class="oz-setup__icons" data-oz-icon-grid><div class="oz-skeleton oz-setup__iconwait"></div></div>
+    </div>
+  </section>
+</div>
+<script src="{{ asset('oz-setup.js') }}" defer></script>

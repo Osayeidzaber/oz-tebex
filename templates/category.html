@@ -18,7 +18,7 @@
     {% set catIcon = 'chest' %}
     {% for c in store.categories %}{% if c.id == id %}{% set catIcon = iconNames[(loop.index0) % 10] %}{% endif %}{% endfor %}
     {% set catIcon = iconMap[name|lower]|default(iconMap[id ~ '']|default(catIcon)) %}
-    <span class="oz-slot"><span class="oz-ico oz-ico--xl oz-ico--{{ catIcon }}"></span></span>
+    <span class="oz-slot">{% include "oz-icon.twig" with { ic: catIcon, size: 'xl' } %}</span>
     <div style="flex:1;min-width:240px">
       <nav class="oz-crumbs" aria-label="Breadcrumb"><a href="/">{{ __('Home') }}</a> / {{ name }}</nav>
       <h1>{{ name }}</h1>
@@ -37,7 +37,7 @@
       <option value="price-desc">{{ __('Price: high to low') }}</option>
       <option value="name">{{ __('Name A–Z') }}</option>
     </select>
-    <span class="oz-muted" style="font-size:13px"><span data-oz-count-shown>{{ packages|length }}</span> / {{ packages|length }}</span>
+    <span class="oz-muted oz-small"><span data-oz-count-shown>{{ packages|length }}</span> / {{ packages|length }}</span>
   </div>
   {% endif %}
 
@@ -72,11 +72,24 @@
         <div class="oz-panel oz-rankhero__info">
           <div class="oz-label">{{ __('Rank preview') }}</div>
           <h2 data-oz-preview-name>{{ pick.name }}</h2>
-          <p class="oz-muted" style="margin:0">{{ basket.ign ? __('This is exactly how you will look in-game.') : __('Log in to see it on your own skin.') }}</p>
+          <p class="oz-muted oz-m0">{{ basket.ign ? __('This is exactly how you will look in-game.') : __('Log in to see it on your own skin.') }}</p>
+          {# "Your current rank": the player says which rank they own (Tebex does not tell the theme).
+             Remembered in their browser per username. Ranks are assumed to be listed lowest → highest. #}
+          {% if basket.ign and config('rank-current-picker')|default('on')|lower == 'on' %}
+          <div class="oz-slot oz-myrank" data-oz-myrank data-ign="{{ basket.ign|lower }}">
+            <label class="oz-label" for="oz-myrank-sel">{{ __('Your current rank') }}</label>
+            <select class="oz-input oz-myrank__sel" id="oz-myrank-sel">
+              <option value="">{{ __('None yet') }}</option>
+              {% for package in packages %}<option value="{{ package.name|lower }}">{{ package.name }}</option>{% endfor %}
+            </select>
+            <p class="oz-myrank__status" data-oz-upgrade aria-live="polite"></p>
+            <small class="oz-muted">{{ __('Saved on this device only. We can’t see your in-game rank, so pick it here.') }}</small>
+          </div>
+          {% endif %}
           {% if config('rank-ladder')|default('on')|lower == 'on' %}
           <div class="oz-ladder" aria-label="{{ __('Rank ladder') }}">
             {% for c in pvChoices %}
-              <a class="oz-ladder__step" href="#oz-rank-table"><span class="oz-ladder__bar" style="height:{{ 30 + loop.index0 * (90 / (pvChoices|length)) }}px;background:{{ c.color }}"></span><b style="color:{{ c.color }}">{{ c.name }}</b><small class="oz-muted">{{ c.price|money }} {{ basket.currency }}</small></a>
+              <a class="oz-ladder__step" href="#oz-rank-table" data-oz-rank="{{ c.name|lower }}"><span class="oz-ladder__bar" style="height:{{ 30 + loop.index0 * (90 / (pvChoices|length)) }}px;background:{{ c.color }}"></span><b style="color:{{ c.color }}">{{ c.name }}</b><small class="oz-muted">{{ c.price|money }} {{ basket.currency }}</small></a>
             {% endfor %}
           </div>
           {% endif %}
@@ -90,7 +103,8 @@
           <tr>
             <th style="vertical-align:bottom;width:24%"><span class="oz-label">{{ __('Compare') }}</span></th>
             {% for package in packages %}
-              <th class="{% if package.name|lower == hot %}is-hot{% endif %}">
+              <th class="{% if package.name|lower == hot %}is-hot{% endif %}" data-oz-rank="{{ package.name|lower }}">
+                <span class="oz-tag oz-tag--b oz-ranks__mine" hidden>{{ __('Your rank') }}</span>
                 {% if package.name|lower == hot %}<span class="oz-tag oz-ranks__hot">{{ __('Most popular') }}</span>{% endif %}
                 <span class="oz-slot">{% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="">{% else %}<span class="oz-ico oz-ico--lg oz-ico--crown"></span>{% endif %}</span>
                 <h3>{{ package.name }}</h3>
@@ -115,7 +129,7 @@
                 <td>{{ cells[0]|trim }}</td>
                 {% for package in packages %}
                   {% set v = cells[loop.index]|default('')|trim %}
-                  <td class="{% if package.name|lower == hot %}is-hot{% endif %}">
+                  <td class="{% if package.name|lower == hot %}is-hot{% endif %}" data-oz-rank="{{ package.name|lower }}">
                     {% if v|lower in ['yes','y','true','✓'] %}<span class="yes" aria-label="{{ __('Included') }}">✓</span>
                     {% elseif v|lower in ['no','n','false','-','—',''] %}<span class="no" aria-label="{{ __('Not included') }}">✕</span>
                     {% else %}{{ v }}{% endif %}
@@ -133,7 +147,7 @@
     <div class="oz-list">
       {% for package in packages %}
         <div class="oz-panel oz-row">
-          <span class="oz-slot">{% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="">{% else %}<span class="oz-ico oz-ico--chest"></span>{% endif %}</span>
+          <span class="oz-slot">{% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[package.name|lower]|default(pkgIconDefault), size: '' } %}{% endif %}</span>
           <h3><a href="/package/{{ package.id }}" data-oz-popup>{{ package.name }}</a></h3>
           <div class="oz-price">
             {% if package.discount is defined and package.discount.applied %}<s>{{ package.discount.original|money }}</s>{% endif %}
@@ -159,7 +173,7 @@
             {% for b in badgeMap[package.name|lower]|default([]) %}{% set b = b|trim %}<span class="oz-tag oz-badge--{{ b|lower|replace({' ': '-'}) }}">{{ b }}</span>{% endfor %}
           </div>
           <a class="oz-slot oz-pkg__media" href="/package/{{ package.id }}" data-oz-popup aria-label="{{ package.name }}">
-            {% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="" loading="lazy">{% else %}<span class="oz-ico oz-ico--xl oz-ico--chest"></span>{% endif %}
+            {% if package.image is defined and package.image and package.image.url %}<img src="{{ package.image.url }}" alt="" loading="lazy">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[package.name|lower]|default(pkgIconDefault), size: 'xl' } %}{% endif %}
           </a>
           <h3 class="oz-pkg__name"><a href="/package/{{ package.id }}" data-oz-popup>{{ package.name }}</a></h3>
           <div class="oz-price">

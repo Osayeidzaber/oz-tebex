@@ -64,22 +64,28 @@
   /* ---------- Live player count (mcsrvstat.us) ---------- */
   $$('[data-oz-players]').forEach(function (el) {
     var label = $('[data-oz-players-label]', el);
+    if (!label) return;
+    var base = label.textContent;
+    label.classList.add('is-fetching');                       // pulsing "…" while we wait
     fetch('https://api.mcsrvstat.us/3/' + encodeURIComponent(el.getAttribute('data-oz-players')))
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        if (!label) return;
-        if (d && d.online && d.players) label.textContent = label.textContent.split(' · ')[0] + ' · ' + d.players.online + ' ' + (cfg.online || 'online');
-        else label.textContent = cfg.offline || 'Server offline';
-      }).catch(function () {});
+        if (d && d.online && d.players) { label.textContent = base + ' · ' + d.players.online + ' ' + (cfg.online || 'online'); el.classList.add('is-live'); }
+        else { label.textContent = cfg.offline || 'Server offline'; el.classList.add('is-offline'); }
+      })
+      .catch(function () { label.textContent = base; })
+      .then(function () { label.classList.remove('is-fetching'); });
   });
 
   /* ---------- Discord member count (server widget must be enabled) ---------- */
   $$('[data-oz-discord]').forEach(function (el) {
     var label = $('[data-oz-discord-label]', el);
+    if (label) label.classList.add('is-fetching');
     fetch('https://discord.com/api/guilds/' + encodeURIComponent(el.getAttribute('data-oz-discord')) + '/widget.json')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) { if (d && label && typeof d.presence_count === 'number') label.textContent = 'Discord · ' + d.presence_count.toLocaleString() + ' ' + (cfg.online || 'online'); })
-      .catch(function () {});
+      .catch(function () {})
+      .then(function () { if (label) label.classList.remove('is-fetching'); });
   });
 
   /* ---------- Countdown ---------- */
@@ -90,7 +96,10 @@
     (function tick() {
       var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
       if (!s) { el.hidden = true; return; }
-      el.textContent = pad(Math.floor(s / 86400)) + 'd ' + pad(Math.floor(s % 86400 / 3600)) + 'h ' + pad(Math.floor(s % 3600 / 60)) + 'm ' + pad(s % 60) + 's';
+      var parts = { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
+      var boxes = $$('[data-oz-cd]', el);
+      if (boxes.length) boxes.forEach(function (b) { b.textContent = pad(parts[b.getAttribute('data-oz-cd')]); });
+      else el.textContent = pad(parts.d) + 'd ' + pad(parts.h) + 'h ' + pad(parts.m) + 'm ' + pad(parts.s) + 's';
       setTimeout(tick, 1000);
     })();
   });

@@ -4,24 +4,24 @@
 {% block sidebar %}{% endblock %}
 
 {% block content %}
-  <div class="oz-panel oz-login" style="max-width:560px">
+  <div class="oz-panel oz-login oz-narrow">
     <div>
       <div class="oz-label">{{ __('Almost there') }}</div>
-      <h1 style="margin-top:8px">{{ options.package.name }}</h1>
-      <p class="oz-muted" style="margin:8px 0 0">{{ __('Choose your options before adding to basket.') }}</p>
+      <h1 class="oz-mt-8">{{ options.package.name }}</h1>
+      <p class="oz-muted oz-mt-8 oz-m0b">{{ __('Choose your options before adding to basket.') }}</p>
     </div>
 
     <form method="post" style="display:flex;flex-direction:column;gap:16px">
       {% if options.package.customPrice %}
         <div>
-          <label class="oz-label" for="oz-price" style="display:block;margin-bottom:8px">{{ __('Amount') }} ({{ basket.currency }})</label>
+          <label class="oz-label oz-block-mb" for="oz-price">{{ __('Amount') }} ({{ basket.currency }})</label>
           <input class="oz-input" id="oz-price" name="price" type="number" step="0.01" min="{{ options.package.price }}" value="{{ options.package.price }}" required>
         </div>
       {% endif %}
 
       {% for variable in options.variables %}
         <div>
-          <label class="oz-label" for="oz-var-{{ variable.id }}" style="display:block;margin-bottom:8px">{{ variable.description }}</label>
+          <label class="oz-label oz-block-mb" for="oz-var-{{ variable.id }}">{{ variable.description }}</label>
           {% if variable.type == 'dropdown' %}
             <select class="oz-input" id="oz-var-{{ variable.id }}" name="variables[{{ variable.id }}]">
               {% for option in variable.options %}
@@ -36,7 +36,7 @@
         </div>
       {% endfor %}
 
-      <button class="oz-btn oz-btn--block" type="submit" style="min-height:56px">{{ __('Add to basket') }}</button>
+      <button class="oz-btn oz-btn--block oz-btn--tall" type="submit">{{ __('Add to basket') }}</button>
     </form>
   </div>
 {% endblock %}

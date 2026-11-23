@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1 style="margin:0 0 12px;font:700 22px/1.2 'Courier New',monospace;color:#E9EEF7;">You left something behind</h1>
+  {% if content is defined and content %}{{ content|raw }}{% else %}
+  <p style="margin:0 0 20px;">Your basket at {{ store.name }} is still waiting. Come back and finish your order whenever you are ready.</p>
+  {% endif %}
+{% endblock %}

@@ -8,7 +8,7 @@
   {% if search and giftcard %}
     <div class="oz-slot" style="display:block;padding:12px;margin-top:12px;font-size:13px">
       {% if giftcard.void %}
-        <span style="color:var(--danger)">{{ __('This gift card is no longer valid.') }}</span>
+        <span class="oz-danger">{{ __('This gift card is no longer valid.') }}</span>
       {% else %}
         <span class="oz-muted">{{ giftcard.card_number }}</span><br>
         <strong style="font:700 22px var(--font-pixel)">{{ giftcard.remaining_balance|money }} {{ basket.currency }}</strong> {{ __('left') }}

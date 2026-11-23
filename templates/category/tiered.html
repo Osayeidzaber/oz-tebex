@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{# Tebex tiered categories (subscriptions with upgrade tiers). Tebex renders the tier UI as `content`. #}
+{% block content %}
+  <section class="oz-panel oz-welcome oz-tiered">
+    <nav class="oz-crumbs" aria-label="Breadcrumb"><a href="/">{{ __('Home') }}</a>{% if category is defined and category.name %} / {{ category.name }}{% endif %}</nav>
+    {% if category is defined and category.name %}<h1>{{ category.name }}</h1>{% endif %}
+    {% if category is defined and category.description %}<div class="oz-prose">{{ category.description|raw }}</div>{% endif %}
+    {% if content is defined and content %}
+      <div class="oz-tiered__body">{{ content|raw }}</div>
+    {% else %}
+      <div class="oz-empty">{{ __('No tiers available right now.') }}</div>
+    {% endif %}
+  </section>
+{% endblock %}

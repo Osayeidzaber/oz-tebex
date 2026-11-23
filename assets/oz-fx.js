@@ -42,7 +42,7 @@
   if (screen) window.addEventListener('load', function () { screen.classList.add('is-done'); setTimeout(function () { screen.remove(); }, 500); });
 
   /* ---------- Smooth page transitions (internal links) ---------- */
-  if (fx.transitions && !reduce) {
+  if (fx.transitions && fx.transitionStyle !== 'blocks' && !reduce) {
     document.addEventListener('click', function (e) {
       var a = e.target.closest('a[href]');
       if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank') return;

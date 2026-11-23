@@ -1,0 +1,62 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "templates/email/layout.html"
+        ],
+        "createdAt": "2026-11-23T17:11:30.493Z",
+        "reason": "Claude: email text is light on the dark #151B30 table background set in email/layout.html (lowest pair #A3ADC2 on #151B30 ~7:1); checker evaluates without that background"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "templates/email/abandonedcart.html"
+        ],
+        "createdAt": "2026-11-23T17:11:31.251Z",
+        "reason": "Claude: email text is light on the dark #151B30 table background set in email/layout.html (lowest pair #A3ADC2 on #151B30 ~7:1); checker evaluates without that background"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "templates/email/purchasefollowup.html"
+        ],
+        "createdAt": "2026-11-23T17:11:31.916Z",
+        "reason": "Claude: email text is light on the dark #151B30 table background set in email/layout.html (lowest pair #A3ADC2 on #151B30 ~7:1); checker evaluates without that background"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "templates/email/downloadablepackage.html"
+        ],
+        "createdAt": "2026-11-23T17:11:32.596Z",
+        "reason": "Claude: email text is light on the dark #151B30 table background set in email/layout.html (lowest pair #A3ADC2 on #151B30 ~7:1); checker evaluates without that background"
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "templates/email/layout.html"
+        ],
+        "createdAt": "2026-11-23T17:14:19.206Z",
+        "reason": "Claude: email clients ignore web fonts; Arial is the email-safe fallback by design"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "tools/workbench.html"
+        ],
+        "createdAt": "2026-11-23T17:14:19.934Z",
+        "reason": "Claude: internal dev tool, deliberately matches the theme's existing Inter body font"
+      }
+    ]
+  }
+}

@@ -5,12 +5,14 @@ A pixel-art webstore theme for Tebex. 9 one-click presets, 4 layout formats, lig
 ## Install (5 minutes)
 
 1. **Tebex panel → Webstore → Templates → Create template** (base it on any template).
-2. **Assets** tab: upload `assets/oz.css` and `assets/oz.js`.
+2. **Assets** tab: upload every file in `assets/` (`oz.css`, `oz.js`, `oz-fx.js`, `oz-preview.js`, `oz-checkout.js`, `oz-extras.js`, `oz-setup.js`, `oz-motion.js`, `oz-icons.css`) and the partials in `templates/` that end in `.twig` (`oz-preview.twig`, `oz-links.twig`, `oz-setup.twig`, `oz-icon.twig`).
 3. **Pages** tab: open each page below and replace its contents with the file of the same name from `templates/`:
-   `layout.html`, `index.html`, `category.html`, `package.html`, `username.html`, `options.html`, `checkout.html`, `cms/page.html`, and the 8 `module.*.html` sidebar modules.
+   `layout.html`, `index.html`, `category.html`, `package.html`, `username.html`, `options.html`, `checkout.html`, `quote.html`, `cms/page.html`, `category/tiered.html`, the 8 `module.*.html` sidebar modules, and the 4 files in `email/`.
 4. **Change schema**: paste the contents of `schema.json` and save.
 5. Open the template **settings** and fill in at least: server IP, Discord invite, preset.
 6. Activate the template.
+7. *(Optional, recommended)* Set **Setup page** to On and create a Tebex page titled **Setup**. It shows what is still missing and has editors for staff, vote sites, FAQ, slider and rank table that give you text to paste into the settings. Turn it Off when you are done — the page is public.
+8. For the built-in **Staff, Vote, FAQ, Patrons, Rules and News** pages, create Tebex pages with those titles and fill the matching lists in settings.
 
 ## Make it yours
 
@@ -20,7 +22,6 @@ Everything is in the template settings — see [docs/SETTINGS.md](docs/SETTINGS.
 - **Formats:** category hotbar / tabs / sidebar / none · header scene / compact / minimal · square / soft / round corners · bevel / flat / outline panels · Pixel / Blocky / Tech / Clean heading font
 - **Header:** text or image logo, your own banner image, ground blocks (snow, grass, sand, nether, end, cherry, sculk)
 - **Store features:** copy-IP with live player count, Discord member count, announcement bar with countdown, quantity buttons, rank comparison table, package popup with image/video gallery, basket drawer, Java/Bedrock login with Geyser prefix, checkout agreement boxes, 8 styled sidebar modules
-- **Player & rank preview:** logged-in players see their own Minecraft skin in the sidebar; rank pages and rank packages show the skin with the rank's nametag and a chat line (set prefixes + colors in *Rank styles*)
 - **Player & rank preview:** logged-in players see their own Minecraft skin in the sidebar; the rank table and rank packages show the skin with the rank's nametag and a sample chat line (prefixes and colors set in *Rank styles*)
 - **Text:** every label passes through Tebex translations (`__()`), so the store follows your language settings
 

@@ -31,9 +31,9 @@
   <div data-oz-pv-panel="chat" {% if firstTab != 'chat' %}hidden{% endif %}>
     <div class="oz-slot oz-stage3d" style="align-content:end;padding:16px 16px 40px">
       <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:4px;width:100%">
-        <div class="oz-chat" style="opacity:.6">Steve: {{ __('anyone up for a dungeon?') }}</div>
+        <div class="oz-chat oz-dim">Steve: {{ __('anyone up for a dungeon?') }}</div>
         <div class="oz-chat"><span data-oz-preview-chat style="color:{{ pvColor }}">{{ pvPrefix }}</span> <b>{{ pvLabel }}</b>: {{ config('preview-chat')|default('gg! just ranked up') }}</div>
-        <div class="oz-chat" style="opacity:.6">Alex: {{ __('congrats!') }}</div>
+        <div class="oz-chat oz-dim">Alex: {{ __('congrats!') }}</div>
       </div>
     </div>
   </div>
@@ -65,9 +65,9 @@
   {% endif %}
 
   {% if pvChoices is defined and pvChoices|length > 1 %}
-  <div class="oz-preview__picks" role="group" aria-label="{{ __('Preview a rank') }}" style="margin-top:12px">
+  <div class="oz-preview__picks oz-mt-12" role="group" aria-label="{{ __('Preview a rank') }}">
     {% for c in pvChoices %}
-      <button type="button" class="oz-btn oz-btn--alt oz-btn--sm" data-oz-preview-set data-prefix="{{ c.prefix }}" data-color="{{ c.color }}" data-name="{{ c.name }}" data-href="{{ c.href }}" aria-pressed="{{ c.name|lower == pvName|lower ? 'true' : 'false' }}">{{ c.name }}</button>
+      <button type="button" class="oz-btn oz-btn--alt oz-btn--sm" data-oz-rank="{{ c.name|lower }}" data-oz-preview-set data-prefix="{{ c.prefix }}" data-color="{{ c.color }}" data-name="{{ c.name }}" data-href="{{ c.href }}" aria-pressed="{{ c.name|lower == pvName|lower ? 'true' : 'false' }}">{{ c.name }}</button>
     {% endfor %}
   </div>
   {% endif %}

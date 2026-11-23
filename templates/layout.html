@@ -17,11 +17,15 @@
 {% set discordId   = config('discord-id')|default('') %}
 {% set showAnnounce = config('announcement')|default('hide')|lower == 'show' %}
 {% set loader      = config('fx-page-loader')|default('bar')|lower %}
+{% set transition  = config('fx-page-transitions')|default('blocks')|lower %}{% if transition == 'on' %}{% set transition = 'fade' %}{% endif %}
+{% set revealStyle = config('fx-reveal-style')|default('drop')|lower %}
 {% set fxOn = {
   reveal: config('fx-scroll-reveal')|default('on')|lower == 'on',
   tilt: config('fx-card-tilt')|default('on')|lower == 'on',
   shine: config('fx-card-shine')|default('on')|lower == 'on',
-  transitions: config('fx-page-transitions')|default('on')|lower == 'on',
+  transitions: transition != 'off',
+  transitionStyle: transition,
+  loadingStates: config('fx-loading-states')|default('on')|lower == 'on',
   stickyHeader: config('fx-sticky-header')|default('on')|lower == 'on',
   flyToCart: config('fx-fly-to-cart')|default('on')|lower == 'on',
   parallax: config('fx-parallax')|default('on')|lower == 'on',
@@ -39,8 +43,17 @@
   {% set kv = pair|split('=') %}
   {% if kv|length == 2 %}{% set iconMap = iconMap|merge({ (kv[0]|trim|lower): kv[1]|trim|lower }) %}{% endif %}
 {% endfor %}
+{# Icon per package without an image: "MVP=crown-gold, Golden key=key-gold" #}
+{% set pkgIconMap = {} %}
+{% for line in config('package-icons')|default('')|split("\n") %}
+  {% for pair in line|split(',') %}
+    {% set kv = pair|split('=') %}
+    {% if kv|length == 2 %}{% set pkgIconMap = pkgIconMap|merge({ (kv[0]|trim|lower): kv[1]|trim }) %}{% endif %}
+  {% endfor %}
+{% endfor %}
+{% set pkgIconDefault = config('package-icon-default')|default('chest')|trim %}
 <!DOCTYPE html>
-<html lang="en" data-preset="{{ preset }}" data-mode="{{ mode == 'light' ? 'light' : 'dark' }}" data-mode-choice="{{ mode }}" {% if ground != 'preset' %}data-ground="{{ ground }}"{% endif %} data-corners="{{ corners }}" data-panels="{{ panels }}" data-font="{{ headFont }}" data-header="{{ headerStyle }}" data-cursor="{{ config('fx-cursor')|default('default')|lower }}">
+<html lang="en" data-preset="{{ preset }}" data-mode="{{ mode == 'light' ? 'light' : 'dark' }}" data-mode-choice="{{ mode }}" {% if ground != 'preset' %}data-ground="{{ ground }}"{% endif %} data-corners="{{ corners }}" data-panels="{{ panels }}" data-font="{{ headFont }}" data-header="{{ headerStyle }}" data-cursor="{{ config('fx-cursor')|default('default')|lower }}" data-reveal="{{ revealStyle }}" data-icons="{{ config('fx-icon-motion')|default('hover')|lower }}" data-transition="{{ transition }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,6 +70,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&family=Chakra+Petch:wght@600;700&family=Silkscreen:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="{{ asset('oz.css') }}">
+  <link rel="stylesheet" href="{{ asset('oz-icons.css') }}">
   {% if preset == 'custom' %}
   <style>
     :root {
@@ -67,6 +81,8 @@
   </style>
   {% endif %}
   {% if store.css %}<link rel="stylesheet" href="{{ store.css }}">{% endif %}
+  {# Arriving from a block-wipe transition: keep the screen covered until oz-motion.js uncovers it (CSS fallback after 1.2s). #}
+  <script>try{if(sessionStorage.getItem('oz-wipe')){document.documentElement.classList.add('oz-arriving');}}catch(e){}</script>
   <script>try{var m=localStorage.getItem('oz-mode');if(m&&document.documentElement.dataset.modeChoice==='player')document.documentElement.dataset.mode=m;}catch(e){}</script>
 </head>
 <body>
@@ -104,10 +120,7 @@
     <div class="oz-topbar">
       <nav aria-label="Site">
         <a class="oz-btn oz-btn--alt oz-btn--sm" href="/">{{ __('Home') }}</a>
-        {% for link in config('header-links')|default('')|split(',') %}
-          {% set parts = link|split('|') %}
-          {% if parts|length == 2 %}<a class="oz-btn oz-btn--alt oz-btn--sm" href="{{ parts[1]|trim }}">{{ parts[0]|trim }}</a>{% endif %}
-        {% endfor %}
+        {% include "oz-links.twig" with { list: config('header-links'), cls: 'oz-btn oz-btn--alt oz-btn--sm' } %}
       </nav>
       <div class="oz-topbar__right">
         {% if config('search')|default('on')|lower == 'on' %}<button class="oz-btn oz-btn--alt oz-btn--sm" type="button" data-oz-search-open aria-label="{{ __('Search') }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span class="oz-kbd" aria-hidden="true">/</span></button>{% endif %}
@@ -135,14 +148,26 @@
       </button>
       {% else %}<span></span>{% endif %}
 
-      <a class="oz-logo" href="/">
+      {#
+        Hero logo. Settings: logo-image (uploaded full logo, replaces everything),
+        logo-icon-image (uploaded icon) or logo-icon (icon name / URL), logo-text, logo-subtitle,
+        logo-size (small | medium | large), logo-animation (float | bounce | glow | none).
+      #}
+      {% set logoIconSrc = config('logo-icon-image')|default(config('logo-icon'))|default('')|trim %}
+      {% set logoSub = config('logo-subtitle')|default(__('Official store')) %}
+      <a class="oz-logo" href="/" data-logo-size="{{ config('logo-size')|default('medium')|lower }}" data-logo-anim="{{ config('logo-animation')|default('float')|lower }}" aria-label="{{ store.name }}">
         {% if config('logo-image') %}
-          <img src="{{ config('logo-image') }}" alt="{{ store.name }}">
-        {% elseif store.logo %}
-          <img src="{{ store.logo }}" alt="{{ store.name }}">
+          <img class="oz-logo__img" src="{{ config('logo-image') }}" alt="{{ store.name }}">
+        {% elseif store.logo and not logoIconSrc %}
+          <img class="oz-logo__img" src="{{ store.logo }}" alt="{{ store.name }}">
         {% else %}
-          <div class="oz-logo__text">{{ logoText }}</div>
-          <div class="oz-label oz-logo__sub">{{ __('Official store') }}</div>
+          {% if logoIconSrc %}
+            <span class="oz-logo__icon">{% include "oz-icon.twig" with { ic: logoIconSrc, size: '' } %}</span>
+          {% endif %}
+          {% if logoText|trim and config('logo-icon-only')|default('off')|lower != 'on' %}
+            <div class="oz-logo__text">{% for ch in logoText|split('') %}<span style="--i:{{ loop.index0 }}">{{ ch == ' ' ? ' ' : ch }}</span>{% endfor %}</div>
+          {% endif %}
+          {% if logoSub|trim %}<div class="oz-label oz-logo__sub">{{ logoSub }}</div>{% endif %}
         {% endif %}
       </a>
 
@@ -174,8 +199,8 @@
       {% set ic = iconMap[category.name|lower]|default(iconMap[category.id ~ '']|default(iconNames[n % 10])) %}
       {% set n = n + 1 %}
       <div class="oz-hb {% if path() ends with '/category/' ~ category.id %}is-active{% endif %}">
-        <a href="/category/{{ category.id }}" style="display:contents;color:inherit">
-          <span class="oz-slot"><span class="oz-ico oz-ico--{{ ic }}"></span></span>
+        <a class="oz-hb__link" href="/category/{{ category.id }}">
+          <span class="oz-slot">{% include "oz-icon.twig" with { ic: ic, size: '' } %}</span>
           <span>{{ category.name }}</span>
         </a>
         {% if category.subcategories is defined and category.subcategories|length %}
@@ -200,19 +225,19 @@
 
 <main id="oz-main" class="oz-wrap oz-main">
   {% if page.message is defined and page.message.display %}
-    <div class="oz-panel oz-toast oz-toast--{{ page.message.type }}" role="alert" style="margin-bottom:24px" data-oz-message="{{ page.message.text }}" data-oz-message-type="{{ page.message.type }}">{{ page.message.text }}</div>
+    <div class="oz-panel oz-toast oz-toast--page oz-toast--{{ page.message.type }}" role="alert" data-oz-message="{{ page.message.text }}" data-oz-message-type="{{ page.message.type }}">{{ page.message.text }}</div>
   {% endif %}
 
   <div class="oz-grid {% if navStyle == 'sidebar' %}oz-grid--left{% endif %} {% block grid_class %}{% endblock %}">
     {% if navStyle == 'sidebar' %}
     <nav class="oz-panel oz-side-nav" aria-label="{{ __('Categories') }}">
-      <span class="oz-label" style="padding:6px 8px">{{ __('Menu') }}</span>
+      <span class="oz-label oz-side-nav__label">{{ __('Menu') }}</span>
       <a href="/"><span class="oz-slot"><span class="oz-ico oz-ico--sm oz-ico--home"></span></span>{{ __('Home') }}</a>
       {% set n = 0 %}
       {% for category in store.categories %}
         {% set ic = iconMap[category.name|lower]|default(iconMap[category.id ~ '']|default(iconNames[n % 10])) %}
         {% set n = n + 1 %}
-        <a href="/category/{{ category.id }}"><span class="oz-slot"><span class="oz-ico oz-ico--sm oz-ico--{{ ic }}"></span></span>{{ category.name }}</a>
+        <a href="/category/{{ category.id }}"><span class="oz-slot">{% include "oz-icon.twig" with { ic: ic, size: 'sm' } %}</span>{{ category.name }}</a>
         {% if category.subcategories is defined %}{% for sub in category.subcategories %}<a class="is-sub" href="/category/{{ sub.id }}">{{ sub.name }}</a>{% endfor %}{% endif %}
       {% endfor %}
     </nav>
@@ -264,18 +289,16 @@
     </div>
     <div>
       <h4>{{ __('Help') }}</h4>
-      {% if config('terms-url') %}<a href="{{ config('terms-url') }}">{{ __('Terms of sale') }}</a>{% endif %}
-      {% if config('refund-url') %}<a href="{{ config('refund-url') }}">{{ __('Refund policy') }}</a>{% endif %}
+      <a href="{{ config('terms-url')|default('/terms/checkout') }}">{{ __('Terms of sale') }}</a>
+      <a href="{{ config('refund-url')|default('/terms/privacy') }}">{{ config('refund-url') ? __('Refund policy') : __('Privacy policy') }}</a>
+      {% if store.pages is defined %}{% for p in store.pages %}{% if p.slug is not defined or p.slug != config('page-slug-setup')|default('setup') %}<a href="/pages/{{ p.id }}">{{ p.name|default(p.title) }}</a>{% endif %}{% endfor %}{% endif %}
       {% if config('faq-url') %}<a href="{{ config('faq-url') }}">{{ __('FAQ') }}</a>{% endif %}
       {% if discordUrl %}<a href="{{ discordUrl }}" target="_blank" rel="noopener">{{ __('Support') }}</a>{% endif %}
     </div>
     <div>
       <h4>{{ __('Community') }}</h4>
       {% if discordUrl %}<a href="{{ discordUrl }}" target="_blank" rel="noopener">Discord</a>{% endif %}
-      {% for link in config('footer-links')|default('')|split(',') %}
-        {% set parts = link|split('|') %}
-        {% if parts|length == 2 %}<a href="{{ parts[1]|trim }}">{{ parts[0]|trim }}</a>{% endif %}
-      {% endfor %}
+      {% include "oz-links.twig" with { list: config('footer-links'), cls: '' } %}
     </div>
   </div>
   <div class="oz-wrap oz-footer__bottom">
@@ -289,13 +312,22 @@
 <aside class="oz-panel oz-drawer" id="oz-basket" aria-label="{{ __('Basket') }}" aria-hidden="true">
   <div class="oz-drawer__head">
     <div><h2>{{ __('Basket') }}</h2><small class="oz-muted">{{ basket.packages|length }} {{ __('items') }}{% if basket.ign %} · {{ basket.ign }}{% endif %}</small></div>
-    <button class="oz-btn oz-btn--alt oz-btn--icon" type="button" data-oz-close="basket" aria-label="{{ __('Close') }}">&times;</button>
+    <div class="oz-drawer__tools">
+      {% set currencies = config('currencies')|default('')|replace({' ': ''})|split(',') %}
+      {% if currencies|length > 1 %}
+        <label class="oz-sr" for="oz-currency">{{ __('Currency') }}</label>
+        <select class="oz-input oz-currency" id="oz-currency" data-oz-currency>
+          {% for c in currencies %}{% if c %}<option value="{{ c|upper }}" {% if c|upper == basket.currency|upper %}selected{% endif %}>{{ c|upper }}</option>{% endif %}{% endfor %}
+        </select>
+      {% endif %}
+      <button class="oz-btn oz-btn--alt oz-btn--icon" type="button" data-oz-close="basket" aria-label="{{ __('Close') }}">&times;</button>
+    </div>
   </div>
   <div class="oz-drawer__body">
     {% for item in basket.packages %}
       <div class="oz-panel oz-line">
         <span class="oz-slot">
-          {% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img src="{{ item.image.url }}" alt="" style="max-height:36px;width:auto">{% else %}<span class="oz-ico oz-ico--sm oz-ico--chest"></span>{% endif %}
+          {% if item.image is defined and item.image and item.image.url is defined and item.image.url %}<img class="oz-line__img" src="{{ item.image.url }}" alt="">{% else %}{% include "oz-icon.twig" with { ic: pkgIconMap[item.name|lower]|default(pkgIconDefault), size: 'sm' } %}{% endif %}
         </span>
         <div><b>{{ item.name }}</b><small>{% if item.quantity is defined and item.quantity > 1 %}{{ item.quantity }} &times; {% endif %}{{ item.price|money }} {{ basket.currency }}</small></div>
         <div class="oz-line__actions">
@@ -303,7 +335,7 @@
         </div>
       </div>
     {% else %}
-      <div class="oz-empty"><span class="oz-ico oz-ico--lg oz-ico--chest" style="margin:0 auto 12px;opacity:.6"></span>{{ __('Your basket is empty.') }}</div>
+      <div class="oz-empty"><span class="oz-ico oz-ico--lg oz-ico--chest oz-empty__ico"></span>{{ __('Your basket is empty.') }}</div>
     {% endfor %}
   </div>
   {% if basket.packages|length %}
@@ -311,14 +343,14 @@
     {% set giftGoal = config('basket-goal-amount')|default('')|trim %}
     {% if giftGoal %}
       {% set left = giftGoal - basket.price %}
-      <div class="oz-slot oz-giftgoal" data-oz-goal="{{ giftGoal }}" data-oz-have="{{ basket.price }}" style="display:block">
-        {% if left > 0 %}{{ config('basket-goal-text')|default(__('Spend :amount more for a free gift!'))|replace({':amount': (left|number_format(2)) ~ ' ' ~ basket.currency}) }}{% else %}<strong style="color:var(--ok)">{{ config('basket-goal-done')|default(__('Free gift unlocked!')) }}</strong>{% endif %}
+      <div class="oz-slot oz-giftgoal" data-oz-goal="{{ giftGoal }}" data-oz-have="{{ basket.price }}">
+        {% if left > 0 %}{{ config('basket-goal-text')|default(__('Spend :amount more for a free gift!'))|replace({':amount': (left|number_format(2)) ~ ' ' ~ basket.currency}) }}{% else %}<strong class="oz-ok">{{ config('basket-goal-done')|default(__('Free gift unlocked!')) }}</strong>{% endif %}
         <div class="oz-xp__bar"><span class="oz-xp__fill"></span></div>
       </div>
     {% endif %}
     <div class="oz-total"><span class="oz-label">{{ __('Total') }}</span><strong>{{ basket.price|money }} {{ basket.currency }}</strong></div>
-    <a class="oz-btn oz-btn--block" href="/checkout/basket" style="min-height:54px">{{ __('Proceed to checkout') }}</a>
-    <small class="oz-muted" style="text-align:center">{{ __('Taxes calculated at checkout.') }}</small>
+    <a class="oz-btn oz-btn--block" href="/checkout/basket">{{ __('Proceed to checkout') }}</a>
+    <small class="oz-muted oz-center">{{ __('Taxes calculated at checkout.') }}</small>
   </div>
   {% endif %}
 </aside>
@@ -332,6 +364,26 @@
 </div>
 
 <div class="oz-panel oz-pop" data-oz-pop role="status" aria-live="polite"></div>
+
+{# Discount pop-up (settings: promo-*). Shown once per code per visitor. #}
+{% if config('promo')|default('off')|lower == 'on' and config('promo-title') %}
+<div class="oz-modal oz-promo" id="oz-promo" role="dialog" aria-modal="true" aria-labelledby="oz-promo-h"
+  data-oz-promo="{{ config('promo-code')|default(config('promo-title')) }}" data-oz-promo-delay="{{ config('promo-delay')|default('4')|trim }}">
+  <div class="oz-panel oz-modal__box oz-promo__box">
+    <button class="oz-btn oz-btn--alt oz-btn--icon oz-modal__close" type="button" data-oz-promo-close aria-label="{{ __('Close') }}">&times;</button>
+    <span class="oz-ico oz-ico--lg oz-ico--gift oz-promo__ico" aria-hidden="true"></span>
+    <h2 id="oz-promo-h">{{ config('promo-title') }}</h2>
+    {% if config('promo-text') %}<p class="oz-muted">{{ config('promo-text') }}</p>{% endif %}
+    {% if config('promo-code') %}
+      <button class="oz-slot oz-promo__code" type="button" data-oz-copy="{{ config('promo-code') }}">
+        <b>{{ config('promo-code') }}</b><small>{{ __('Click to copy') }}</small>
+      </button>
+      <p class="oz-small oz-muted">{{ __('Enter it at checkout.') }}</p>
+    {% endif %}
+    <button class="oz-btn oz-btn--block" type="button" data-oz-promo-close>{{ config('promo-button')|default(__('Start shopping')) }}</button>
+  </div>
+</div>
+{% endif %}
 
 {% if config('search')|default('on')|lower == 'on' %}
 <div class="oz-search" id="oz-search" role="dialog" aria-modal="true" aria-label="{{ __('Search') }}">
@@ -360,12 +412,20 @@
     online: {{ __('online')|json_encode|raw }},
     offline: {{ __('Server offline')|json_encode|raw }},
     noResults: {{ __('No results')|json_encode|raw }},
+    offlineMsg: {{ __('You are offline. Purchases will wait until you reconnect.')|json_encode|raw }},
+    onlineMsg: {{ __('Back online.')|json_encode|raw }},
+    rankMine: {{ __('This is your rank.')|json_encode|raw }},
+    rankUpgrade: {{ __('Upgrade')|json_encode|raw }},
+    rankBelow: {{ __('Already included in your rank.')|json_encode|raw }},
+    rankNone: {{ __('Pick a rank to preview it.')|json_encode|raw }},
     fx: {{ fxOn|json_encode|raw }}
   };
 </script>
 <script src="{{ asset('oz.js') }}" defer></script>
 <script src="{{ asset('oz-fx.js') }}" defer></script>
 <script src="{{ asset('oz-preview.js') }}" defer></script>
+<script src="{{ asset('oz-extras.js') }}" defer></script>
+<script src="{{ asset('oz-motion.js') }}" defer></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>

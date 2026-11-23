@@ -22,8 +22,14 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
-| Logo image (optional — otherwise the text logo is shown) | `logo-image` | image-uploader | — | — |
+| Full logo image (replaces icon + text completely) | `logo-image` | image-uploader | — | — |
 | Text logo / server name | `logo-text` | textarea | Frostvale | — |
+| Hero icon: upload an image shown above your server name (e.g. your server icon) | `logo-icon-image` | image-uploader | — | — |
+| Hero icon from the icon set (used if no icon image is uploaded): icon name like crown-gold, or an image URL | `logo-icon` | textarea | — | — |
+| Show only the hero icon (hide the server name text) | `logo-icon-only` | select | Off | On, Off |
+| Text under the logo (empty = hide) | `logo-subtitle` | textarea | Official store | — |
+| Hero logo size | `logo-size` | select | Medium | Small, Medium, Large |
+| Hero logo animation: Float (gentle bob), Bounce (letter wave), Glow (light sweep), None | `logo-animation` | select | Float | Float, Bounce, Glow, None |
 | Header links — Label|URL, comma separated | `header-links` | textarea | Rules|/rules, Vote|/vote | — |
 | Footer community links — Label|URL, comma separated | `footer-links` | textarea | — | — |
 
@@ -56,7 +62,10 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
 | Category navigation | `category-style` | select | Hotbar | Hotbar, Tabs, Sidebar, None |
-| Category icons — Name=icon, comma separated. Icons: crown, key, coin, gem, chest, pet, gift, sword, star, potion | `category-icons` | textarea | Ranks=crown, Keys=key, Coins=coin | — |
+| Category icons: Category name=icon, comma separated (e.g. Ranks=crown-gold, Keys=key-diamond). Use any of 290 icon names (see the setup page Icons tab) or an image URL | `category-icons` | textarea | Ranks=crown, Keys=key, Coins=coin | — |
+| Package icons (for packages without an image): Package name=icon, one per line or comma separated (e.g. MVP=crown-gold). Icon name or image URL | `package-icons` | textarea | — | — |
+| Default icon for packages without an image | `package-icon-default` | textarea | chest | — |
+| Icon animation: Hover (hop on hover), Idle (gentle float + sparkle on rare items), Off | `fx-icon-motion` | select | Hover | Hover, Idle, Off |
 | Packages per row (desktop) | `packages-per-row` | select | 3 | 2, 3, 4 |
 | Clicking a package opens | `package-click` | select | Popup | Popup, Page |
 | Quantity buttons in these categories — names or IDs, comma separated, * for all | `quantity-categories` | textarea | — | — |
@@ -80,6 +89,7 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 | Highlighted rank (package name) | `rank-highlight` | textarea | — | — |
 | Rows — one per line: Perk | value for 1st package | 2nd | … (yes / no or any text) | `rank-table` | textarea | Chat prefix | [VIP] | [VIP+] | [MVP]<br>Homes | 2 | 4 | 6<br>No chat cooldown | no | yes | yes<br>Rank cosmetics | no | no | yes | — |
 | Show rank preview (skin + nametag + chat) | `rank-preview` | select | Show | Show, Hide |
+| "Your current rank" picker on the rank page (logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest) | `rank-current-picker` | select | On | On, Off |
 | Rank styles — one per line: Package name | chat prefix | color | `rank-styles` | textarea | VIP | [VIP] | #C9CED6<br>VIP+ | [VIP+] | #7AA2FF<br>MVP | [MVP] | #F2C94C<br>MVP+ | [MVP+] | #5BE0E6 | — |
 | Example chat message in the preview | `preview-chat` | textarea | gg! just ranked up | — |
 | Skin shown to logged-out visitors (Minecraft username) | `preview-skin` | textarea | MHF_Steve | — |
@@ -115,7 +125,9 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
 | Page loading indicator | `fx-page-loader` | select | Bar | Bar, Screen, Off |
-| Smooth page transitions | `fx-page-transitions` | select | On | On, Off |
+| Page transitions: Blocks (pixel wipe), Fade, or Off | `fx-page-transitions` | select | Blocks | Blocks, Fade, Off |
+| How items appear on scroll: Drop (fall into slot), Rise, Pop | `fx-reveal-style` | select | Drop | Drop, Rise, Pop |
+| Loading spinners on buttons, forms and basket actions | `fx-loading-states` | select | On | On, Off |
 | Reveal sections on scroll | `fx-scroll-reveal` | select | On | On, Off |
 | 3D tilt on package cards | `fx-card-tilt` | select | On | On, Off |
 | Shine sweep on hover | `fx-card-shine` | select | On | On, Off |
@@ -158,3 +170,47 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 |---|---|---|---|---|
 | Search & share description | `seo-description` | textarea | — | — |
 | Share image (1200×630) | `seo-image` | image-uploader | — | — |
+
+## 13. Homepage extras
+
+| Setting | ID | Type | Default | Choices |
+|---|---|---|---|---|
+| Sale banner on homepage | `sale` | select | Hide | Show, Hide |
+| Sale badge (e.g. 50% SALE) | `sale-badge` | textarea | 50% SALE | — |
+| Sale title | `sale-title` | textarea | Black Friday | — |
+| Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends | `sale-end` | textarea | — | — |
+| Sale banner link (optional) | `sale-link` | url | — | — |
+| Slider: one slide per line — image or YouTube URL | title | link | `slides` | textarea | — | — |
+| Slider autoplay seconds (0 = off) | `slides-autoplay` | textarea | 6 | — |
+| Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide | `currencies` | textarea | — | — |
+
+## 14. Discount pop-up
+
+| Setting | ID | Type | Default | Choices |
+|---|---|---|---|---|
+| Show discount pop-up (once per visitor) | `promo` | select | Off | On, Off |
+| Pop-up title | `promo-title` | textarea | 10% off your first order | — |
+| Pop-up text | `promo-text` | textarea | Use this code at checkout. | — |
+| Coupon / creator code to show | `promo-code` | textarea | — | — |
+| Delay before showing (seconds) | `promo-delay` | textarea | 4 | — |
+| Button text | `promo-button` | textarea | Start shopping | — |
+
+## 15. Info pages (Staff, Vote, FAQ, Patrons, Rules, News)
+
+| Setting | ID | Type | Default | Choices |
+|---|---|---|---|---|
+| Staff: one per line — Name | Role | Minecraft name | `staff-list` | textarea | — | — |
+| Vote sites: one per line — Site name | URL | `vote-list` | textarea | — | — |
+| FAQ: one per line — Question | Answer | `faq-list` | textarea | — | — |
+| Patrons: one per line — Minecraft name | Tier | `patrons-list` | textarea | — | — |
+| Text under the patrons list | `patrons-note` | textarea | Thank you for keeping the server running. | — |
+| Rules: one per line — Section | Rule (lines with the same section are grouped) | `rules-list` | textarea | — | — |
+| News: one per line — Date | Title | Text | Image URL (optional) | `news-list` | textarea | — | — |
+| URL slug of your Staff page | `page-slug-staff` | textarea | staff | — |
+| URL slug of your Vote page | `page-slug-vote` | textarea | vote | — |
+| URL slug of your FAQ page | `page-slug-faq` | textarea | faq | — |
+| URL slug of your Patrons page | `page-slug-patrons` | textarea | patrons | — |
+| URL slug or title of your Rules page | `page-slug-rules` | textarea | rules | — |
+| URL slug or title of your News page | `page-slug-news` | textarea | news | — |
+| Setup page (checklist + admin editors on your Tebex page titled "Setup"). Turn Off before launch: it is public | `setup-page` | select | Off | On, Off |
+| URL slug or title of your Setup page | `page-slug-setup` | textarea | setup | — |
