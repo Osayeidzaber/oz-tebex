@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- Tall "all features" image: the section images (real theme components) stacked, then an add-ons row.
+     Rendered by marketing/render-sections.sh to marketing/out/features.png (1200 wide). -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600;700&family=Inter:wght@500;700;800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #0A0F1E; width: 1200px; }
+  .top { padding: 80px 60px 50px; text-align: center; background: linear-gradient(180deg, #0E1532, #0A0F1E); }
+  .top h1 { margin: 0; font: 700 68px "Pixelify Sans"; color: #fff; }
+  .top h1 b { color: #D4FF3A; font: 800 72px "Inter"; letter-spacing: -2px; }
+  .top p { margin: 16px 0 0; font: 500 24px "Inter"; color: #B9C3E3; letter-spacing: 3px; }
+  img.sec { display: block; width: 1200px; height: auto; }
+  .gap { height: 18px; background: #0A0F1E; }
+  .addons { padding: 70px 60px 80px; background: radial-gradient(900px 500px at 50% 0%, rgba(185,166,255,.18), transparent 70%), #0A0F1E; }
+  .addons h2 { margin: 0 0 10px; text-align: center; font: 700 56px "Pixelify Sans"; color: #fff; }
+  .addons .lead { margin: 0 0 40px; text-align: center; font: 500 22px "Inter"; color: #B9C3E3; letter-spacing: 2px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card { border: 3px solid #2B3766; background: #111833; }
+  .card img { display: block; width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: right center; border-bottom: 3px solid #2B3766; }
+  .card div { padding: 18px 20px 22px; }
+  .card span { display: inline-block; padding: 4px 10px; background: #B9A6FF; color: #15102B; font: 800 16px "Inter"; }
+  .card h3 { margin: 12px 0 8px; font: 700 30px "Pixelify Sans"; color: #fff; }
+  .card p { margin: 0; font: 500 17px/1.5 "Inter"; color: #B9C3E3; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>Everything in <b>OZ</b></h1>
+    <p>REAL THEME COMPONENTS · NO MOCK-UPS</p>
+  </div>
+  <img class="sec" src="../out/s-product.png" alt="">
+  <div class="gap"></div>
+  <img class="sec" src="../out/s-quantity.png" alt="">
+  <div class="gap"></div>
+  <img class="sec" src="../out/s-login.png" alt="">
+  <div class="gap"></div>
+  <img class="sec" src="../out/s-sidebar.png" alt="">
+  <div class="gap"></div>
+  <img class="sec" src="../out/s-setup.png" alt="">
+  <section class="addons">
+    <h2>Optional add-ons</h2>
+    <p class="lead">$5 EACH · DROP IN, NO PAGE EDITS</p>
+    <div class="grid">
+      <div class="card"><img src="../out/s-ranks.png" alt=""><div><span>Add-on · $5</span><h3>Rank Preview</h3><p>3D skin with the rank nametag, chat and tab-list preview, rank ladder and comparison table.</p></div></div>
+      <div class="card"><img src="../out/s-sales.png" alt=""><div><span>Add-on · $5</span><h3>Sales Pack</h3><p>Sale bar with live countdown, one-time discount pop-up and a currency picker.</p></div></div>
+      <div class="card"><img src="../out/s-pages.png" alt=""><div><span>Add-on · $5</span><h3>Pages Pack</h3><p>Styled Staff, Vote, FAQ, Patrons, Rules and News pages filled from settings.</p></div></div>
+    </div>
+  </section>
+</body>
+</html>

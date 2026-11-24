@@ -11,3 +11,4 @@ for s in ${@:-product sidebar login quantity setup ranks sales pages}; do
     --screenshot="$OUT/s-$s.png" "http://localhost:5173/sections.html?s=$s" >/dev/null 2>&1
   echo "marketing/out/s-$s.png"
 done
+C="${CHROME:-/c/Program Files/Google/Chrome/Application/chrome.exe}"; "$C" --headless=new --disable-gpu --hide-scrollbars --user-data-dir="$(mktemp -d)" --window-size=1200,5232 --virtual-time-budget=6000 --screenshot="$OUT/features.png" "file:///$(cd marketing/src && pwd -W)/features.html" >/dev/null 2>&1; echo marketing/out/features.png

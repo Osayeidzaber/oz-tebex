@@ -11,7 +11,7 @@ r() { "$C" --headless=new --disable-gpu --hide-scrollbars --user-data-dir="$P" -
   --virtual-time-budget=6000 --screenshot="$(pwd -W 2>/dev/null || pwd)/out/$1.png" "$SRC?b=$1" >/dev/null 2>&1; echo "out/$1.png"; }
 r cover 2000,1000
 r strip 1516,275
-r features 1040,3900
+
 r presets 2000,1180
 r setup 1516,746
 r icon 512,512
