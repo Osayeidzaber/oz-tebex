@@ -86,13 +86,13 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
 | Category that shows the rank table (name or ID) | `rank-category` | textarea | — | — |
-| Highlighted rank (package name) | `rank-highlight` | textarea | — | — |
-| Rows — one per line: Perk | value for 1st package | 2nd | … (yes / no or any text) | `rank-table` | textarea | Chat prefix | [VIP] | [VIP+] | [MVP]<br>Homes | 2 | 4 | 6<br>No chat cooldown | no | yes | yes<br>Rank cosmetics | no | no | yes | — |
-| Show rank preview (skin + nametag + chat) | `rank-preview` | select | Show | Show, Hide |
-| "Your current rank" picker on the rank page (logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest) | `rank-current-picker` | select | On | On, Off |
-| Rank styles — one per line: Package name | chat prefix | color | `rank-styles` | textarea | VIP | [VIP] | #C9CED6<br>VIP+ | [VIP+] | #7AA2FF<br>MVP | [MVP] | #F2C94C<br>MVP+ | [MVP+] | #5BE0E6 | — |
-| Example chat message in the preview | `preview-chat` | textarea | gg! just ranked up | — |
-| Skin shown to logged-out visitors (Minecraft username) | `preview-skin` | textarea | MHF_Steve | — |
+| Highlighted rank (package name) [Rank Preview add-on] | `rank-highlight` | textarea | — | — |
+| Rows — one per line: Perk | value for 1st package | 2nd | … (yes / no or any text) [Rank Preview add-on] | `rank-table` | textarea | Chat prefix | [VIP] | [VIP+] | [MVP]<br>Homes | 2 | 4 | 6<br>No chat cooldown | no | yes | yes<br>Rank cosmetics | no | no | yes | — |
+| Show rank preview (skin + nametag + chat) [Rank Preview add-on] | `rank-preview` | select | Show | Show, Hide |
+| "Your current rank" picker on the rank page (logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest) [Rank Preview add-on] | `rank-current-picker` | select | On | On, Off |
+| Rank styles — one per line: Package name | chat prefix | color [Rank Preview add-on] | `rank-styles` | textarea | VIP | [VIP] | #C9CED6<br>VIP+ | [VIP+] | #7AA2FF<br>MVP | [MVP] | #F2C94C<br>MVP+ | [MVP+] | #5BE0E6 | — |
+| Example chat message in the preview [Rank Preview add-on] | `preview-chat` | textarea | gg! just ranked up | — |
+| Skin shown to logged-out visitors (Minecraft username) [Rank Preview add-on] | `preview-skin` | textarea | MHF_Steve | — |
 
 ## 7. Homepage
 
@@ -145,11 +145,11 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
 | Package page layout | `product-layout` | select | Big | Big, Compact |
-| Live 3D skin preview (falls back to 2D) | `preview-3d` | select | On | On, Off |
-| Preview animation | `preview-animation` | select | Walk | Walk, Run, Idle, None |
-| Auto-rotate preview | `preview-autorotate` | select | On | On, Off |
-| Preview tabs, in order (3d, chat, tab, media) | `preview-tabs` | textarea | 3d,chat,tab,media | — |
-| Rank ladder above the rank table | `rank-ladder` | select | On | On, Off |
+| Live 3D skin preview (falls back to 2D) [Rank Preview add-on] | `preview-3d` | select | On | On, Off |
+| Preview animation [Rank Preview add-on] | `preview-animation` | select | Walk | Walk, Run, Idle, None |
+| Auto-rotate preview [Rank Preview add-on] | `preview-autorotate` | select | On | On, Off |
+| Preview tabs, in order (3d, chat, tab, media) [Rank Preview add-on] | `preview-tabs` | textarea | 3d,chat,tab,media | — |
+| Rank ladder above the rank table [Rank Preview add-on] | `rank-ladder` | select | On | On, Off |
 | Sticky buy bar on package pages | `sticky-buy-bar` | select | On | On, Off |
 
 ## 11. Search, basket & social
@@ -175,42 +175,42 @@ All settings live in **Tebex → Webstore → Templates → your OZ template →
 
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
-| Sale banner on homepage | `sale` | select | Hide | Show, Hide |
-| Sale badge (e.g. 50% SALE) | `sale-badge` | textarea | 50% SALE | — |
-| Sale title | `sale-title` | textarea | Black Friday | — |
-| Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends | `sale-end` | textarea | — | — |
-| Sale banner link (optional) | `sale-link` | url | — | — |
+| Sale banner on homepage [Sales Pack add-on] | `sale` | select | Hide | Show, Hide |
+| Sale badge (e.g. 50% SALE) [Sales Pack add-on] | `sale-badge` | textarea | 50% SALE | — |
+| Sale title [Sales Pack add-on] | `sale-title` | textarea | Black Friday | — |
+| Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends [Sales Pack add-on] | `sale-end` | textarea | — | — |
+| Sale banner link (optional) [Sales Pack add-on] | `sale-link` | url | — | — |
 | Slider: one slide per line — image or YouTube URL | title | link | `slides` | textarea | — | — |
 | Slider autoplay seconds (0 = off) | `slides-autoplay` | textarea | 6 | — |
-| Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide | `currencies` | textarea | — | — |
+| Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide [Sales Pack add-on] | `currencies` | textarea | — | — |
 
 ## 14. Discount pop-up
 
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
-| Show discount pop-up (once per visitor) | `promo` | select | Off | On, Off |
-| Pop-up title | `promo-title` | textarea | 10% off your first order | — |
-| Pop-up text | `promo-text` | textarea | Use this code at checkout. | — |
-| Coupon / creator code to show | `promo-code` | textarea | — | — |
-| Delay before showing (seconds) | `promo-delay` | textarea | 4 | — |
-| Button text | `promo-button` | textarea | Start shopping | — |
+| Show discount pop-up (once per visitor) [Sales Pack add-on] | `promo` | select | Off | On, Off |
+| Pop-up title [Sales Pack add-on] | `promo-title` | textarea | 10% off your first order | — |
+| Pop-up text [Sales Pack add-on] | `promo-text` | textarea | Use this code at checkout. | — |
+| Coupon / creator code to show [Sales Pack add-on] | `promo-code` | textarea | — | — |
+| Delay before showing (seconds) [Sales Pack add-on] | `promo-delay` | textarea | 4 | — |
+| Button text [Sales Pack add-on] | `promo-button` | textarea | Start shopping | — |
 
 ## 15. Info pages (Staff, Vote, FAQ, Patrons, Rules, News)
 
 | Setting | ID | Type | Default | Choices |
 |---|---|---|---|---|
-| Staff: one per line — Name | Role | Minecraft name | `staff-list` | textarea | — | — |
-| Vote sites: one per line — Site name | URL | `vote-list` | textarea | — | — |
-| FAQ: one per line — Question | Answer | `faq-list` | textarea | — | — |
-| Patrons: one per line — Minecraft name | Tier | `patrons-list` | textarea | — | — |
-| Text under the patrons list | `patrons-note` | textarea | Thank you for keeping the server running. | — |
-| Rules: one per line — Section | Rule (lines with the same section are grouped) | `rules-list` | textarea | — | — |
-| News: one per line — Date | Title | Text | Image URL (optional) | `news-list` | textarea | — | — |
-| URL slug of your Staff page | `page-slug-staff` | textarea | staff | — |
-| URL slug of your Vote page | `page-slug-vote` | textarea | vote | — |
-| URL slug of your FAQ page | `page-slug-faq` | textarea | faq | — |
-| URL slug of your Patrons page | `page-slug-patrons` | textarea | patrons | — |
-| URL slug or title of your Rules page | `page-slug-rules` | textarea | rules | — |
-| URL slug or title of your News page | `page-slug-news` | textarea | news | — |
+| Staff: one per line — Name | Role | Minecraft name [Pages Pack add-on] | `staff-list` | textarea | — | — |
+| Vote sites: one per line — Site name | URL [Pages Pack add-on] | `vote-list` | textarea | — | — |
+| FAQ: one per line — Question | Answer [Pages Pack add-on] | `faq-list` | textarea | — | — |
+| Patrons: one per line — Minecraft name | Tier [Pages Pack add-on] | `patrons-list` | textarea | — | — |
+| Text under the patrons list [Pages Pack add-on] | `patrons-note` | textarea | Thank you for keeping the server running. | — |
+| Rules: one per line — Section | Rule (lines with the same section are grouped) [Pages Pack add-on] | `rules-list` | textarea | — | — |
+| News: one per line — Date | Title | Text | Image URL (optional) [Pages Pack add-on] | `news-list` | textarea | — | — |
+| URL slug of your Staff page [Pages Pack add-on] | `page-slug-staff` | textarea | staff | — |
+| URL slug of your Vote page [Pages Pack add-on] | `page-slug-vote` | textarea | vote | — |
+| URL slug of your FAQ page [Pages Pack add-on] | `page-slug-faq` | textarea | faq | — |
+| URL slug of your Patrons page [Pages Pack add-on] | `page-slug-patrons` | textarea | patrons | — |
+| URL slug or title of your Rules page [Pages Pack add-on] | `page-slug-rules` | textarea | rules | — |
+| URL slug or title of your News page [Pages Pack add-on] | `page-slug-news` | textarea | news | — |
 | Setup page (checklist + admin editors on your Tebex page titled "Setup"). Turn Off before launch: it is public | `setup-page` | select | Off | On, Off |
 | URL slug or title of your Setup page | `page-slug-setup` | textarea | setup | — |

@@ -56,6 +56,15 @@
         ],
         "createdAt": "2026-11-23T17:14:19.934Z",
         "reason": "Claude: internal dev tool, deliberately matches the theme's existing Inter body font"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "marketing/src/boards.html"
+        ],
+        "createdAt": "2026-11-24T13:53:46.177Z",
+        "reason": "Claude: marketing boards reuse the theme's own body font (Inter in assets/oz.css) so images match the product"
       }
     ]
   }

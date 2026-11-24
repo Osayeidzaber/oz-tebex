@@ -1,0 +1,50 @@
+{#
+  OZ add-on: Sales Pack. Homepage sale banner with live countdown, one-time discount pop-up, basket currency picker.
+  Included three times with ozPart = banner | promo | currency ("ignore missing"), so the base theme works without it.
+  Settings: sale-*, promo-*, currencies.
+#}
+{% if ozPart == "banner" %}
+{# ---- Sale banner (settings: sale-*) ---- #}
+{% if (config('sale') ? config('sale') : 'hide')|lower == 'show' and config('sale-title') %}
+  {% set saleTag = config('sale-link') ? 'a' : 'div' %}
+  <{{ saleTag }} class="oz-panel oz-sale" {% if config('sale-link') %}href="{{ config('sale-link') }}"{% endif %}>
+    {% if config('sale-badge') %}<span class="oz-sale__badge">{{ config('sale-badge') }}</span>{% endif %}
+    <strong class="oz-sale__title">{{ config('sale-title') }}</strong>
+    {% if config('sale-end') %}
+      <span class="oz-sale__timer" data-oz-countdown="{{ config('sale-end') }}" aria-label="{{ __('Time left') }}">
+        {% for u in [['d', __('Days')], ['h', __('Hrs')], ['m', __('Min')], ['s', __('Sec')]] %}
+          <span class="oz-slot oz-sale__unit"><b data-oz-cd="{{ u[0] }}">00</b><small>{{ u[1] }}</small></span>
+        {% endfor %}
+      </span>
+    {% endif %}
+  </{{ saleTag }}>
+{% endif %}
+{% elseif ozPart == "promo" %}
+{# Discount pop-up (settings: promo-*). Shown once per code per visitor. #}
+{% if (config('promo') ? config('promo') : 'off')|lower == 'on' and config('promo-title') %}
+<div class="oz-modal oz-promo" id="oz-promo" role="dialog" aria-modal="true" aria-labelledby="oz-promo-h"
+  data-oz-promo="{{ (config('promo-code') ? config('promo-code') : config('promo-title')) }}" data-oz-promo-delay="{{ (config('promo-delay') ? config('promo-delay') : '4')|replace({' ': ''}) }}">
+  <div class="oz-panel oz-modal__box oz-promo__box">
+    <button class="oz-btn oz-btn--alt oz-btn--icon oz-modal__close" type="button" data-oz-promo-close aria-label="{{ __('Close') }}">&times;</button>
+    <span class="oz-ico oz-ico--lg oz-ico--gift oz-promo__ico" aria-hidden="true"></span>
+    <h2 id="oz-promo-h">{{ config('promo-title') }}</h2>
+    {% if config('promo-text') %}<p class="oz-muted">{{ config('promo-text') }}</p>{% endif %}
+    {% if config('promo-code') %}
+      <button class="oz-slot oz-promo__code" type="button" data-oz-copy="{{ config('promo-code') }}">
+        <b>{{ config('promo-code') }}</b><small>{{ __('Click to copy') }}</small>
+      </button>
+      <p class="oz-small oz-muted">{{ __('Enter it at checkout.') }}</p>
+    {% endif %}
+    <button class="oz-btn oz-btn--block" type="button" data-oz-promo-close>{{ (config('promo-button') ? config('promo-button') : __('Start shopping')) }}</button>
+  </div>
+</div>
+{% endif %}
+{% elseif ozPart == "currency" %}
+{% set currencies = (config('currencies') ? config('currencies') : '')|replace({' ': ''})|split(',') %}
+{% if currencies|length > 1 %}
+  <label class="oz-sr" for="oz-currency">{{ __('Currency') }}</label>
+  <select class="oz-input oz-currency" id="oz-currency" data-oz-currency>
+    {% for c in currencies %}{% if c %}<option value="{{ c|upper }}" {% if c|upper == basket.currency|upper %}selected{% endif %}>{{ c|upper }}</option>{% endif %}{% endfor %}
+  </select>
+{% endif %}
+{% endif %}

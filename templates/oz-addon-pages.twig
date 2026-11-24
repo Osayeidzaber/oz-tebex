@@ -1,0 +1,77 @@
+{#
+  OZ add-on: Pages Pack. Styled Staff, Vote, FAQ, Patrons, Rules and News pages filled from the matching *-list settings.
+  Included by cms/page.html with "ignore missing"; without it those pages show their normal Tebex page content.
+#}
+{% if kind == 'staff' and rows|length %}
+  <div class="oz-people">
+    {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+      {% set ign = (r|length > 2 ? r[2] : r[0])|replace({' ': ''}) %}
+      <div class="oz-slot oz-person">
+        <img src="https://mc-heads.net/body/{{ ign|escape('url') }}/120" alt="" width="60" height="120" loading="lazy" data-oz-skin-fallback>
+        <strong>{{ r[0] }}</strong>
+        {% if r|length > 1 %}<span class="oz-tag">{{ r[1] }}</span>{% endif %}
+      </div>
+    {% endif %}{% endfor %}
+  </div>
+
+{% elseif kind == 'vote' and rows|length %}
+  <div class="oz-votes">
+    {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+      <a class="oz-slot oz-vote" href="{{ (r|length > 1 ? r[1] : '#')|replace({' ': ''}) }}" target="_blank" rel="noopener">
+        <span class="oz-vote__n">{{ num }}</span>
+        <strong>{{ r[0] }}</strong>
+        <span class="oz-btn oz-btn--sm">{{ __('Vote') }} &rarr;</span>
+      </a>
+    {% endif %}{% endfor %}
+  </div>
+
+{% elseif kind == 'faq' and rows|length %}
+  <div class="oz-faq">
+    {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+      <details class="oz-slot oz-faq__item" {% if num == 1 %}open{% endif %}>
+        <summary>{{ r[0] }}</summary>
+        <p>{{ r|length > 1 ? line|slice((r[0]|length) + 1) : '' }}</p>
+      </details>
+    {% endif %}{% endfor %}
+  </div>
+
+{% elseif kind == 'patrons' and rows|length %}
+  <div class="oz-people oz-people--small">
+    {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+      <div class="oz-slot oz-person">
+        <img src="https://mc-heads.net/avatar/{{ r[0]|replace({' ': ''})|escape('url') }}/64" alt="" width="48" height="48" loading="lazy">
+        <strong>{{ r[0] }}</strong>
+        {% if r|length > 1 %}<span class="oz-tag">{{ r[1] }}</span>{% endif %}
+      </div>
+    {% endif %}{% endfor %}
+  </div>
+  <p class="oz-muted oz-small">{{ (config('patrons-note') ? config('patrons-note') : __('Thank you for keeping the server running.')) }}</p>
+
+{% elseif kind == 'rules' and rows|length %}
+  {# Rules: "Section | rule" per line. Consecutive lines with the same section are grouped. #}
+  <ol class="oz-rules">
+    {% set lastSec = '' %}
+    {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+      {% set sec = r|length > 1 ? r[0] : '' %}
+      {% set text = r|length > 1 ? line|slice((r[0]|length) + 1) : r[0] %}
+      {% if sec|replace({' ': ''}) and sec != lastSec %}<li class="oz-rules__sec" aria-hidden="true"><span class="oz-label">{{ sec }}</span></li>{% set lastSec = sec %}{% endif %}
+      <li class="oz-slot oz-rules__item"><span class="oz-rules__n">{{ num }}</span><span>{{ text }}</span></li>
+    {% endif %}{% endfor %}
+  </ol>
+
+{% elseif kind == 'news' and rows|length %}
+  {# News: "Date | Title | Text | optional image URL" per line, newest first as written. #}
+  <div class="oz-news">
+    {% set num = 0 %}{% for line in rows %}{% set r = line|split('|') %}{% if r[0]|replace({' ': ''}) %}{% set num = num + 1 %}
+      <article class="oz-slot oz-news__item">
+        {% if r|length > 3 and r[3]|replace({' ': ''}) %}<img class="oz-news__img" src="{{ r[3]|replace({' ': ''}) }}" alt="" loading="lazy">{% endif %}
+        <div>
+          <time class="oz-label">{{ r[0] }}</time>
+          <h2>{{ (r|length > 1 ? r[1] : '') }}</h2>
+          {% if r|length > 2 %}<p>{{ r[2] }}</p>{% endif %}
+        </div>
+      </article>
+    {% endif %}{% endfor %}
+  </div>
+
+{% endif %}

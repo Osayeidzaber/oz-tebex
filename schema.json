@@ -534,60 +534,60 @@
         },
         {
           "id": "rank-highlight",
-          "name": "Highlighted rank (package name)",
+          "name": "Highlighted rank (package name) [Rank Preview add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Highlighted rank. Package name."
+          "description": "Needs the OZ Rank Preview add-on. Highlighted rank. Package name."
         },
         {
           "id": "rank-table",
-          "name": "Rows — one per line: Perk | value for 1st package | 2nd | … (yes / no or any text)",
+          "name": "Rows — one per line: Perk | value for 1st package | 2nd | … (yes / no or any text) [Rank Preview add-on]",
           "type": "textarea",
           "default": "Chat prefix | [VIP] | [VIP+] | [MVP]\nHomes | 2 | 4 | 6\nNo chat cooldown | no | yes | yes\nRank cosmetics | no | no | yes",
-          "description": "Rows — one per line: Perk | value for 1st package | 2nd | …. Yes / no or any text."
+          "description": "Needs the OZ Rank Preview add-on. Rows — one per line: Perk | value for 1st package | 2nd | …. Yes / no or any text."
         },
         {
           "id": "rank-preview",
-          "name": "Show rank preview (skin + nametag + chat)",
+          "name": "Show rank preview (skin + nametag + chat) [Rank Preview add-on]",
           "type": "select",
           "default": "Show",
           "values": [
             "Show",
             "Hide"
           ],
-          "description": "Show rank preview. Skin + nametag + chat. Options: Show, Hide."
+          "description": "Needs the OZ Rank Preview add-on. Show rank preview. Skin + nametag + chat. Options: Show, Hide."
         },
         {
           "id": "rank-current-picker",
-          "name": "\"Your current rank\" picker on the rank page (logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest)",
+          "name": "\"Your current rank\" picker on the rank page (logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest) [Rank Preview add-on]",
           "type": "select",
           "default": "On",
           "values": [
             "On",
             "Off"
           ],
-          "description": "\"Your current rank\" picker on the rank page. Logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest. Options: On, Off."
+          "description": "Needs the OZ Rank Preview add-on. \"Your current rank\" picker on the rank page. Logged-in players pick the rank they own; saved on their device; ranks listed lowest to highest. Options: On, Off."
         },
         {
           "id": "rank-styles",
-          "name": "Rank styles — one per line: Package name | chat prefix | color",
+          "name": "Rank styles — one per line: Package name | chat prefix | color [Rank Preview add-on]",
           "type": "textarea",
           "default": "VIP | [VIP] | #C9CED6\nVIP+ | [VIP+] | #7AA2FF\nMVP | [MVP] | #F2C94C\nMVP+ | [MVP+] | #5BE0E6",
-          "description": "Rank styles — one per line: Package name | chat prefix | color."
+          "description": "Needs the OZ Rank Preview add-on. Rank styles — one per line: Package name | chat prefix | color."
         },
         {
           "id": "preview-chat",
-          "name": "Example chat message in the preview",
+          "name": "Example chat message in the preview [Rank Preview add-on]",
           "type": "textarea",
           "default": "gg! just ranked up",
-          "description": "Example chat message in the preview."
+          "description": "Needs the OZ Rank Preview add-on. Example chat message in the preview."
         },
         {
           "id": "preview-skin",
-          "name": "Skin shown to logged-out visitors (Minecraft username)",
+          "name": "Skin shown to logged-out visitors (Minecraft username) [Rank Preview add-on]",
           "type": "textarea",
           "default": "MHF_Steve",
-          "description": "Skin shown to logged-out visitors. Minecraft username."
+          "description": "Needs the OZ Rank Preview add-on. Skin shown to logged-out visitors. Minecraft username."
         }
       ]
     },
@@ -926,18 +926,18 @@
         },
         {
           "id": "preview-3d",
-          "name": "Live 3D skin preview (falls back to 2D)",
+          "name": "Live 3D skin preview (falls back to 2D) [Rank Preview add-on]",
           "type": "select",
           "default": "On",
           "values": [
             "On",
             "Off"
           ],
-          "description": "Live 3D skin preview. Falls back to 2D. Options: On, Off."
+          "description": "Needs the OZ Rank Preview add-on. Live 3D skin preview. Falls back to 2D. Options: On, Off."
         },
         {
           "id": "preview-animation",
-          "name": "Preview animation",
+          "name": "Preview animation [Rank Preview add-on]",
           "type": "select",
           "default": "Walk",
           "values": [
@@ -946,36 +946,36 @@
             "Idle",
             "None"
           ],
-          "description": "Preview animation. Options: Walk, Run, Idle, None."
+          "description": "Needs the OZ Rank Preview add-on. Preview animation. Options: Walk, Run, Idle, None."
         },
         {
           "id": "preview-autorotate",
-          "name": "Auto-rotate preview",
+          "name": "Auto-rotate preview [Rank Preview add-on]",
           "type": "select",
           "default": "On",
           "values": [
             "On",
             "Off"
           ],
-          "description": "Auto-rotate preview. Options: On, Off."
+          "description": "Needs the OZ Rank Preview add-on. Auto-rotate preview. Options: On, Off."
         },
         {
           "id": "preview-tabs",
-          "name": "Preview tabs, in order (3d, chat, tab, media)",
+          "name": "Preview tabs, in order (3d, chat, tab, media) [Rank Preview add-on]",
           "type": "textarea",
           "default": "3d,chat,tab,media",
-          "description": "Preview tabs, in order. 3d, chat, tab, media."
+          "description": "Needs the OZ Rank Preview add-on. Preview tabs, in order. 3d, chat, tab, media."
         },
         {
           "id": "rank-ladder",
-          "name": "Rank ladder above the rank table",
+          "name": "Rank ladder above the rank table [Rank Preview add-on]",
           "type": "select",
           "default": "On",
           "values": [
             "On",
             "Off"
           ],
-          "description": "Rank ladder above the rank table. Options: On, Off."
+          "description": "Needs the OZ Rank Preview add-on. Rank ladder above the rank table. Options: On, Off."
         },
         {
           "id": "sticky-buy-bar",
@@ -1082,42 +1082,42 @@
       "options": [
         {
           "id": "sale",
-          "name": "Sale banner on homepage",
+          "name": "Sale banner on homepage [Sales Pack add-on]",
           "type": "select",
           "default": "Hide",
           "values": [
             "Show",
             "Hide"
           ],
-          "description": "Sale banner on homepage. Options: Show, Hide."
+          "description": "Needs the OZ Sales Pack add-on. Sale banner on homepage. Options: Show, Hide."
         },
         {
           "id": "sale-badge",
-          "name": "Sale badge (e.g. 50% SALE)",
+          "name": "Sale badge (e.g. 50% SALE) [Sales Pack add-on]",
           "type": "textarea",
           "default": "50% SALE",
-          "description": "Sale badge. E.g. 50% SALE."
+          "description": "Needs the OZ Sales Pack add-on. Sale badge. E.g. 50% SALE."
         },
         {
           "id": "sale-title",
-          "name": "Sale title",
+          "name": "Sale title [Sales Pack add-on]",
           "type": "textarea",
           "default": "Black Friday",
-          "description": "Sale title."
+          "description": "Needs the OZ Sales Pack add-on. Sale title."
         },
         {
           "id": "sale-end",
-          "name": "Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends",
+          "name": "Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends [Sales Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends."
+          "description": "Needs the OZ Sales Pack add-on. Sale ends (ISO date, e.g. 2026-11-30T23:59:00Z). Countdown hides when it ends."
         },
         {
           "id": "sale-link",
-          "name": "Sale banner link (optional)",
+          "name": "Sale banner link (optional) [Sales Pack add-on]",
           "type": "url",
           "default": "",
-          "description": "Sale banner link. Optional. Full link starting with https://, or leave empty."
+          "description": "Needs the OZ Sales Pack add-on. Sale banner link. Optional. Full link starting with https://, or leave empty."
         },
         {
           "id": "slides",
@@ -1135,10 +1135,10 @@
         },
         {
           "id": "currencies",
-          "name": "Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide",
+          "name": "Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide [Sales Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide."
+          "description": "Needs the OZ Sales Pack add-on. Currency picker in basket: codes separated by commas (e.g. USD,EUR,GBP). Leave empty to hide."
         }
       ]
     },
@@ -1147,49 +1147,49 @@
       "options": [
         {
           "id": "promo",
-          "name": "Show discount pop-up (once per visitor)",
+          "name": "Show discount pop-up (once per visitor) [Sales Pack add-on]",
           "type": "select",
           "default": "Off",
           "values": [
             "On",
             "Off"
           ],
-          "description": "Show discount pop-up. Once per visitor. Options: On, Off."
+          "description": "Needs the OZ Sales Pack add-on. Show discount pop-up. Once per visitor. Options: On, Off."
         },
         {
           "id": "promo-title",
-          "name": "Pop-up title",
+          "name": "Pop-up title [Sales Pack add-on]",
           "type": "textarea",
           "default": "10% off your first order",
-          "description": "Pop-up title."
+          "description": "Needs the OZ Sales Pack add-on. Pop-up title."
         },
         {
           "id": "promo-text",
-          "name": "Pop-up text",
+          "name": "Pop-up text [Sales Pack add-on]",
           "type": "textarea",
           "default": "Use this code at checkout.",
-          "description": "Pop-up text."
+          "description": "Needs the OZ Sales Pack add-on. Pop-up text."
         },
         {
           "id": "promo-code",
-          "name": "Coupon / creator code to show",
+          "name": "Coupon / creator code to show [Sales Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Coupon / creator code to show."
+          "description": "Needs the OZ Sales Pack add-on. Coupon / creator code to show."
         },
         {
           "id": "promo-delay",
-          "name": "Delay before showing (seconds)",
+          "name": "Delay before showing (seconds) [Sales Pack add-on]",
           "type": "textarea",
           "default": "4",
-          "description": "Delay before showing. Seconds."
+          "description": "Needs the OZ Sales Pack add-on. Delay before showing. Seconds."
         },
         {
           "id": "promo-button",
-          "name": "Button text",
+          "name": "Button text [Sales Pack add-on]",
           "type": "textarea",
           "default": "Start shopping",
-          "description": "Button text."
+          "description": "Needs the OZ Sales Pack add-on. Button text."
         }
       ]
     },
@@ -1198,94 +1198,94 @@
       "options": [
         {
           "id": "staff-list",
-          "name": "Staff: one per line — Name | Role | Minecraft name",
+          "name": "Staff: one per line — Name | Role | Minecraft name [Pages Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Staff: one per line — Name | Role | Minecraft name."
+          "description": "Needs the OZ Pages Pack add-on. Staff: one per line — Name | Role | Minecraft name."
         },
         {
           "id": "vote-list",
-          "name": "Vote sites: one per line — Site name | URL",
+          "name": "Vote sites: one per line — Site name | URL [Pages Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Vote sites: one per line — Site name | URL."
+          "description": "Needs the OZ Pages Pack add-on. Vote sites: one per line — Site name | URL."
         },
         {
           "id": "faq-list",
-          "name": "FAQ: one per line — Question | Answer",
+          "name": "FAQ: one per line — Question | Answer [Pages Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "FAQ: one per line — Question | Answer."
+          "description": "Needs the OZ Pages Pack add-on. FAQ: one per line — Question | Answer."
         },
         {
           "id": "patrons-list",
-          "name": "Patrons: one per line — Minecraft name | Tier",
+          "name": "Patrons: one per line — Minecraft name | Tier [Pages Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Patrons: one per line — Minecraft name | Tier."
+          "description": "Needs the OZ Pages Pack add-on. Patrons: one per line — Minecraft name | Tier."
         },
         {
           "id": "patrons-note",
-          "name": "Text under the patrons list",
+          "name": "Text under the patrons list [Pages Pack add-on]",
           "type": "textarea",
           "default": "Thank you for keeping the server running.",
-          "description": "Text under the patrons list."
+          "description": "Needs the OZ Pages Pack add-on. Text under the patrons list."
         },
         {
           "id": "rules-list",
-          "name": "Rules: one per line — Section | Rule (lines with the same section are grouped)",
+          "name": "Rules: one per line — Section | Rule (lines with the same section are grouped) [Pages Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "Rules: one per line — Section | Rule. Lines with the same section are grouped."
+          "description": "Needs the OZ Pages Pack add-on. Rules: one per line — Section | Rule. Lines with the same section are grouped."
         },
         {
           "id": "news-list",
-          "name": "News: one per line — Date | Title | Text | Image URL (optional)",
+          "name": "News: one per line — Date | Title | Text | Image URL (optional) [Pages Pack add-on]",
           "type": "textarea",
           "default": "",
-          "description": "News: one per line — Date | Title | Text | Image URL. Optional."
+          "description": "Needs the OZ Pages Pack add-on. News: one per line — Date | Title | Text | Image URL. Optional."
         },
         {
           "id": "page-slug-staff",
-          "name": "URL slug of your Staff page",
+          "name": "URL slug of your Staff page [Pages Pack add-on]",
           "type": "textarea",
           "default": "staff",
-          "description": "URL slug of your Staff page."
+          "description": "Needs the OZ Pages Pack add-on. URL slug of your Staff page."
         },
         {
           "id": "page-slug-vote",
-          "name": "URL slug of your Vote page",
+          "name": "URL slug of your Vote page [Pages Pack add-on]",
           "type": "textarea",
           "default": "vote",
-          "description": "URL slug of your Vote page."
+          "description": "Needs the OZ Pages Pack add-on. URL slug of your Vote page."
         },
         {
           "id": "page-slug-faq",
-          "name": "URL slug of your FAQ page",
+          "name": "URL slug of your FAQ page [Pages Pack add-on]",
           "type": "textarea",
           "default": "faq",
-          "description": "URL slug of your FAQ page."
+          "description": "Needs the OZ Pages Pack add-on. URL slug of your FAQ page."
         },
         {
           "id": "page-slug-patrons",
-          "name": "URL slug of your Patrons page",
+          "name": "URL slug of your Patrons page [Pages Pack add-on]",
           "type": "textarea",
           "default": "patrons",
-          "description": "URL slug of your Patrons page."
+          "description": "Needs the OZ Pages Pack add-on. URL slug of your Patrons page."
         },
         {
           "id": "page-slug-rules",
-          "name": "URL slug or title of your Rules page",
+          "name": "URL slug or title of your Rules page [Pages Pack add-on]",
           "type": "textarea",
           "default": "rules",
-          "description": "URL slug or title of your Rules page."
+          "description": "Needs the OZ Pages Pack add-on. URL slug or title of your Rules page."
         },
         {
           "id": "page-slug-news",
-          "name": "URL slug or title of your News page",
+          "name": "URL slug or title of your News page [Pages Pack add-on]",
           "type": "textarea",
           "default": "news",
-          "description": "URL slug or title of your News page."
+          "description": "Needs the OZ Pages Pack add-on. URL slug or title of your News page."
         },
         {
           "id": "setup-page",

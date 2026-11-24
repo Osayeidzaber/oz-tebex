@@ -26,12 +26,17 @@
 {% set big = (config('product-layout') ? config('product-layout') : 'big')|lower == 'big' %}
 <div class="oz-panel oz-product {% if big %}oz-product--big{% endif %}" id="oz-product">
   <div class="oz-product__media">
+    {# 3D rank preview comes from the Rank Preview add-on (oz-preview.twig). Without it, the normal gallery shows. #}
+    {% set pvHtml = '' %}
     {% if showPreview %}
       {% set pvSkin = basket.ign ? basket.ign : (config('preview-skin') ? config('preview-skin') : 'MHF_Steve') %}
       {% set pvLabel = basket.ign ? basket.ign : __('You') %}
       {% set pvPrefix = stPrefix %}{% set pvColor = stColor %}{% set pvName = package.name %}
       {% set pvMedia = package.media is defined ? package.media : [] %}
-      {% include "oz-preview.twig" %}
+      {% set pvHtml %}{% include "oz-preview.twig" ignore missing %}{% endset %}
+    {% endif %}
+    {% if pvHtml|replace({' ': '', "\n": '', "\r": '', "\t": ''})|length > 0 %}
+      {{ pvHtml|raw }}
     {% else %}
       <div class="oz-gallery" data-oz-gallery>
         <div class="oz-slot oz-gallery__main" data-oz-gallery-main>
