@@ -60,7 +60,7 @@
       canvas.setAttribute('role', 'img');
       var w = stage.clientWidth || 300, h = stage.clientHeight || 360;
       var viewer = new sv.SkinViewer({ canvas: canvas, width: w, height: h, skin: skinUrl(name) });
-      viewer.fov = 40; viewer.zoom = 0.85;
+      viewer.fov = 40; viewer.zoom = 0.78; // room above the head so the nametag isn't clipped
       viewer.controls.enableZoom = false;
       viewer.autoRotate = !reduce && box.getAttribute('data-oz-rotate') !== 'off';
       viewer.autoRotateSpeed = 0.6;
@@ -70,7 +70,9 @@
       else if (anim === 'idle') viewer.animation = new sv.IdleAnimation();
       if (viewer.animation) viewer.animation.speed = 0.7;
       var setTag = function () {
-        try { viewer.nameTag = new sv.NameTagObject(tagText(box), { textStyle: tagColor(box) }); } catch (e) { viewer.nameTag = tagText(box); }
+        // Use the theme's heading font; the canvas would otherwise fall back to a serif font.
+        var font = (getComputedStyle(box).getPropertyValue('--font-pixel') || '').trim() || 'sans-serif';
+        try { viewer.nameTag = new sv.NameTagObject(tagText(box), { textStyle: tagColor(box), font: '48px ' + font }); } catch (e) { viewer.nameTag = tagText(box); }
       };
       setTag();
       // Skin load failure → Steve

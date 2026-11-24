@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- Helper for screenshots that need a UI state: /frame.html?p=category-grid.html&open=basket -->
+<meta charset="utf-8">
+<style>html,body{margin:0;height:100%;overflow:hidden}iframe{border:0;width:100%;height:100%}</style>
+<iframe id="f"></iframe>
+<script>
+  var q = new URLSearchParams(location.search), f = document.getElementById('f');
+  f.onload = function () {
+    var d = f.contentDocument, w = f.contentWindow;
+    setTimeout(function () {
+      if (q.get('open') === 'basket') { var b = d.querySelector('[data-oz-open]'); if (b) b.click(); }
+      if (q.get('qty')) { var g = d.querySelector('[data-oz-qty="' + q.get('qty') + '"]'); if (g) g.click(); }
+      if (q.get('scroll')) w.scrollTo(0, +q.get('scroll'));
+    }, 600);
+  };
+  f.src = '/' + q.get('p');
+</script>

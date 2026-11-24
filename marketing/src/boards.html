@@ -1,0 +1,266 @@
+<!doctype html>
+<!-- Marketing boards for the BuiltByBit listing. Render one board with ?b=<name>; see marketing/render.sh. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OZ boards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pixelify+Sans:wght@500;700&display=block" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0F1E; --bg2: #111833; --panel: #141C36; --line: #263157;
+  --lime: #D4FF3A; --lime-d: #A6CC1F; --violet: #B9A6FF; --text: #EEF2FF; --muted: #9AA6C7;
+  --px: "Pixelify Sans", system-ui, sans-serif; --ui: "Inter", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+.board { display: none; position: relative; overflow: hidden; background: var(--bg); }
+.board.on { display: block; }
+.px { font-family: var(--px); }
+.lime { color: var(--lime); }
+.muted { color: var(--muted); }
+
+/* shared pieces */
+.sky { position: absolute; inset: 0; background:
+  radial-gradient(1200px 600px at 15% 0%, rgba(212,255,58,.10), transparent 60%),
+  radial-gradient(900px 600px at 95% 10%, rgba(185,166,255,.14), transparent 60%),
+  linear-gradient(180deg, #0D1430 0%, var(--bg) 70%); }
+.stars { position: absolute; inset: 0; background-image:
+  radial-gradient(2px 2px at 8% 14%, #fff8, transparent), radial-gradient(2px 2px at 22% 40%, #fff6, transparent),
+  radial-gradient(2px 2px at 41% 9%, #fff7, transparent), radial-gradient(2px 2px at 63% 26%, #fff5, transparent),
+  radial-gradient(2px 2px at 78% 6%, #fff8, transparent), radial-gradient(2px 2px at 91% 33%, #fff6, transparent),
+  radial-gradient(2px 2px at 33% 70%, #fff4, transparent), radial-gradient(2px 2px at 86% 74%, #fff4, transparent); }
+.ground { position: absolute; left: 0; right: 0; bottom: 0; height: 46px;
+  background: repeating-linear-gradient(90deg, #6B4A2E 0 24px, #5A3D25 24px 48px);
+  border-top: 12px solid #EEF4FF; }
+.ground::before { content: ""; position: absolute; left: 0; right: 0; top: -20px; height: 8px;
+  background: repeating-linear-gradient(90deg, #EEF4FF 0 16px, transparent 16px 48px); }
+.frame { position: relative; border: 3px solid #2B3766; background: #0B1022; box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04) inset; overflow: hidden; }
+.frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; background: var(--lime); color: #11160A;
+  font: 700 18px var(--px); box-shadow: 0 -4px 0 rgba(0,0,0,.25) inset; }
+.tick { width: 34px; height: 34px; flex: none; display: grid; place-items: center; background: var(--lime); color: #11160A; font: 800 20px var(--ui); box-shadow: 0 -3px 0 rgba(0,0,0,.25) inset; }
+.logo { font-family: var(--ui) !important; letter-spacing: -2px; display: inline-grid; place-items: center; background: var(--lime); color: #11160A; font-family: var(--px); font-weight: 700; box-shadow: 0 -8px 0 rgba(0,0,0,.22) inset, 0 0 0 4px #11160A; }
+
+/* ---------- cover 2000x1084 ---------- */
+#cover { width: 2000px; height: 1084px; }
+#cover .left { position: absolute; left: 90px; top: 100px; width: 760px; }
+#cover .logo { width: 120px; height: 120px; font-size: 72px; }
+#cover h1 { margin: 44px 0 0; font: 700 132px/0.95 var(--px); letter-spacing: 2px; }
+#cover h1 .oz { font: 800 132px/0.95 var(--ui); letter-spacing: -4px; }
+#cover h2 { margin: 18px 0 0; font: 700 64px/1.05 var(--ui); letter-spacing: -1.5px; }
+#cover .rule { width: 520px; height: 4px; background: linear-gradient(90deg, var(--lime), transparent); margin: 46px 0 40px; }
+#cover ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; }
+#cover li { display: flex; align-items: center; gap: 22px; font: 600 40px var(--ui); }
+#cover .shot { position: absolute; right: -40px; top: 120px; width: 1180px; height: 790px; transform: perspective(2400px) rotateY(-9deg) rotateX(2deg); }
+#cover .phone { position: absolute; right: 70px; bottom: 60px; z-index: 2; width: 250px; height: 520px; border-radius: 26px; border-width: 6px; transform: rotate(-4deg); }
+#cover .tag { position: absolute; left: 0; bottom: 0; padding: 30px 70px 30px 90px; background: var(--lime); color: #11160A; font: 700 52px var(--px); }
+
+/* ---------- compat strip 1516x275 ---------- */
+#strip { width: 1516px; height: 275px; }
+#strip .in { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
+#strip .k { font: 600 30px var(--ui); letter-spacing: 10px; text-transform: uppercase; color: var(--muted); }
+#strip .h { margin-top: 6px; font: 700 76px var(--px); }
+#strip .s { margin-top: 10px; font: 500 26px var(--ui); color: var(--muted); }
+
+/* ---------- features 1040 x auto ---------- */
+#features { width: 1040px; }
+#features .head { padding: 70px 60px 30px; text-align: center; }
+#features .head h1 { margin: 0; font: 700 50px var(--px); }
+#features .head p { margin: 14px 0 0; font: 500 22px var(--ui); color: var(--muted); }
+.feat { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; padding: 56px 60px; }
+.feat.rev .copy { order: 2; }
+.feat h3 { margin: 0 0 16px; font: 700 36px var(--px); }
+.feat p { margin: 0 0 14px; font: 500 20px/1.55 var(--ui); color: #D5DCF2; }
+.feat .chip { margin-top: 14px; font-size: 16px; padding: 8px 14px; }
+.feat .frame { height: 360px; }
+.frame.crop { background-repeat: no-repeat; background-color: #0B1022; image-rendering: auto; }
+.feat .how { margin: 14px 0 0; padding: 12px 14px; background: var(--panel); border-left: 4px solid var(--lime); font: 500 16px/1.5 var(--ui); color: var(--muted); }
+.feat .how b { color: var(--text); }
+.sep { height: 1px; margin: 0 60px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+
+/* ---------- presets 2000x1180 ---------- */
+#presets { width: 2000px; height: 1180px; }
+#presets .head { position: absolute; left: 0; right: 0; top: 70px; text-align: center; }
+#presets h1 { margin: 0; font: 700 72px var(--px); }
+#presets .head p { margin: 14px 0 0; font: 500 28px var(--ui); color: var(--muted); }
+#presets .grid { position: absolute; left: 90px; right: 90px; top: 270px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+#presets .cell .frame { height: 360px; }
+#presets .cell span { display: block; margin-top: 14px; font: 700 28px var(--px); text-align: center; }
+
+/* ---------- setup 1516x746 ---------- */
+#setup { width: 1516px; height: 746px; }
+#setup .copy { position: absolute; left: 110px; top: 150px; width: 560px; }
+#setup h2 { margin: 0 0 26px; font: 700 54px var(--px); }
+#setup p { margin: 0 0 30px; font: 600 26px/1.5 var(--ui); }
+#setup .frame { position: absolute; right: -30px; top: 110px; width: 760px; height: 520px; }
+
+/* ---------- icon 512 ---------- */
+#icon { width: 512px; height: 512px; }
+#icon .logo { position: absolute; left: 106px; top: 96px; width: 300px; height: 300px; font-size: 180px; }
+#icon .ground { height: 40px; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="board" id="cover">
+  <div class="sky"></div><div class="stars"></div>
+  <div class="left">
+    <div class="logo">OZ</div>
+    <h1><span class="lime oz">OZ</span> <span class="px">Theme</span></h1>
+    <h2>Pixel Tebex Store for<br>Minecraft Servers</h2>
+    <div class="rule"></div>
+    <ul>
+      <li><span class="tick">✓</span>Java &amp; Bedrock login</li>
+      <li><span class="tick">✓</span>Live 3D rank preview</li>
+      <li><span class="tick">✓</span>Quantity buttons &amp; basket drawer</li>
+      <li><span class="tick">✓</span>9 presets, no code needed</li>
+    </ul>
+  </div>
+  <div class="frame phone"><img src="../shots/mobile.png" alt=""></div>
+  <div class="frame shot"><img src="../shots/home.png" alt=""></div>
+  <div class="tag">Tebex custom template</div>
+</section>
+
+<!-- STRIP -->
+<section class="board" id="strip">
+  <div class="sky"></div><div class="stars"></div>
+  <div class="in"><div>
+    <div class="k">Built for</div>
+    <div class="h">Tebex <span class="lime">Custom Templates</span></div>
+    <div class="s">Twig template · Tebex Plus · classic webstore</div>
+  </div></div>
+</section>
+
+<!-- FEATURES -->
+<section class="board" id="features">
+  <div class="sky" style="position:absolute"></div>
+  <div style="position:relative">
+    <div class="head">
+      <h1>Everything your store needs</h1>
+      <p>All included. No add-ons, no extra plugins.</p>
+    </div>
+
+    <div class="feat">
+      <div class="copy">
+        <h3>Java &amp; Bedrock login</h3>
+        <p>Players pick their edition, type their name and see their own skin before they buy. Bedrock names get your Geyser prefix automatically.</p>
+        <div class="how"><b>How:</b> pick <b>Login editions</b> and set <b>Bedrock username prefix</b> (e.g. a dot) in the theme settings.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/login.png);background-size:190%;background-position:50% 78%"></div>
+    </div>
+    <div class="sep"></div>
+
+    <div class="feat rev">
+      <div class="copy">
+        <h3>3D rank preview</h3>
+        <p>Rank pages show the player's real skin in 3D with the rank's nametag, plus how they'll look in chat and the tab list. Players switch ranks with one click.</p>
+        <div class="how"><b>How:</b> set <b>Rank category</b> and write your prefixes and colours in <b>Rank styles</b>.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/ranks.png);background-size:260%;background-position:8% 78%"></div>
+    </div>
+    <div class="sep"></div>
+
+    <div class="feat">
+      <div class="copy">
+        <h3>Quantity buttons</h3>
+        <p>Keys, coins and crates get ×1 ×5 ×10 ×15 buttons. The button shows the total before the player adds it.</p>
+        <div class="how"><b>How:</b> list the categories in <b>Quantity categories</b> and pick your amounts in <b>Quantity options</b>.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/keys.png);background-size:230%;background-position:8% 98%"></div>
+    </div>
+    <div class="sep"></div>
+
+    <div class="feat rev">
+      <div class="copy">
+        <h3>Basket drawer</h3>
+        <p>The basket slides in from the side, so players keep shopping. Items, quantities, total and checkout in one place.</p>
+        <div class="how"><b>How:</b> on by default. Add a <b>Free-gift goal</b> to show a progress bar in the basket.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/basket.png);background-size:200%;background-position:100% 0%"></div>
+    </div>
+    <div class="sep"></div>
+
+    <div class="feat">
+      <div class="copy">
+        <h3>Ready-made pages</h3>
+        <p>Staff, Vote, FAQ, Patrons, Rules and News pages with Minecraft skins and copy buttons. Create a Tebex page with that title and OZ styles it.</p>
+        <div class="how"><b>How:</b> one line per entry, e.g. <b>Notch | Owner | Notch</b>.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/staff.png);background-size:190%;background-position:15% 62%"></div>
+    </div>
+    <div class="sep"></div>
+
+    <div class="feat rev">
+      <div class="copy">
+        <h3>Setup page that does the typing</h3>
+        <p>A checklist shows what's missing, and editors build the text for staff, votes, FAQ, slider and rank table. Copy, paste into settings, done.</p>
+        <div class="how"><b>How:</b> turn <b>Setup page</b> on, create a Tebex page called <b>Setup</b>. Turn it off when you're finished.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/setup2.png);background-size:190%;background-position:12% 50%"></div>
+    </div>
+    <div class="sep"></div>
+
+    <div class="feat">
+      <div class="copy">
+        <h3>290 pixel icons</h3>
+        <p>Crowns, keys, coins, crates, pets, swords and more for your categories and packages. Your own package images still work.</p>
+        <div class="how"><b>How:</b> <b>Ranks=crown-gold, Keys=key-diamond</b> in <b>Category icons</b>.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/icons.png);background-size:170%;background-position:0% 15%"></div>
+    </div>
+    <div class="sep"></div>
+
+    <div class="feat rev" style="padding-bottom:80px">
+      <div class="copy">
+        <h3>Sales that sell</h3>
+        <p>Homepage slider with images or YouTube, a sale bar with a live countdown, a one-time discount pop-up and a currency picker.</p>
+        <div class="how"><b>How:</b> switch each on in settings: <b>slides</b>, <b>sale</b>, <b>promo</b>, <b>currencies</b>.</div>
+      </div>
+      <div class="frame crop" style="background-image:url(../shots/home.png);background-size:150%;background-position:20% 0%"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESETS -->
+<section class="board" id="presets">
+  <div class="sky"></div><div class="stars"></div>
+  <div class="head">
+    <h1>9 presets. <span class="lime">Your</span> colours.</h1>
+    <p>Pick a preset, a layout and a font. Or set your own colours.</p>
+  </div>
+  <div class="grid">
+    <div class="cell"><div class="frame"><img src="../shots/home.png" alt=""></div><span>Frost</span></div>
+    <div class="cell"><div class="frame"><img src="../shots/v-ocean.png" alt=""></div><span>Ocean · tabs</span></div>
+    <div class="cell"><div class="frame"><img src="../shots/v-cherry.png" alt=""></div><span>Cherry · sidebar</span></div>
+    <div class="cell"><div class="frame"><img src="../shots/v-desert.png" alt=""></div><span>Desert</span></div>
+    <div class="cell"><div class="frame"><img src="../shots/v-deepdark.png" alt=""></div><span>Deep Dark · minimal</span></div>
+    <div class="cell"><div class="frame"><img src="../shots/v-light.png" alt=""></div><span>Light mode</span></div>
+  </div>
+</section>
+
+<!-- SETUP -->
+<section class="board" id="setup">
+  <div class="sky"></div><div class="stars"></div>
+  <div class="copy">
+    <h2>No code. <span class="lime">Ever.</span></h2>
+    <p>138 settings in the Tebex panel: text, colours, icons, layouts and pages. The built-in setup page tells you what's left.</p>
+    <span class="chip">✦ Included, not an add-on</span>
+  </div>
+  <div class="frame"><img src="../shots/setup2.png" alt=""></div>
+</section>
+
+<!-- ICON -->
+<section class="board" id="icon">
+  <div class="sky"></div><div class="stars"></div>
+  <div class="logo">OZ</div>
+  <div class="ground"></div>
+</section>
+
+<script>
+  var b = new URLSearchParams(location.search).get('b') || 'cover';
+  document.getElementById(b).classList.add('on');
+</script>
+</body>
+</html>

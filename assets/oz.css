@@ -164,6 +164,11 @@ h1, h2, h3, h4 { font-family: var(--font-pixel); font-weight: 700; line-height: 
 .oz-cta__v { display: block; font: 600 24px var(--font-pixel); margin-top: 2px; color: #fff; }
 .oz-cta__s { color: #C9D2E3; font-size: 12px; }
 .oz-logo { text-align: center; }
+.oz-stage > .oz-logo { max-width: min(720px, 52vw); }
+[data-font="blocky"] .oz-logo__text { font-size: clamp(40px, 5.4vw, 76px); }
+.oz-cta { min-width: 0; }
+.oz-cta > span:last-child { min-width: 0; }
+.oz-cta__v { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .oz-logo img { max-height: 180px; width: auto; margin: 0 auto; image-rendering: auto; filter: drop-shadow(0 16px 30px rgba(0,0,0,.5)); }
 .oz-logo__text { font: 700 clamp(56px, 8vw, 104px)/.9 var(--font-pixel); color: #fff; text-shadow: 0 5px 0 var(--a), 0 10px 0 #05070F, 0 24px 40px rgba(0,0,0,.6); word-break: break-word; }
 .oz-logo__sub { margin-top: 20px; color: #C9D2E3; }
@@ -581,9 +586,10 @@ body { transition: opacity .18s ease; }
 [data-oz-state="loading"] .oz-stage3d::before { content: ""; position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px; background: var(--a); z-index: 2; animation: oz-spin-px .6s steps(4) infinite; }
 [data-oz-state="ready"] .oz-preview__overlay-tag { display: none; }
 .oz-preview__overlay-tag { z-index: 2; }
+[data-oz-pv-panel] { position: relative; }
 .oz-preview__hint { position: absolute; left: 12px; bottom: 30px; z-index: 2; font-size: 12px; color: rgba(255,255,255,.8); text-shadow: 1px 1px 0 #000; pointer-events: none; }
 [data-oz-state="fallback"] .oz-preview__hint { display: none; }
-.oz-preview__play { position: absolute; right: 10px; top: 10px; z-index: 3; }
+.oz-preview__play { position: absolute; right: 10px; bottom: 30px; z-index: 3; }
 .oz-pv-tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--slot); border: 3px solid var(--line); }
 .oz-pv-tabs button { min-height: 38px; padding: 0 14px; border: 0; background: transparent; color: var(--muted); font: 600 14px var(--font-pixel); cursor: pointer; border-radius: var(--r, 0); }
 .oz-pv-tabs button[aria-selected="true"] { background: var(--a); color: var(--a-ink); }
@@ -734,7 +740,7 @@ a.oz-sale:hover { filter: none; transform: translateY(-2px); }
 .oz-setup { display: grid; gap: 30px; margin-top: 18px; text-align: left; }
 .oz-setup__warn { padding: 12px 16px; border-left: 6px solid var(--a); }
 .oz-setup__groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
-.oz-setup__group { padding: 14px 16px; }
+.oz-setup__group { padding: 14px 16px; align-content: start; align-self: stretch; display: block; }
 .oz-setup__group h3 { margin: 0 0 10px; font: 700 16px var(--font-pixel); }
 .oz-setup__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .oz-setup__list li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
